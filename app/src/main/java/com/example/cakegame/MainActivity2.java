@@ -45,7 +45,11 @@ public class MainActivity2 extends AppCompatActivity {
         }
         // 設置觸摸監聽器
         for (int cake : newCakeID) {
+
             findViewById(cake).setOnTouchListener(new MyTouchListener());
+            CakeView cakeview = new CakeView(this);
+
+            /*
             Random random = new Random();
             int randnum = random.nextInt(6)+1;
             ImageView plane = findViewById(cake);
@@ -60,7 +64,7 @@ public class MainActivity2 extends AppCompatActivity {
                 default: throw new IllegalStateException("l");
             }
             Drawable drawable = getBaseContext().getResources().getDrawable(drawableResource);
-            plane.setImageDrawable(drawable);
+            plane.setImageDrawable(drawable);*/
         }
 
         // 初始化table陣列
