@@ -1,6 +1,7 @@
 package com.example.cakegame;
 
 import android.annotation.SuppressLint;
+import android.graphics.drawable.Drawable;
 import android.os.*;
 import android.util.*;
 import android.view.*;
@@ -46,6 +47,21 @@ public class MainActivity2 extends AppCompatActivity {
         // 設置觸摸監聽器
         for (int cake : newCakeID) {
             findViewById(cake).setOnTouchListener(new MyTouchListener());
+            Random random = new Random();
+            int randnum = random.nextInt(6)+1;
+            ImageView plane = findViewById(cake);
+            int drawableResource = 0;
+            switch (randnum){
+                case 1 : drawableResource = R.drawable.cake_1;break;
+                case 2 : drawableResource = R.drawable.cake_2;break;
+                case 3 : drawableResource = R.drawable.cake_3;break;
+                case 4 : drawableResource = R.drawable.cake_4;break;
+                case 5 : drawableResource = R.drawable.cake_5;break;
+                case 6 : drawableResource = R.drawable.cake_6;break;
+                default: throw new IllegalStateException("l");
+            }
+            Drawable drawable = getBaseContext().getResources().getDrawable(drawableResource);
+            plane.setImageDrawable(drawable);
         }
 
         // 初始化table陣列
