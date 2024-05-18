@@ -141,7 +141,7 @@ public class MainActivity2 extends AppCompatActivity {
         private int originalIndex;
         private boolean dropped = false;
 
-        @SuppressLint({"UseCompatLoadingForDrawables", "ClickableViewAccessibility"})
+        @SuppressLint({"UseCompatLoadingForDrawables"})
         @Override
         public boolean onDrag(View v, DragEvent event) {
             ImageView imageView = (ImageView) v;
@@ -149,7 +149,7 @@ public class MainActivity2 extends AppCompatActivity {
                 case DragEvent.ACTION_DRAG_STARTED:
                     if (originalParent == null) {
                         originalParent = findViewById(R.id.newCakeContainer);
-                        originalIndex = originalParent.indexOfChild(imageView);
+                        originalIndex = originalParent.indexOfChild(v);
                     }
                     break;
                 case DragEvent.ACTION_DRAG_ENTERED:
