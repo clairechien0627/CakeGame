@@ -141,7 +141,7 @@ public class MainActivity2 extends AppCompatActivity {
         private int originalIndex;
         private boolean dropped = false;
 
-        @SuppressLint({"UseCompatLoadingForDrawables"})
+        @SuppressLint({"UseCompatLoadingForDrawables", "ClickableViewAccessibility"})
         @Override
         public boolean onDrag(View v, DragEvent event) {
             ImageView imageView = (ImageView) v;
@@ -149,28 +149,16 @@ public class MainActivity2 extends AppCompatActivity {
                 case DragEvent.ACTION_DRAG_STARTED:
                     if (originalParent == null) {
                         originalParent = findViewById(R.id.newCakeContainer);
-                        originalIndex = originalParent.indexOfChild(v);
+                        originalIndex = originalParent.indexOfChild(imageView);
                     }
                     break;
                 case DragEvent.ACTION_DRAG_ENTERED:
                     imageView.setImageResource(R.drawable.destination_circle);
-                    for(int a = 0; a < 5; a++){
-                        for(int b = 0; b < 4; b++){
-                            if(!cakes[a][b].getPieces().isEmpty()){
-                                cakeView[a][b].setImageResource(R.drawable.pieces_circle);
-                            }
-                        }
-                    }
+                    notEmpty();
                     break;
                 case DragEvent.ACTION_DRAG_EXITED:
                     imageView.setImageResource(R.drawable.stroke_circle);
-                    for(int a = 0; a < 5; a++){
-                        for(int b = 0; b < 4; b++){
-                            if(!cakes[a][b].getPieces().isEmpty()){
-                                cakeView[a][b].setImageResource(R.drawable.pieces_circle);
-                            }
-                        }
-                    }
+                    notEmpty();
                     break;
                 case DragEvent.ACTION_DROP:
                     ImageView draggedView = (ImageView) event.getLocalState();
@@ -191,13 +179,7 @@ public class MainActivity2 extends AppCompatActivity {
                                 Log.d("CakeSort", "蛋糕放置在: (" + i + ", " + j + ")");
                                 draggedViewParent.removeView(draggedView);
                                 dropped = true;
-                                for(int a = 0; a < 5; a++){
-                                    for(int b = 0; b <4; b++){
-                                        if(!cakes[a][b].getPieces().isEmpty()){
-                                            cakeView[a][b].setImageResource(R.drawable.pieces_circle);
-                                        }
-                                    }
-                                }
+                                notEmpty();
                                 getTable();
                                 break;
                             }
@@ -207,6 +189,7 @@ public class MainActivity2 extends AppCompatActivity {
                         }
                     }
                     if (!dropped) {
+                        draggedViewParent.removeView(draggedView);
                         originalParent.addView(draggedView, originalIndex);
                         draggedView.setVisibility(View.VISIBLE);
                         draggedView.setOnTouchListener(new MyTouchListener());
@@ -223,16 +206,7 @@ public class MainActivity2 extends AppCompatActivity {
                         draggedViewEnded.setVisibility(View.VISIBLE);
                     }
                     imageView.setImageResource(R.drawable.stroke_circle);
-                    for(int a = 0; a < 5; a++){
-                        for(int b = 0; b < 4; b++){
-                            if(!cakes[a][b].getPieces().isEmpty()){
-                                cakeView[a][b].setImageResource(R.drawable.pieces_circle);
-                            }
-                        }
-                    }
-                    // 重置变量
-                    originalParent = null;
-                    originalIndex = 0;
+                    notEmpty();
                     dropped = false;
                     break;
             }
@@ -257,5 +231,15 @@ public class MainActivity2 extends AppCompatActivity {
         // 記錄 table 字串
         Log.d("CakeSort", "Table:\n" + tableString);
         Log.d("CakeSort", "\nnewTable:\n" + newTableString);
+    }
+
+    private void notEmpty(){
+        for(int a = 0; a < 5; a++){
+            for(int b = 0; b < 4; b++){
+                if(!cakes[a][b].getPieces().isEmpty()){
+                    cakeView[a][b].setImageResource(R.drawable.pieces_circle);
+                }
+            }
+        }
     }
 }
