@@ -16,9 +16,8 @@ import java.util.*;
 
 public class MainActivity2 extends AppCompatActivity {
 
-    public static ArrayList<Integer>[][] table = new ArrayList[5][4];
     public static CakePane[][] cakes = new CakePane[5][4];
-    public static ArrayList<Integer>[] newTable = new ArrayList[4];
+    public static ImageView[][] cakeView = new ImageView[5][4];
     public static CakePane[] new_cakes = new CakePane[4];
     public static int[][] cakeID = {
             {R.id.cake1, R.id.cake2, R.id.cake3, R.id.cake4},
@@ -67,26 +66,26 @@ public class MainActivity2 extends AppCompatActivity {
         // 初始化table陣列
         for (int i = 0; i < 5; i++) {
             for (int j = 0; j < 4; j++) {
-                table[i][j] = new ArrayList<>();
                 cakes[i][j] = new CakePane();
-                table[i][j] = cakes[i][j].getPieces();
+                cakeView[i][j] = findViewById(cakeID[i][j]);
             }
         }
         // 初始化newTable陣列
         for (int i = 0; i < 4; i++) {
             new_cakes[i] = new CakePane();
             new_cakes[i].refresh();
-            newTable[i] = new_cakes[i].getPieces();
         }
+        getTable();
     }
 
+    @SuppressLint("ClickableViewAccessibility")
     private void resetDraggableCakes() {
         // 清空 newTable 並重新添加元素
         for (int i = 0; i < 4; i++) {
             new_cakes[i] = new CakePane();
             new_cakes[i].refresh();
-            newTable[i]= new_cakes[i].getPieces();
         }
+        getTable();
 
         // 找到放置新蛋糕的父視圖
         ViewGroup parent = findViewById(R.id.newCakeContainer);
@@ -116,7 +115,6 @@ public class MainActivity2 extends AppCompatActivity {
         @Override
         public boolean onTouch(View v, MotionEvent event) {
             if (event.getAction() == MotionEvent.ACTION_DOWN) {
-                getTable();
                 View.DragShadowBuilder shadowBuilder = new View.DragShadowBuilder(v);
 
                 // 创建一个空的 ClipData 对象，避免 NullPointerException
@@ -143,22 +141,36 @@ public class MainActivity2 extends AppCompatActivity {
         private int originalIndex;
         private boolean dropped = false;
 
-        @SuppressLint("UseCompatLoadingForDrawables")
+        @SuppressLint({"UseCompatLoadingForDrawables", "ClickableViewAccessibility"})
         @Override
         public boolean onDrag(View v, DragEvent event) {
             ImageView imageView = (ImageView) v;
             switch (event.getAction()) {
                 case DragEvent.ACTION_DRAG_STARTED:
                     if (originalParent == null) {
-                        originalParent = (ViewGroup) v.getParent();
-                        originalIndex = originalParent.indexOfChild(v);
+                        originalParent = findViewById(R.id.newCakeContainer);
+                        originalIndex = originalParent.indexOfChild(imageView);
                     }
                     break;
                 case DragEvent.ACTION_DRAG_ENTERED:
                     imageView.setImageResource(R.drawable.destination_circle);
+                    for(int a = 0; a < 5; a++){
+                        for(int b = 0; b < 4; b++){
+                            if(!cakes[a][b].getPieces().isEmpty()){
+                                cakeView[a][b].setImageResource(R.drawable.pieces_circle);
+                            }
+                        }
+                    }
                     break;
                 case DragEvent.ACTION_DRAG_EXITED:
                     imageView.setImageResource(R.drawable.stroke_circle);
+                    for(int a = 0; a < 5; a++){
+                        for(int b = 0; b < 4; b++){
+                            if(!cakes[a][b].getPieces().isEmpty()){
+                                cakeView[a][b].setImageResource(R.drawable.pieces_circle);
+                            }
+                        }
+                    }
                     break;
                 case DragEvent.ACTION_DROP:
                     ImageView draggedView = (ImageView) event.getLocalState();
@@ -174,14 +186,16 @@ public class MainActivity2 extends AppCompatActivity {
 
                     for (int i = 0; i < 5; i++) {
                         for (int j = 0; j < 4; j++) {
-                            if (imageView.getId() == cakeID[i][j] && table[i][j].isEmpty()) {
+                            if (imageView.getId() == cakeID[i][j] && cakes[i][j].getPieces().isEmpty()) {
                                 new_cakes[draggedViewIndex].put_cake_to_table(cakes, i, j);
                                 Log.d("CakeSort", "蛋糕放置在: (" + i + ", " + j + ")");
                                 draggedViewParent.removeView(draggedView);
                                 dropped = true;
                                 for(int a = 0; a < 5; a++){
                                     for(int b = 0; b <4; b++){
-                                        table[a][b] = cakes[a][b].getPieces();
+                                        if(!cakes[a][b].getPieces().isEmpty()){
+                                            cakeView[a][b].setImageResource(R.drawable.pieces_circle);
+                                        }
                                     }
                                 }
                                 getTable();
@@ -209,6 +223,13 @@ public class MainActivity2 extends AppCompatActivity {
                         draggedViewEnded.setVisibility(View.VISIBLE);
                     }
                     imageView.setImageResource(R.drawable.stroke_circle);
+                    for(int a = 0; a < 5; a++){
+                        for(int b = 0; b < 4; b++){
+                            if(!cakes[a][b].getPieces().isEmpty()){
+                                cakeView[a][b].setImageResource(R.drawable.pieces_circle);
+                            }
+                        }
+                    }
                     // 重置变量
                     originalParent = null;
                     originalIndex = 0;
@@ -225,17 +246,16 @@ public class MainActivity2 extends AppCompatActivity {
         StringBuilder tableString = new StringBuilder();
         for (int i = 0; i < 5; i++) {
             for (int j = 0; j < 4; j++) {
-                tableString.append(table[i][j]).append(" ");
+                tableString.append(cakes[i][j].getPieces()).append(" ");
             }
             tableString.append("\n");
         }
         StringBuilder newTableString = new StringBuilder();
         for (int i = 0; i < 4; i++) {
-            tableString.append(newTable[i]).append(" ");
+            newTableString.append(new_cakes[i].getPieces()).append(" ");
         }
         // 記錄 table 字串
-        Log.d("CakeSort", "Table:\n" + tableString.toString());
-
-        Log.d("CakeSort", "\n" + newTableString.toString());
+        Log.d("CakeSort", "Table:\n" + tableString);
+        Log.d("CakeSort", "\nnewTable:\n" + newTableString);
     }
 }

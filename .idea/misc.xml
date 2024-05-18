@@ -4,23 +4,12 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/Users/clair/AndroidStudioProjects/CakeGame/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.12129629629629629" />
+        <entry key="..\:/Users/clair/AndroidStudioProjects/CakeGame/app/src/main/res/drawable/cake_1.xml" value="0.2212962962962963" />
         <entry key="..\:/Users/clair/AndroidStudioProjects/CakeGame/app/src/main/res/drawable/destination_circle.xml" value="0.11388888888888889" />
         <entry key="..\:/Users/clair/AndroidStudioProjects/CakeGame/app/src/main/res/drawable/ic_launcher_background.xml" value="0.12129629629629629" />
+        <entry key="..\:/Users/clair/AndroidStudioProjects/CakeGame/app/src/main/res/drawable/pieces_circle.xml" value="0.253125" />
         <entry key="..\:/Users/clair/AndroidStudioProjects/CakeGame/app/src/main/res/layout/activity_main.xml" value="0.10364583333333334" />
-        <entry key="..\:/Users/clair/AndroidStudioProjects/CakeGame/app/src/main/res/layout/activity_main2.xml" value="0.1" />
-        <entry key="..\:/Users/user/AndroidStudioProjects/CakeGame/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.1" />
-        <entry key="..\:/Users/user/AndroidStudioProjects/CakeGame/app/src/main/res/drawable/2.xml" value="0.10092592592592593" />
-        <entry key="..\:/Users/user/AndroidStudioProjects/CakeGame/app/src/main/res/drawable/cake_1.xml" value="0.1" />
-        <entry key="..\:/Users/user/AndroidStudioProjects/CakeGame/app/src/main/res/drawable/cake_2.xml" value="0.1712962962962963" />
-        <entry key="..\:/Users/user/AndroidStudioProjects/CakeGame/app/src/main/res/drawable/cake_3.xml" value="0.10833333333333334" />
-        <entry key="..\:/Users/user/AndroidStudioProjects/CakeGame/app/src/main/res/drawable/cake_4.xml" value="0.10833333333333334" />
-        <entry key="..\:/Users/user/AndroidStudioProjects/CakeGame/app/src/main/res/drawable/cake_5.xml" value="0.10833333333333334" />
-        <entry key="..\:/Users/user/AndroidStudioProjects/CakeGame/app/src/main/res/drawable/cake_6.xml" value="0.10833333333333334" />
-        <entry key="..\:/Users/user/AndroidStudioProjects/CakeGame/app/src/main/res/drawable/destination_circle.xml" value="0.109375" />
-        <entry key="..\:/Users/user/AndroidStudioProjects/CakeGame/app/src/main/res/drawable/ic_launcher_background.xml" value="0.10572916666666667" />
-        <entry key="..\:/Users/user/AndroidStudioProjects/CakeGame/app/src/main/res/drawable/shape_circle.xml" value="0.1" />
-        <entry key="..\:/Users/user/AndroidStudioProjects/CakeGame/app/src/main/res/drawable/stroke_circle.xml" value="0.1" />
-        <entry key="..\:/Users/user/AndroidStudioProjects/CakeGame/app/src/main/res/layout/activity_main.xml" value="0.1" />
+        <entry key="..\:/Users/clair/AndroidStudioProjects/CakeGame/app/src/main/res/layout/activity_main2.xml" value="0.25" />
       </map>
     </option>
   </component>
