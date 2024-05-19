@@ -9,7 +9,7 @@ public class CakePane {
 
     private final int x_max = 5;
     private final int y_max = 4;
-    private final int pieces_kind = 5;
+    private final int pieces_kind = 6;
     private final int pieces_max = 8;
 
 

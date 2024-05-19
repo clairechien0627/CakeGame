@@ -10,289 +10,535 @@
     android:gravity="center"
     tools:context=".MainActivity2">
 
-    <!--    <TextView-->
-    <!--        android:id="@+id/change"-->
-    <!--        android:layout_width="wrap_content"-->
-    <!--        android:layout_height="wrap_content"-->
-    <!--        android:text="change"-->
-    <!--        android:textSize="50sp"-->
-    <!--        android:gravity="center"-->
-    <!--        />-->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        tools:ignore="ExtraText">
+        android:baselineAligned="false"
+        android:orientation="horizontal">
 
-        <ImageView
-            android:id="@+id/cake1"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/cakeAll1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1">
+
+            <com.example.cakegame.CakeView
+                android:id="@+id/cake1"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                app:layout_constraintDimensionRatio="1:1"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_gravity="center"
+                android:background="@drawable/stroke_circle"/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/cakeAll2"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:src="@drawable/stroke_circle"
-            android:contentDescription="@string/cake_description"
-            />
+            android:layout_marginStart="10dp">
 
-        <ImageView
-            android:id="@+id/cake2"
+            <com.example.cakegame.CakeView
+                android:id="@+id/cake2"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                app:layout_constraintDimensionRatio="1:1"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_gravity="center"
+                android:background="@drawable/stroke_circle"/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/cakeAll3"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:layout_marginStart="10dp"
-            android:src="@drawable/stroke_circle"
-            android:contentDescription="@string/cake_description"/>
-        />
+            android:layout_marginStart="10dp">
 
-        <ImageView
-            android:id="@+id/cake3"
+            <com.example.cakegame.CakeView
+                android:id="@+id/cake3"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                app:layout_constraintDimensionRatio="1:1"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_gravity="center"
+                android:background="@drawable/stroke_circle"/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/cakeAll4"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:layout_marginStart="10dp"
-            android:src="@drawable/stroke_circle"
-            android:contentDescription="@string/cake_description"/>
-        />
+            android:layout_marginStart="10dp">
 
-        <ImageView
-            android:id="@+id/cake4"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:layout_marginStart="10dp"
-            android:src="@drawable/stroke_circle"
-            android:contentDescription="@string/cake_description"/>
-        />
+            <com.example.cakegame.CakeView
+                android:id="@+id/cake4"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                app:layout_constraintDimensionRatio="1:1"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_gravity="center"
+                android:background="@drawable/stroke_circle"/>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
     </LinearLayout>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
+        android:baselineAligned="false"
         android:layout_marginTop="20dp"
-        >
+        android:orientation="horizontal">
 
-        <ImageView
-            android:id="@+id/cake5"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/cakeAll5"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1">
+
+            <com.example.cakegame.CakeView
+                android:id="@+id/cake5"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                app:layout_constraintDimensionRatio="1:1"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_gravity="center"
+                android:background="@drawable/stroke_circle"/>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/cakeAll6"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:src="@drawable/stroke_circle"
-            android:contentDescription="@string/cake_description"/>
-        />
+            android:layout_marginStart="10dp">
 
-        <ImageView
-            android:id="@+id/cake6"
+            <com.example.cakegame.CakeView
+                android:id="@+id/cake6"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                app:layout_constraintDimensionRatio="1:1"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_gravity="center"
+                android:background="@drawable/stroke_circle"/>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/cakeAll7"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:layout_marginStart="10dp"
-            android:src="@drawable/stroke_circle"
-            android:contentDescription="@string/cake_description"/>
-        />
+            android:layout_marginStart="10dp">
 
-        <ImageView
-            android:id="@+id/cake7"
+            <com.example.cakegame.CakeView
+                android:id="@+id/cake7"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                app:layout_constraintDimensionRatio="1:1"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_gravity="center"
+                android:background="@drawable/stroke_circle"/>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/cakeAll8"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:layout_marginStart="10dp"
-            android:src="@drawable/stroke_circle"
-            android:contentDescription="@string/cake_description"/>
-        />
+            android:layout_marginStart="10dp">
 
-        <ImageView
-            android:id="@+id/cake8"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:layout_marginStart="10dp"
-            android:src="@drawable/stroke_circle"
-            android:contentDescription="@string/cake_description"/>
-        />
+            <com.example.cakegame.CakeView
+                android:id="@+id/cake8"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                app:layout_constraintDimensionRatio="1:1"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_gravity="center"
+                android:background="@drawable/stroke_circle"/>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
     </LinearLayout>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
+        android:baselineAligned="false"
         android:layout_marginTop="20dp"
-        >
+        android:orientation="horizontal">
 
-        <ImageView
-            android:id="@+id/cake9"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/cakeAll9"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1">
+
+            <com.example.cakegame.CakeView
+                android:id="@+id/cake9"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                app:layout_constraintDimensionRatio="1:1"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_gravity="center"
+                android:background="@drawable/stroke_circle"/>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/cakeAll10"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:src="@drawable/stroke_circle"
-            android:contentDescription="@string/cake_description"/>
-        />
+            android:layout_marginStart="10dp">
 
-        <ImageView
-            android:id="@+id/cake10"
+            <com.example.cakegame.CakeView
+                android:id="@+id/cake10"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                app:layout_constraintDimensionRatio="1:1"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_gravity="center"
+                android:background="@drawable/stroke_circle"/>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/cakeAll11"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:layout_marginStart="10dp"
-            android:src="@drawable/stroke_circle"
-            android:contentDescription="@string/cake_description"/>
-        />
+            android:layout_marginStart="10dp">
 
-        <ImageView
-            android:id="@+id/cake11"
+            <com.example.cakegame.CakeView
+                android:id="@+id/cake11"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                app:layout_constraintDimensionRatio="1:1"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_gravity="center"
+                android:background="@drawable/stroke_circle"/>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/cakeAll12"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:layout_marginStart="10dp"
-            android:src="@drawable/stroke_circle"
-            android:contentDescription="@string/cake_description"/>
-        />
+            android:layout_marginStart="10dp">
 
-        <ImageView
-            android:id="@+id/cake12"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:layout_marginStart="10dp"
-            android:src="@drawable/stroke_circle"
-            android:contentDescription="@string/cake_description"/>
-        />
+            <com.example.cakegame.CakeView
+                android:id="@+id/cake12"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                app:layout_constraintDimensionRatio="1:1"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_gravity="center"
+                android:background="@drawable/stroke_circle"/>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
     </LinearLayout>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
+        android:baselineAligned="false"
         android:layout_marginTop="20dp"
-        >
+        android:orientation="horizontal">
 
-        <ImageView
-            android:id="@+id/cake13"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/cakeAll13"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1">
+
+            <com.example.cakegame.CakeView
+                android:id="@+id/cake13"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                app:layout_constraintDimensionRatio="1:1"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_gravity="center"
+                android:background="@drawable/stroke_circle"/>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/cakeAll14"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:src="@drawable/stroke_circle"
-            android:contentDescription="@string/cake_description"/>
-        />
+            android:layout_marginStart="10dp">
 
-        <ImageView
-            android:id="@+id/cake14"
+            <com.example.cakegame.CakeView
+                android:id="@+id/cake14"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                app:layout_constraintDimensionRatio="1:1"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_gravity="center"
+                android:background="@drawable/stroke_circle"/>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/cakeAll15"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:layout_marginStart="10dp"
-            android:src="@drawable/stroke_circle"
-            android:contentDescription="@string/cake_description"/>
-        />
+            android:layout_marginStart="10dp">
 
-        <ImageView
-            android:id="@+id/cake15"
+            <com.example.cakegame.CakeView
+                android:id="@+id/cake15"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                app:layout_constraintDimensionRatio="1:1"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_gravity="center"
+                android:background="@drawable/stroke_circle"/>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/cakeAll16"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:layout_marginStart="10dp"
-            android:src="@drawable/stroke_circle"
-            android:contentDescription="@string/cake_description"/>
-        />
+            android:layout_marginStart="10dp">
 
-        <ImageView
-            android:id="@+id/cake16"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:layout_marginStart="10dp"
-            android:src="@drawable/stroke_circle"
-            android:contentDescription="@string/cake_description"/>
-        />
+            <com.example.cakegame.CakeView
+                android:id="@+id/cake16"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                app:layout_constraintDimensionRatio="1:1"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_gravity="center"
+                android:background="@drawable/stroke_circle"/>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
     </LinearLayout>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
+        android:baselineAligned="false"
         android:layout_marginTop="20dp"
-        >
+        android:orientation="horizontal">
 
-        <ImageView
-            android:id="@+id/cake17"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/cakeAll17"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1">
+
+            <com.example.cakegame.CakeView
+                android:id="@+id/cake17"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                app:layout_constraintDimensionRatio="1:1"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_gravity="center"
+                android:background="@drawable/stroke_circle"/>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/cakeAll18"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:contentDescription="@string/cake_description"
-            android:src="@drawable/stroke_circle" />
+            android:layout_marginStart="10dp">
 
-        <ImageView
-            android:id="@+id/cake18"
+            <com.example.cakegame.CakeView
+                android:id="@+id/cake18"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                app:layout_constraintDimensionRatio="1:1"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_gravity="center"
+                android:background="@drawable/stroke_circle"/>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/cakeAll19"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:layout_marginStart="10dp">
 
-            android:layout_marginStart="10dp"
-            android:src="@drawable/stroke_circle"
-            android:contentDescription="@string/cake_description"/>
-        />
+            <com.example.cakegame.CakeView
+                android:id="@+id/cake19"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                app:layout_constraintDimensionRatio="1:1"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_gravity="center"
+                android:background="@drawable/stroke_circle"/>
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
-        <ImageView
-            android:id="@+id/cake19"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/cakeAll20"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:layout_marginStart="10dp"
-            android:src="@drawable/stroke_circle"
-            android:contentDescription="@string/cake_description"/>
-        />
+            android:layout_marginStart="10dp">
 
-        <ImageView
-            android:id="@+id/cake20"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:layout_marginStart="10dp"
-            android:src="@drawable/stroke_circle"
-            android:contentDescription="@string/cake_description"/>
-        />
+            <com.example.cakegame.CakeView
+                android:id="@+id/cake20"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                app:layout_constraintDimensionRatio="1:1"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_gravity="center"
+                android:background="@drawable/stroke_circle"/>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
     </LinearLayout>
 
     <LinearLayout
         android:id="@+id/newCakeContainer"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_marginTop="70dp"
-        >
+        android:baselineAligned="false"
+        android:layout_marginTop="50dp"
+        android:orientation="horizontal">
 
-        <ImageView
-            android:id="@+id/cake21"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/cakeAll21"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1">
+
+            <com.example.cakegame.CakeView
+                android:id="@+id/cake21"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                app:layout_constraintDimensionRatio="1:1"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_gravity="center"
+                android:background="@drawable/destination_circle"/>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/cakeAll22"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:contentDescription="@string/cake_description"
-            android:src="@drawable/destination_circle" />
+            android:layout_marginStart="10dp">
 
-        <ImageView
-            android:id="@+id/cake22"
+            <com.example.cakegame.CakeView
+                android:id="@+id/cake22"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                app:layout_constraintDimensionRatio="1:1"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_gravity="center"
+                android:background="@drawable/destination_circle"/>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/cakeAll23"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:layout_marginStart="10dp"
-            android:src="@drawable/destination_circle"
-            android:contentDescription="@string/cake_description"/>
-        />
+            android:layout_marginStart="10dp">
 
-        <ImageView
-            android:id="@+id/cake23"
+            <com.example.cakegame.CakeView
+                android:id="@+id/cake23"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                app:layout_constraintDimensionRatio="1:1"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_gravity="center"
+                android:background="@drawable/destination_circle"/>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/cakeAll24"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:layout_marginStart="10dp"
-            android:src="@drawable/destination_circle"
-            android:contentDescription="@string/cake_description"/>
-        />
+            android:layout_marginStart="10dp">
 
-        <ImageView
-            android:id="@+id/cake24"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:layout_marginStart="10dp"
-            android:src="@drawable/destination_circle"
-            android:contentDescription="@string/cake_description"/>
-        />
+            <com.example.cakegame.CakeView
+                android:id="@+id/cake24"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                app:layout_constraintDimensionRatio="1:1"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_gravity="center"
+                android:background="@drawable/destination_circle"/>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
     </LinearLayout>
 
 </LinearLayout>

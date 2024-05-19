@@ -1,82 +1,83 @@
 package com.example.cakegame;
 
-import android.content.Context;
-import android.graphics.Canvas;
-import android.graphics.Paint;
-import android.util.AttributeSet;
-import android.view.View;
+import android.content.*;
+import android.graphics.*;
+import android.util.*;
+import android.view.*;
 
-import java.util.ArrayList;
+import androidx.annotation.NonNull;
 
 public class CakeView extends View {
 
-    // 繪製扇形區塊的畫筆數組
+    private int mHeight, mWidth;
     private Paint[] paints;
-    // 圓的半徑
     private float radius;
-    // CakePane 類的實例，用於獲取扇形區塊的數量
-    private CakePane cakepane = new CakePane();
-    // 扇形區塊的顏色數據
-    private ArrayList<Integer> pieces = cakepane.getPieces();
+    private float startAngle = 90;
+    private CakePane cakepane;
+    private RectF rectF;
 
-    // 第一個構造函數，用於在程式碼中創建此視圖
     public CakeView(Context context) {
         super(context);
         init();
     }
 
-    // 第二個構造函數，用於在 XML 佈局中創建此視圖
     public CakeView(Context context, AttributeSet attrs) {
         super(context, attrs);
         init();
     }
 
-    // 第三個構造函數，包含預設樣式參數
-    public CakeView(Context context, AttributeSet attrs, int defStyleAttr) {
-        super(context, attrs, defStyleAttr);
-        init();
-    }
-
-    // 初始化畫筆和其他變量
     private void init() {
-        // 預設顏色數組
         int[] colors = new int[]{
-                0xFFFF0000, // 紅色
+                0xFFFF0000, // 红色
                 0xFFFFA500, // 橙色
-                0xFFFFFF00, // 黃色
-                0xFF00FF00, // 綠色
-                0xFF0000FF, // 藍色
+                0xFFFFFF00, // 黄色
+                0xFF00FF00, // 绿色
+                0xFF0000FF, // 蓝色
                 0xFF800080  // 紫色
         };
-        // 初始化畫筆數組
-        for (int i = 0 ; i < pieces.size(); i++) {
-            int color = pieces.get(i); // 獲取當前扇形區塊的顏色索引
-            paints = new Paint[5]; // 初始化畫筆數組的長度
-            for (int j = 0; j < 5; j++) {
-                paints[i] = new Paint(); // 創建畫筆實例
-                paints[i].setStyle(Paint.Style.STROKE); // 設置畫筆樣式為只描邊
-                paints[i].setColor(colors[color]); // 設置畫筆顏色
-            }
+
+        paints = new Paint[6];
+        for (int i = 0; i < 6; i++) {
+            paints[i] = new Paint();
+            paints[i].setStyle(Paint.Style.FILL);
+            paints[i].setColor(colors[i]);
         }
 
-        radius = 100; // 設置圓的半徑
+        radius = 50;
+        rectF = new RectF(); // 初始化 RectF 对象
+    }
+
+    public void setCakePane(CakePane cakepane) {
+        this.cakepane = cakepane;
+        invalidate();
     }
 
     @Override
-    protected void onDraw(Canvas canvas) {
+    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+        super.onMeasure(widthMeasureSpec, heightMeasureSpec);
+        mHeight = MeasureSpec.getSize(heightMeasureSpec);
+        mWidth = MeasureSpec.getSize(widthMeasureSpec);
+    }
+
+    @Override
+    protected void onDraw(@NonNull Canvas canvas) {
         super.onDraw(canvas);
 
-        // 獲取視圖的中心點
-        float centerX = getWidth() / 2f;
-        float centerY = getHeight() / 2f;
+        if (cakepane == null) {
+            return;
+        }
 
-        float startAngle = 0; // 起始角度
-        // 繪製五個扇形區塊
-        for (int i = 0; i < 5; i++) {
-            // 繪製 1/8 圓弧
-            canvas.drawArc(centerX - radius, centerY - radius, centerX + radius, centerY + radius,
-                    startAngle, 45, false, paints[i]);
-            startAngle += 45; // 更新起始角度
+        int centerX = (getRight() - getLeft()) / 2;
+        int centerY = (getBottom() - getTop()) / 2;
+        radius = (float) (Math.min(mHeight, mWidth) / 2 * 0.8);
+        rectF.set(centerX - radius, centerY - radius, centerX + radius, centerY + radius);
+
+        startAngle = -90;
+        for (int i = 0; i < 6; i++) {
+            int pieces = cakepane.getPiecesNum(i);
+            canvas.drawArc(rectF, startAngle, 45 * pieces, true, paints[i]);
+            startAngle += 45 * pieces;
         }
     }
+
 }
