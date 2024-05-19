@@ -147,7 +147,7 @@ public class MainActivity2 extends AppCompatActivity {
     class MyDragListener implements View.OnDragListener {
 
         private ViewGroup originalParent;
-        private int originalIndex;
+//        private int originalIndex;
         private boolean dropped = false;
 
         @SuppressLint({"UseCompatLoadingForDrawables", "ClickableViewAccessibility"})
@@ -156,9 +156,8 @@ public class MainActivity2 extends AppCompatActivity {
             CakeView imageView = (CakeView) v;
             switch (event.getAction()) {
                 case DragEvent.ACTION_DRAG_STARTED:
-                    // 紀錄初始父容器和索引
-                    originalParent = (ViewGroup) imageView.getParent();
-                    originalIndex = originalParent.indexOfChild(imageView);
+                    originalParent = findViewById(R.id.newCakeContainer);
+
                     break;
                 case DragEvent.ACTION_DRAG_ENTERED:
                     // 當拖曳進入時改變背景
@@ -201,14 +200,14 @@ public class MainActivity2 extends AppCompatActivity {
                         }
                     }
                     if (dropped) {
-                        // 如果蛋糕成功放置，移除原視圖
-                        ViewGroup parentLayout = (ViewGroup) draggedViewParent.getParent();
+                        // 如果蛋糕成功放置，移除原视图
                         draggedViewParent.removeView(draggedView);
-                        parentLayout.removeView(draggedViewParent);
                     } else {
-                        // 如果蛋糕未成功放置，還原至原始位置
-                        draggedViewParent.removeView(draggedView);
-                        originalParent.addView(draggedView, originalIndex); // 還原至原始位置
+                        // 如果蛋糕未成功放置，还原至原始位置
+                        ViewGroup parentLayout = (ViewGroup) draggedViewParent.getParent();
+                        parentLayout.removeView(draggedViewParent);
+                        originalParent.addView((View) draggedViewParent, draggedViewIndex); // 再添加回原始父视图
+                        Log.d("CakeSort", "蛋糕還原在: " + draggedViewIndex);
                         draggedView.setVisibility(View.VISIBLE);
                         draggedView.setOnTouchListener(new MyTouchListener());
                     }
@@ -244,6 +243,8 @@ public class MainActivity2 extends AppCompatActivity {
             return true;
         }
     }
+
+
 
 
 
