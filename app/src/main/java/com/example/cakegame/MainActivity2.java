@@ -23,7 +23,10 @@ public class MainActivity2 extends AppCompatActivity {
             {R.id.cake17, R.id.cake18, R.id.cake19, R.id.cake20}
     };
     public int[] newCakeID = {R.id.cake21, R.id.cake22, R.id.cake23, R.id.cake24};
-//    public int[] newCakeViewID = {R.id.cake_view21, R.id.cake_view22, R.id.cake_view23, R.id.cake_view24};
+
+    public static int totalScore = 0;
+    public static int totalFullCakeNum = 0;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -188,7 +191,12 @@ public class MainActivity2 extends AppCompatActivity {
                         for (int j = 0; j < 4; j++) {
                             if (imageView.getId() == cakeID[i][j] && cakes[i][j].getPieces().isEmpty()) {
                                 new_cakes[draggedViewIndex].put_cake_to_table(cakes, i, j);
+                                totalScore = new_cakes[draggedViewIndex].getScore();
+                                totalFullCakeNum = new_cakes[draggedViewIndex].getFullCakeNum();
                                 Log.d("CakeSort", "蛋糕放置在: (" + i + ", " + j + ")");
+                                Log.d("CakeSort", "totalScore: " + totalScore);
+                                Log.d("CakeSort", "totalFullCakeNum: " + totalFullCakeNum);
+
                                 dropped = true;
                                 notEmpty();
                                 getTable();

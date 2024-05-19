@@ -22,6 +22,8 @@ public class CakePane {
     private int count;
     private int randomX;
     private int randomY;
+    private static int score = 0;
+    private static int full_cake_num = 0;
 
 
 
@@ -67,6 +69,8 @@ public class CakePane {
 
 
         cakes[x][y].mix(cakes, x, y);   //蛋糕片交換
+
+        score += cakes[x][y].getPieces().size();
 
         add_random_cake(cakes, x, y);   //生成random_cake
 
@@ -193,6 +197,7 @@ public class CakePane {
         if(pieces_num[p] == pieces_max) {
             clearPieces();
 
+            full_cake_num++;
 
             return true;
         }
@@ -261,7 +266,7 @@ public class CakePane {
 
                     cakes[randomX][randomY].place_piece(randomCake);
                 }
-
+                score += randomNumCake;
 
                 break;
             }
@@ -296,6 +301,8 @@ public class CakePane {
         return pieces;
     }
 
+    public int getScore() { return score;}
 
+    public int getFullCakeNum() { return full_cake_num; }
 
 }
