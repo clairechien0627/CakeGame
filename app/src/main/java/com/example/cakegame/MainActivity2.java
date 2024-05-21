@@ -287,6 +287,9 @@ public class MainActivity2 extends AppCompatActivity {
             }
         }
         if (allNotEmpty) {
+
+            ScoreBoard s = new ScoreBoard(totalScore, totalFullCakeNum);
+
             // 如果所有格子都不空，跳轉到下一個活動
             Intent intent = new Intent(MainActivity2.this, MainActivity3.class);
             startActivity(intent);

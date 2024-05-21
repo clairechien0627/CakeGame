@@ -13,7 +13,6 @@ public class CakePane {
     private final int pieces_max = 8;
 
 
-    private final int[][] position = {{1,0},{2,0},{0,1},{3,1},{0,2},{3,2},{1,3},{2,3}};	//放置蛋糕片的座標
     private final int[][] dir = {{0,-1},{-1, 0},{0,1},{1,0}};   //蛋糕相對位置上左下右
 
 
