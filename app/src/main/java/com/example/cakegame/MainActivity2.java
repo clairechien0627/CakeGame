@@ -26,6 +26,7 @@ public class MainActivity2 extends AppCompatActivity {
 
     public static int totalScore = 0;
     public static int totalFullCakeNum = 0;
+    public static SoundPlay soundPlay;
 
 
     @Override
@@ -34,6 +35,7 @@ public class MainActivity2 extends AppCompatActivity {
         setContentView(R.layout.activity_main2);
 
         initializeGame(); // 初始化遊戲
+        soundPlay = new SoundPlay(this);
     }
 
     // 初始化遊戲的設置
@@ -165,6 +167,7 @@ public class MainActivity2 extends AppCompatActivity {
                 case DragEvent.ACTION_DRAG_ENTERED:
                     // 當拖曳進入時改變背景
                     imageView.setBackgroundResource(R.drawable.destination_circle);
+                    soundPlay.getSound("choose");
                     notEmpty();
                     break;
                 case DragEvent.ACTION_DRAG_EXITED:

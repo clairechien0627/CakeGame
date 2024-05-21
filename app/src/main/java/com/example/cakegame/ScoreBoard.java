@@ -21,7 +21,7 @@ public class ScoreBoard {
 
     }
 
-    public ArrayList<Score> getScoreBoard_num() {
+    public ArrayList<Score> getScoreBoard_num() { //按編號排序
 
         Collections.sort(scoreBoard, new Comparator<Score>() {
             @Override
@@ -39,7 +39,7 @@ public class ScoreBoard {
 
 
 
-    public ArrayList<Score> getScoreBoard_score() {
+    public ArrayList<Score> getScoreBoard_score() { //按分數排序
 
         Collections.sort(scoreBoard, new Comparator<Score>() {
             @Override
@@ -63,7 +63,7 @@ public class ScoreBoard {
             scoreBoard.get(count).setRank(count_rank + 1);
             count++;
 
-            while(scoreBoard.get(count).getScore() == scoreBoard.get(count - 1).getScore()) {
+            while(count < scoreBoard.size() && scoreBoard.get(count).getScore() == scoreBoard.get(count - 1).getScore()) {
                 scoreBoard.get(count).setRank(count_rank + 1);
                 count++;
             }
@@ -77,7 +77,7 @@ public class ScoreBoard {
 
 
 
-    public ArrayList<Score> getScoreBoard_cake() {
+    public ArrayList<Score> getScoreBoard_cake() { //按蛋糕數量排序
 
         Collections.sort(scoreBoard, new Comparator<Score>() {
             @Override
@@ -100,7 +100,7 @@ public class ScoreBoard {
             scoreBoard.get(count).setRank(count_rank + 1);
             count++;
 
-            while(scoreBoard.get(count).getFull_cake() == scoreBoard.get(count - 1).getFull_cake()) {
+            while(count < scoreBoard.size() && scoreBoard.get(count).getFull_cake() == scoreBoard.get(count - 1).getFull_cake()) {
                 scoreBoard.get(count).setRank(count_rank + 1);
                 count++;
             }
