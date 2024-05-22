@@ -127,6 +127,7 @@ public class MainActivity2 extends AppCompatActivity {
         @Override
         public boolean onTouch(View v, MotionEvent event) {
             if (event.getAction() == MotionEvent.ACTION_DOWN) {
+                originalIndex = ((ViewGroup) v.getParent()).indexOfChild(v);
                 View.DragShadowBuilder shadowBuilder = new View.DragShadowBuilder(v);
 
                 // 创建一个空的 ClipData 对象，避免 NullPointerException

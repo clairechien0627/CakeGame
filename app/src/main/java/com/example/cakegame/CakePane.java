@@ -1,5 +1,7 @@
 package com.example.cakegame;
 
+import android.util.Log;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -13,7 +15,7 @@ public class CakePane {
     private final int pieces_max = 8;
 
 
-    private final int[][] dir = {{0,-1},{-1, 0},{0,1},{1,0}};   //蛋糕相對位置上左下右
+    private final int[][] dir = {{-1, 0},{0,-1},{1,0},{0,1}};   //蛋糕相對位置上左下右
 
 
     private ArrayList<Integer> pieces = new ArrayList<>();	//蛋糕片花色ArrayList版，已被排序過，總片數最大為pieces_max，像這樣 {1,1,4,5}
@@ -64,12 +66,20 @@ public class CakePane {
 
         for(int i=0;i<getPieces().size();i++) {
             cakes[x][y].place_piece(getPieces().get(i));    //取得蛋糕片
+            score++;
         }
 
 
         cakes[x][y].mix(cakes, x, y);   //蛋糕片交換
 
-        score += cakes[x][y].getPieces().size();
+        boolean end_mix = false;
+
+        while(!end_mix) {
+
+            end_mix = other_cake_mix(cakes);
+
+        }
+
 
         add_random_cake(cakes, x, y);   //生成random_cake
 
@@ -86,16 +96,19 @@ public class CakePane {
         ArrayList<int[]> full_cake = new ArrayList<>();			//位置x, y值，ArrayList中，像這樣 {{x1, y1},{x2, y2},...}
         boolean[][] vis = new boolean[x_max][y_max];
 
-
+        count = 0;
         available_cake = find_available_cake(cakes, x, y, p, vis, available_cake);  //可進行交換的所有蛋糕
+        available_cake.remove(available_cake.size() - 1);
 
 
         //判斷要移動到的盤子的位置
         //count可進行移動的蛋糕片數
-        while(count > 8  && available_cake.size() > 0) {
+        while(count > pieces_max  && available_cake.size() > 0) {
             CakePane cake = cakes[available_cake.get(0)[0]][available_cake.get(0)[1]];
 
             if(cake.getPiecesNum(p) == cake.getPieces().size()) {   //該盤子上蛋糕只有一種花色
+
+                Log.d("CakePane", "full_cake: (" + available_cake.get(0)[0] + ", " + available_cake.get(0)[1] + ")");
 
                 full_cake.add(available_cake.get(0));   //full_cake為蛋糕片要被移動到的位置
 
@@ -132,6 +145,36 @@ public class CakePane {
 
         }
 
+    }
+
+
+    public boolean other_cake_mix(CakePane[][] cakes) {
+
+        for(int i=0;i<x_max;i++) {
+            for(int j=0;j<y_max;j++) {
+
+                if(cakes[i][j].getPieces().size() != 0 && cakes[i][j].getPieces().size() == cakes[i][j].getPiecesNum(cakes[i][j].getPieces().get(0))) {
+
+                    int p = cakes[i][j].getPieces().get(0);
+
+                    for(int[] d : dir) {
+                        int dx = i + d[0];
+                        int dy = j + d[1];
+
+                        if(!out_of_boundary(dx, dy) && cakes[dx][dy].getPiecesNum(p) > 0) {
+                            cakes[i][j].mix(cakes, i, j);
+
+                            return false;
+                        }
+
+                    }
+
+                }
+
+            }
+        }
+
+        return true;
     }
 
 
@@ -173,6 +216,7 @@ public class CakePane {
 
         vis[x][y] = true;   //已被訪問
 
+
         for(int i=0;i<4;i++) {	//上左下右
             int dx = x + dir[i][0];
             int dy = y + dir[i][1];
@@ -184,6 +228,8 @@ public class CakePane {
             }
         }
         count += cakes[x][y].getPiecesNum(p);   //可進行移動的蛋糕片數
+        available_cake.add(new int[]{x,y});
+        Log.d("CakePane", "available_cake: (" + x + ", " + y + ")");
 
         return available_cake;
     }
@@ -209,8 +255,10 @@ public class CakePane {
 
     //將蛋糕片移動到目的地
     public void move(CakePane to, CakePane from, int p) {
+
         to.place_piece(p);
         from.erase_piece(p);
+
     }
 
     //清空蛋糕片
