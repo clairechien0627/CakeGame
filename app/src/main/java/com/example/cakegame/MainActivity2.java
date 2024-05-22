@@ -8,7 +8,7 @@ import android.view.*;
 import android.widget.*;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.constraintlayout.widget.ConstraintLayout;
+
 
 public class MainActivity2 extends AppCompatActivity {
     public static CakePane[][] cakes = new CakePane[5][4];
@@ -26,6 +26,13 @@ public class MainActivity2 extends AppCompatActivity {
 
     public static int totalScore = 0;
     public static int totalFullCakeNum = 0;
+    @SuppressLint("StaticFieldLeak")
+    public static TextView score;
+    @SuppressLint("StaticFieldLeak")
+    public static TextView fullCake;
+    private static int width;
+    private static int height;
+    private int originalIndex;
     public static SoundPlay soundPlay;
 
 
@@ -35,88 +42,80 @@ public class MainActivity2 extends AppCompatActivity {
         setContentView(R.layout.activity_main2);
 
         initializeGame(); // 初始化遊戲
-        soundPlay = new SoundPlay(this);
     }
 
     // 初始化遊戲的設置
     private void initializeGame() {
-        // 設置拖曳監聽器
-        for (int[] cakes : cakeID) {
-            for (int cake : cakes) {
-                findViewById(cake).setOnDragListener(new MyDragListener());
-            }
-        }
-        // 設置觸摸監聽器
-        for (int cake : newCakeID) {
-            findViewById(cake).setOnTouchListener(new MyTouchListener());
-        }
+        //設置音效
+        soundPlay = new SoundPlay(this);
+        //設置分數
+        score = findViewById(R.id.totalScore);
+        fullCake = findViewById(R.id.totalFullCakeNum);
 
-        // 初始化蛋糕格子的陣列
-        for (int i = 0; i < 5; i++) {
-            for (int j = 0; j < 4; j++) {
-                cakes[i][j] = new CakePane();
-                cakeView[i][j] = findViewById(cakeID[i][j]);
-                cakeView[i][j].setCakePane(cakes[i][j]);
+        // 使用 View.post() 方法确保在布局绘制完成后执行初始化操作
+        findViewById(R.id.cake1).post(new Runnable() {
+            @SuppressLint("ClickableViewAccessibility")
+            @Override
+            public void run() {
+                // 获取控件的宽度和高度
+                CakeView cakeSize = findViewById(R.id.cake1);
+                width = cakeSize.getWidth();
+                height = cakeSize.getHeight();
+                Log.d("CakeSort", width + " " + height);
+
+                // 初始化table陣列
+                for (int i = 0; i < 5; i++) {
+                    for (int j = 0; j < 4; j++) {
+                        cakes[i][j] = new CakePane();
+                        cakeView[i][j] = findViewById(cakeID[i][j]);
+                        cakeView[i][j].setOnDragListener(new MyDragListener());
+                        cakeView[i][j].setCakePane(cakes[i][j]);
+                        cakeView[i][j].setSize(height, width);
+                    }
+                }
+                // 初始化newTable陣列
+                for (int i = 0; i < 4; i++) {
+                    new_cakes[i] = new CakePane();
+                    new_cakes[i].refresh();
+                    newCakeView[i] = findViewById(newCakeID[i]);
+                    newCakeView[i].setOnTouchListener(new MyTouchListener());
+                    newCakeView[i].setCakePane(new_cakes[i]);
+                    newCakeView[i].setSize(height, width);
+                }
+                notEmpty();
+                getTable();
             }
-        }
-        // 初始化新的蛋糕格子的陣列
-        for (int i = 0; i < 4; i++) {
-            new_cakes[i] = new CakePane();
-            new_cakes[i].refresh(); // 刷新蛋糕狀態
-            newCakeView[i] = findViewById(newCakeID[i]);
-            newCakeView[i].setCakePane(new_cakes[i]);
-        }
-        notEmpty(); // 檢查是否所有格子都不空
-        getTable(); // 獲取當前的蛋糕格子狀態
+        });
     }
 
     // 重置可拖曳的蛋糕
     @SuppressLint("ClickableViewAccessibility")
     private void resetDraggableCakes() {
         ViewGroup parent = findViewById(R.id.newCakeContainer);
-        parent.removeAllViews(); // 移除所有子視圖
+        parent.removeAllViews();
 
         for (int i = 0; i < 4; i++) {
-            // 创建新的 ConstraintLayout
-            ConstraintLayout newConstraintLayout = new ConstraintLayout(this);
-            newConstraintLayout.setId(View.generateViewId()); // 为新视图生成一个唯一的ID
-
-            LinearLayout.LayoutParams constraintLayoutParams = new LinearLayout.LayoutParams(
-                    0,
-                    ViewGroup.LayoutParams.WRAP_CONTENT,
-                    1
-            );
-            if (i != 0) {
-                // 添加左边距
-                constraintLayoutParams.setMarginStart(30);
-            }
-            newConstraintLayout.setLayoutParams(constraintLayoutParams);
-
             // 创建新的 CakeView
             newCakeView[i] = new CakeView(this);
             newCakeView[i].setId(newCakeID[i]);
 
-            ConstraintLayout.LayoutParams cakeLayoutParams = new ConstraintLayout.LayoutParams(
+            newCakeView[i].setLayoutParams(new LinearLayout.LayoutParams(
                     0,
-                    0
-            );
-            cakeLayoutParams.dimensionRatio = "1:1";
-            cakeLayoutParams.topToTop = ConstraintLayout.LayoutParams.PARENT_ID;
-            cakeLayoutParams.bottomToBottom = ConstraintLayout.LayoutParams.PARENT_ID;
-            cakeLayoutParams.startToStart = ConstraintLayout.LayoutParams.PARENT_ID;
-            cakeLayoutParams.endToEnd = ConstraintLayout.LayoutParams.PARENT_ID;
-            newCakeView[i].setLayoutParams(cakeLayoutParams);
-
-            newCakeView[i].setBackgroundResource(R.drawable.destination_circle);
-            newCakeView[i].setContentDescription(getString(R.string.cake_description));
+                    ViewGroup.LayoutParams.WRAP_CONTENT,
+                    1
+            ));
+            if(i != 3){
+                newCakeView[i].setPadding(0, 0, 10, 0); // 添加右邊距，使得蛋糕之間有間隔
+            }
+            newCakeView[i].setImageResource(R.drawable.destination_circle);
             newCakeView[i].setOnTouchListener(new MyTouchListener());
 
-            newConstraintLayout.addView(newCakeView[i]);
-            parent.addView(newConstraintLayout);
+            parent.addView(newCakeView[i]);
 
             new_cakes[i] = new CakePane();
             new_cakes[i].refresh();
             newCakeView[i].setCakePane(new_cakes[i]);
+            newCakeView[i].setSize(height, width);
         }
 
         getTable();
@@ -151,37 +150,28 @@ public class MainActivity2 extends AppCompatActivity {
     // 自定義拖曳監聽器類別
     class MyDragListener implements View.OnDragListener {
 
-        private ViewGroup originalParent;
-//        private int originalIndex;
+        private ViewGroup originalParent= findViewById(R.id.newCakeContainer);
         private boolean dropped = false;
 
         @SuppressLint({"UseCompatLoadingForDrawables", "ClickableViewAccessibility"})
         @Override
         public boolean onDrag(View v, DragEvent event) {
-            CakeView imageView = (CakeView) v;
+            CakeView cakeView = (CakeView) v;
             switch (event.getAction()) {
-                case DragEvent.ACTION_DRAG_STARTED:
-                    originalParent = findViewById(R.id.newCakeContainer);
-
-                    break;
                 case DragEvent.ACTION_DRAG_ENTERED:
-                    // 當拖曳進入時改變背景
-                    imageView.setBackgroundResource(R.drawable.destination_circle);
+                    cakeView.setImageResource(R.drawable.destination_circle);
                     soundPlay.getSound("choose");
                     notEmpty();
                     break;
                 case DragEvent.ACTION_DRAG_EXITED:
-                    // 當拖曳退出時改變背景
-                    imageView.setBackgroundResource(R.drawable.stroke_circle);
+                    cakeView.setImageResource(R.drawable.stroke_circle);
                     notEmpty();
                     break;
                 case DragEvent.ACTION_DROP:
-                    // 當拖曳放置時處理
                     CakeView draggedView = (CakeView) event.getLocalState();
                     ViewGroup draggedViewParent = (ViewGroup) draggedView.getParent();
                     int draggedViewIndex = 0;
 
-                    // 獲取拖曳視圖的索引
                     for (int i = 0; i < 4; i++) {
                         if (draggedView.getId() == newCakeID[i]) {
                             draggedViewIndex = i;
@@ -189,18 +179,16 @@ public class MainActivity2 extends AppCompatActivity {
                         }
                     }
 
-                    Log.d("CakeSort", String.valueOf(imageView.getId()));
+                    Log.d("CakeSort", String.valueOf(cakeView.getId()));
                     for (int i = 0; i < 5; i++) {
                         for (int j = 0; j < 4; j++) {
-                            if (imageView.getId() == cakeID[i][j] && cakes[i][j].getPieces().isEmpty()) {
+                            if (cakeView.getId() == cakeID[i][j] && cakes[i][j].getPieces().isEmpty()) {
                                 new_cakes[draggedViewIndex].put_cake_to_table(cakes, i, j);
-                                totalScore = new_cakes[draggedViewIndex].getScore();
-                                totalFullCakeNum = new_cakes[draggedViewIndex].getFullCakeNum();
                                 Log.d("CakeSort", "蛋糕放置在: (" + i + ", " + j + ")");
-                                Log.d("CakeSort", "totalScore: " + totalScore);
-                                Log.d("CakeSort", "totalFullCakeNum: " + totalFullCakeNum);
-
                                 dropped = true;
+                                totalScore = cakes[i][j].getScore();
+                                totalFullCakeNum = cakes[i][j].getFullCakeNum();
+                                updateScoreAndFullCake();
                                 notEmpty();
                                 getTable();
                                 break;
@@ -210,46 +198,34 @@ public class MainActivity2 extends AppCompatActivity {
                             break;
                         }
                     }
-                    if (dropped) {
-                        // 如果蛋糕成功放置，移除原视图
-                        draggedViewParent.removeView(draggedView);
-                    } else {
-                        // 如果蛋糕未成功放置，还原至原始位置
-                        ViewGroup parentLayout = (ViewGroup) draggedViewParent.getParent();
-                        parentLayout.removeView(draggedViewParent);
-                        originalParent.addView((View) draggedViewParent, draggedViewIndex); // 再添加回原始父视图
-                        Log.d("CakeSort", "蛋糕還原在: " + draggedViewIndex);
+                    draggedViewParent.removeView(draggedView);
+                    if (!dropped) {
+                        originalParent.addView(draggedView, originalIndex);
                         draggedView.setVisibility(View.VISIBLE);
                         draggedView.setOnTouchListener(new MyTouchListener());
                     }
 
-                    // 如果所有可拖曳的視圖已移除，重置蛋糕
-                    if (allDraggableViewsRemoved()) {
+                    boolean reset = true;
+                    for(int i = 0; i < 4; i++){
+                        if (!new_cakes[i].getPieces().isEmpty()) {
+                            reset = false;
+                            break;
+                        }
+                    }
+                    if (reset) {
                         resetDraggableCakes();
+                        Log.d("CakeSort", "resetDraggableCakes called");
                     }
                     break;
                 case DragEvent.ACTION_DRAG_ENDED:
-                    // 當拖曳結束時處理
                     if (!dropped) {
                         View draggedViewEnded = (View) event.getLocalState();
                         draggedViewEnded.setVisibility(View.VISIBLE);
                     }
-                    imageView.setBackgroundResource(R.drawable.stroke_circle);
+                    cakeView.setImageResource(R.drawable.stroke_circle);
                     notEmpty();
                     dropped = false;
                     break;
-            }
-            return true;
-        }
-
-        // 檢查是否所有可拖曳的視圖都已移除
-        private boolean allDraggableViewsRemoved() {
-            ViewGroup parent = findViewById(R.id.newCakeContainer);
-            for (int i = 0; i < parent.getChildCount(); i++) {
-                View child = parent.getChildAt(i);
-                if (child instanceof ConstraintLayout && ((ConstraintLayout) child).getChildCount() != 0) {
-                    return false;
-                }
             }
             return true;
         }
@@ -278,24 +254,26 @@ public class MainActivity2 extends AppCompatActivity {
     }
 
     // 檢查是否所有格子都不空
-    private void notEmpty() {
+    private void notEmpty(){
         boolean allNotEmpty = true;
-        for (int i = 0; i < 5; i++) {
-            for (int j = 0; j < 4; j++) {
-                if (cakes[i][j].getPieces().isEmpty()) {
+        for(int i = 0; i < 5; i++){
+            for(int j = 0; j < 4; j++){
+                if(cakes[i][j].getPieces().isEmpty()){
                     allNotEmpty = false;
                 } else {
-                    cakeView[i][j].setBackgroundResource(R.drawable.pieces_circle);
+                    cakeView[i][j].setImageResource(R.drawable.pieces_circle);
                 }
             }
         }
         if (allNotEmpty) {
-
             ScoreBoard s = new ScoreBoard(totalScore, totalFullCakeNum);
-
-            // 如果所有格子都不空，跳轉到下一個活動
             Intent intent = new Intent(MainActivity2.this, MainActivity3.class);
             startActivity(intent);
         }
+    }
+
+    private void updateScoreAndFullCake() {
+        score.setText("Total Score : " + totalScore);
+        fullCake.setText("Full Cake : " + totalFullCakeNum);
     }
 }

@@ -3,13 +3,13 @@ package com.example.cakegame;
 import android.content.*;
 import android.graphics.*;
 import android.util.*;
-import android.view.*;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.widget.AppCompatImageView;
 
-public class CakeView extends View {
+public class CakeView extends AppCompatImageView {
 
-    private int mHeight, mWidth;
+    private int height, width;
     private Paint[] paints;
     private float radius;
     private float startAngle = 90;
@@ -45,18 +45,12 @@ public class CakeView extends View {
 
         radius = 50;
         rectF = new RectF(); // 初始化 RectF 对象
+
     }
 
     public void setCakePane(CakePane cakepane) {
         this.cakepane = cakepane;
         invalidate();
-    }
-
-    @Override
-    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-        super.onMeasure(widthMeasureSpec, heightMeasureSpec);
-        mHeight = MeasureSpec.getSize(heightMeasureSpec);
-        mWidth = MeasureSpec.getSize(widthMeasureSpec);
     }
 
     @Override
@@ -69,7 +63,7 @@ public class CakeView extends View {
 
         int centerX = (getRight() - getLeft()) / 2;
         int centerY = (getBottom() - getTop()) / 2;
-        radius = (float) (Math.min(mHeight, mWidth) / 2 * 0.8);
+        radius = (float) (Math.min(height, width) / 2 * 0.8);
         rectF.set(centerX - radius, centerY - radius, centerX + radius, centerY + radius);
 
         startAngle = -90;
@@ -78,6 +72,12 @@ public class CakeView extends View {
             canvas.drawArc(rectF, startAngle, 45 * pieces, true, paints[i]);
             startAngle += 45 * pieces;
         }
+    }
+
+    public void setSize(int height, int width){
+        this.height = height;
+        this.width = width;
+        invalidate();
     }
 
 }
