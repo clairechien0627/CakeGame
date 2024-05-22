@@ -152,7 +152,7 @@ public class MainActivity2 extends AppCompatActivity {
     class MyDragListener implements View.OnDragListener {
 
         private ViewGroup originalParent;
-//        private int originalIndex;
+        //        private int originalIndex;
         private boolean dropped = false;
 
         @SuppressLint({"UseCompatLoadingForDrawables", "ClickableViewAccessibility"})
