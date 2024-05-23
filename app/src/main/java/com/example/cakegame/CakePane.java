@@ -23,8 +23,8 @@ public class CakePane {
     private int count;
     private int randomX;
     private int randomY;
-    private static int score = 0;
-    private static int full_cake_num = 0;
+    private static int score;
+    private static int full_cake_num;
 
 
 
@@ -59,6 +59,10 @@ public class CakePane {
 
     //將下方new_cake放入上方
     public void put_cake_to_table(CakePane[][] cakes, int x, int y) {
+
+        score = 0;
+        full_cake_num = 0;
+
 
         if(cakes[x][y].getPieces().size() > 0 || getPieces().size() == 0) { //遇到已有蛋糕片的位置
             return;

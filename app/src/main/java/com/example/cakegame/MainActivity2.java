@@ -24,6 +24,7 @@ public class MainActivity2 extends AppCompatActivity {
     };
     public int[] newCakeID = {R.id.cake21, R.id.cake22, R.id.cake23, R.id.cake24};
 
+    public static ScoreBoard scoreBoard;
     public static int totalScore = 0;
     public static int totalFullCakeNum = 0;
     @SuppressLint("StaticFieldLeak")
@@ -49,6 +50,7 @@ public class MainActivity2 extends AppCompatActivity {
         //設置音效
         soundPlay = new SoundPlay(this);
         //設置分數
+        scoreBoard = new ScoreBoard();
         score = findViewById(R.id.totalScore);
         fullCake = findViewById(R.id.totalFullCakeNum);
 
@@ -187,8 +189,10 @@ public class MainActivity2 extends AppCompatActivity {
                                 new_cakes[draggedViewIndex].put_cake_to_table(cakes, i, j);
                                 Log.d("CakeSort", "蛋糕放置在: (" + i + ", " + j + ")");
                                 dropped = true;
-                                totalScore = cakes[i][j].getScore();
-                                totalFullCakeNum = cakes[i][j].getFullCakeNum();
+                                scoreBoard.getCurrentScore().addScore(cakes[i][j].getScore());
+                                scoreBoard.getCurrentScore().addFullCake(cakes[i][j].getFullCakeNum());
+                                totalScore = scoreBoard.getCurrentScore().getScore();
+                                totalFullCakeNum = scoreBoard.getCurrentScore().getFullCake();
                                 updateScoreAndFullCake();
                                 notEmpty();
                                 getTable();
@@ -267,7 +271,7 @@ public class MainActivity2 extends AppCompatActivity {
             }
         }
         if (allNotEmpty) {
-            ScoreBoard s = new ScoreBoard(totalScore, totalFullCakeNum);
+            scoreBoard.addCurrentScore();
             Intent intent = new Intent(MainActivity2.this, MainActivity3.class);
             startActivity(intent);
         }
