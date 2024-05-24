@@ -9,10 +9,12 @@ import android.widget.*;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import java.util.ArrayList;
+
 
 public class MainActivity2 extends AppCompatActivity {
     public static CakePane[][] cakes = new CakePane[5][4];
-    public static CakeView[][] cakeView = new CakeView[5][4];
+    public static CakeView[][] cakeViews = new CakeView[5][4];
     public static CakePane[] new_cakes = new CakePane[4];
     public static CakeView[] newCakeView = new CakeView[4];
     public static int[][] cakeID = {
@@ -55,38 +57,34 @@ public class MainActivity2 extends AppCompatActivity {
         fullCake = findViewById(R.id.totalFullCakeNum);
 
         // 使用 View.post() 方法确保在布局绘制完成后执行初始化操作
-        findViewById(R.id.cake1).post(new Runnable() {
-            @SuppressLint("ClickableViewAccessibility")
-            @Override
-            public void run() {
-                // 获取控件的宽度和高度
-                CakeView cakeSize = findViewById(R.id.cake1);
-                width = cakeSize.getWidth();
-                height = cakeSize.getHeight();
-                Log.d("CakeSort", width + " " + height);
+        findViewById(R.id.cake1).post(() -> {
+            // 获取控件的宽度和高度
+            CakeView cakeSize = findViewById(R.id.cake1);
+            width = cakeSize.getWidth();
+            height = cakeSize.getHeight();
+            Log.d("CakeSort", width + " " + height);
 
-                // 初始化table陣列
-                for (int i = 0; i < 5; i++) {
-                    for (int j = 0; j < 4; j++) {
-                        cakes[i][j] = new CakePane();
-                        cakeView[i][j] = findViewById(cakeID[i][j]);
-                        cakeView[i][j].setOnDragListener(new MyDragListener());
-                        cakeView[i][j].setCakePane(cakes[i][j]);
-                        cakeView[i][j].setSize(height, width);
-                    }
+            // 初始化table陣列
+            for (int i = 0; i < 5; i++) {
+                for (int j = 0; j < 4; j++) {
+                    cakes[i][j] = new CakePane();
+                    cakeViews[i][j] = findViewById(cakeID[i][j]);
+                    cakeViews[i][j].setOnDragListener(new MyDragListener());
+                    cakeViews[i][j].setCakePane(cakes[i][j]);
+                    cakeViews[i][j].setSize(height, width);
                 }
-                // 初始化newTable陣列
-                for (int i = 0; i < 4; i++) {
-                    new_cakes[i] = new CakePane();
-                    new_cakes[i].refresh();
-                    newCakeView[i] = findViewById(newCakeID[i]);
-                    newCakeView[i].setOnTouchListener(new MyTouchListener());
-                    newCakeView[i].setCakePane(new_cakes[i]);
-                    newCakeView[i].setSize(height, width);
-                }
-                notEmpty();
-                getTable();
             }
+            // 初始化newTable陣列
+            for (int i = 0; i < 4; i++) {
+                new_cakes[i] = new CakePane();
+                new_cakes[i].refresh();
+                newCakeView[i] = findViewById(newCakeID[i]);
+                newCakeView[i].setOnTouchListener(new MyTouchListener());
+                newCakeView[i].setCakePane(new_cakes[i]);
+                newCakeView[i].setSize(height, width);
+            }
+            notEmpty();
+            getTable();
         });
     }
 
@@ -106,9 +104,6 @@ public class MainActivity2 extends AppCompatActivity {
                     ViewGroup.LayoutParams.WRAP_CONTENT,
                     1
             ));
-            if(i != 3){
-                newCakeView[i].setPadding(0, 0, 10, 0); // 添加右邊距，使得蛋糕之間有間隔
-            }
             newCakeView[i].setImageResource(R.drawable.destination_circle);
             newCakeView[i].setOnTouchListener(new MyTouchListener());
 
@@ -163,6 +158,7 @@ public class MainActivity2 extends AppCompatActivity {
             switch (event.getAction()) {
                 case DragEvent.ACTION_DRAG_ENTERED:
                     cakeView.setImageResource(R.drawable.destination_circle);
+
                     soundPlay.getSound("choose");
                     notEmpty();
                     break;
@@ -185,15 +181,11 @@ public class MainActivity2 extends AppCompatActivity {
                     Log.d("CakeSort", String.valueOf(cakeView.getId()));
                     for (int i = 0; i < 5; i++) {
                         for (int j = 0; j < 4; j++) {
-                            if (cakeView.getId() == cakeID[i][j] && cakes[i][j].getPieces().isEmpty()) {
-                                new_cakes[draggedViewIndex].put_cake_to_table(cakes, i, j);
+                            if (cakeView.getId() == cakeID[i][j] && cakes[i][j].getPieces().isEmpty() && !cakeViews[i][j].onAnimation()) {
+                                new_cakes[draggedViewIndex].put_cake_to_table(cakes, cakeViews, i, j);
                                 Log.d("CakeSort", "蛋糕放置在: (" + i + ", " + j + ")");
                                 dropped = true;
-                                scoreBoard.getCurrentScore().addScore(cakes[i][j].getScore());
-                                scoreBoard.getCurrentScore().addFullCake(cakes[i][j].getFullCakeNum());
-                                totalScore = scoreBoard.getCurrentScore().getScore();
-                                totalFullCakeNum = scoreBoard.getCurrentScore().getFullCake();
-                                updateScoreAndFullCake();
+                                updateScoreAndFullCake(cakes[i][j]);
                                 notEmpty();
                                 getTable();
                                 break;
@@ -266,7 +258,7 @@ public class MainActivity2 extends AppCompatActivity {
                 if(cakes[i][j].getPieces().isEmpty()){
                     allNotEmpty = false;
                 } else {
-                    cakeView[i][j].setImageResource(R.drawable.pieces_circle);
+                    cakeViews[i][j].setImageResource(R.drawable.pieces_circle);
                 }
             }
         }
@@ -277,7 +269,14 @@ public class MainActivity2 extends AppCompatActivity {
         }
     }
 
-    private void updateScoreAndFullCake() {
+    private void updateScoreAndFullCake(CakePane currentCake) {
+        scoreBoard.getCurrentScore().addScore(currentCake.getScore());
+        totalScore = scoreBoard.getCurrentScore().getScore();
+        if(currentCake.getFullCakeNum() > 0) {
+            soundPlay.getSound("full");
+            scoreBoard.getCurrentScore().addFullCake(currentCake.getFullCakeNum());
+            totalFullCakeNum = scoreBoard.getCurrentScore().getFullCake();
+        }
         score.setText("Total Score : " + totalScore);
         fullCake.setText("Full Cake : " + totalFullCakeNum);
     }

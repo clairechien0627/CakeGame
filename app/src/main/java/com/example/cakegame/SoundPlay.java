@@ -21,6 +21,7 @@ public class SoundPlay {
                 .build();
 
         soundMap.put("choose", soundPool.load(context, R.raw.choose, 1));
+        soundMap.put("full", soundPool.load(context, R.raw.full, 1));
 
 
     }

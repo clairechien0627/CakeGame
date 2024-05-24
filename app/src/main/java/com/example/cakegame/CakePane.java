@@ -28,6 +28,7 @@ public class CakePane {
 
 
 
+
     public CakePane() {
         for(int i=0;i<pieces_kind;i++) {
             pieces_num[i] = 0;
@@ -58,7 +59,7 @@ public class CakePane {
 
 
     //將下方new_cake放入上方
-    public void put_cake_to_table(CakePane[][] cakes, int x, int y) {
+    public void put_cake_to_table(CakePane[][] cakes, CakeView[][] cakeViews, int x, int y) {
 
         score = 0;
         full_cake_num = 0;
@@ -74,13 +75,13 @@ public class CakePane {
         }
 
 
-        cakes[x][y].mix(cakes, x, y);   //蛋糕片交換
+        cakes[x][y].mix(cakes, cakeViews, x, y);   //蛋糕片交換
 
         boolean end_mix = false;
 
         while(!end_mix) {
 
-            end_mix = other_cake_mix(cakes);
+            end_mix = other_cake_mix(cakes, cakeViews);
 
         }
 
@@ -93,7 +94,7 @@ public class CakePane {
 
 
     //進行蛋糕片交換
-    public void mix(CakePane[][] cakes, int x, int y) {
+    public void mix(CakePane[][] cakes, CakeView[][] cakeViews, int x, int y) {
         int p = cakes[x][y].getPieces().get(0); //蛋糕片花色
 
         ArrayList<int[]> available_cake = new ArrayList<>();	//位置x, y值，ArrayList中，像這樣 {{x1, y1},{x2, y2},...}
@@ -109,12 +110,14 @@ public class CakePane {
         //count可進行移動的蛋糕片數
         while(count > pieces_max  && available_cake.size() > 0) {
             CakePane cake = cakes[available_cake.get(0)[0]][available_cake.get(0)[1]];
+            CakeView cakeView = cakeViews[available_cake.get(0)[0]][available_cake.get(0)[1]];
 
             if(cake.getPiecesNum(p) == cake.getPieces().size()) {   //該盤子上蛋糕只有一種花色
 
                 Log.d("CakePane", "full_cake: (" + available_cake.get(0)[0] + ", " + available_cake.get(0)[1] + ")");
 
                 full_cake.add(available_cake.get(0));   //full_cake為蛋糕片要被移動到的位置
+                cakeView.animateProgress(p);
 
                 available_cake.remove(0);
                 count -= 8;
@@ -152,7 +155,7 @@ public class CakePane {
     }
 
 
-    public boolean other_cake_mix(CakePane[][] cakes) {
+    public boolean other_cake_mix(CakePane[][] cakes, CakeView[][] cakeViews) {
 
         for(int i=0;i<x_max;i++) {
             for(int j=0;j<y_max;j++) {
@@ -166,7 +169,7 @@ public class CakePane {
                         int dy = j + d[1];
 
                         if(!out_of_boundary(dx, dy) && cakes[dx][dy].getPiecesNum(p) > 0) {
-                            cakes[i][j].mix(cakes, i, j);
+                            cakes[i][j].mix(cakes, cakeViews, i, j);
 
                             return false;
                         }
