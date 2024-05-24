@@ -141,10 +141,8 @@ public class CakeView extends AppCompatImageView {
         startAngle = -90;
         for (int i = 0; i < 6; i++) {
             int pieces = cakepane.getPiecesNum(i);
-
             canvas.drawArc(rectF, startAngle, 45 * pieces, true, paints[i]);
             startAngle += 45 * pieces;
-//            Log.d("CakeView",  i + " " + startAngle);
         }
 //        Log.d("CakeView", "draw" + startAngle);
     }
@@ -182,7 +180,7 @@ public class CakeView extends AppCompatImageView {
             @Override
             public void onAnimationEnd(Animator animation) {
                 // 动画结束后的操作
-                onAnimation = true;
+                onAnimation = false;
                 fullCakePaint.setColor(fullCakeColor);
                 fillArcPaint.setColor(parentArcColor);
                 currentPercentage = 0;
