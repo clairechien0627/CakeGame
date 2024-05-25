@@ -10,8 +10,6 @@ public class CakePane {
     private final int y_max = 4;
     private final int pieces_kind = 6;
     private final int pieces_max = 8;
-
-
     private final int[][] dir = {{-1, 0},{0,-1},{1,0},{0,1}};   //蛋糕相對位置上左下右
 
 
@@ -24,15 +22,15 @@ public class CakePane {
     private static int full_cake_num;
 
     private static double complex_cake_possibility;
-    private final double[] diff = new double[]{0.3,0.4,0.5,0};
+    private final double[] diff = new double[]{0.3, 0.4, 0.5, 0};
 
 
     public CakePane() {
 
     }
 
-    public CakePane(int diff_mode) {
-        complex_cake_possibility = diff[diff_mode];
+    public CakePane(int mode) {
+        complex_cake_possibility = diff[mode];
     }
 
     //放置蛋糕片
@@ -40,12 +38,7 @@ public class CakePane {
         pieces.add(p);
         pieces_num[p]++;
 
-        Collections.sort(pieces, new Comparator<Integer>() {
-            @Override
-            public int compare(Integer o1, Integer o2) {
-                return o1.compareTo(o2);
-            }
-        });
+        Collections.sort(pieces, Integer::compareTo);
 
         full(p);    //判斷蛋糕是否已滿
     }
@@ -54,27 +47,25 @@ public class CakePane {
     public void erase_piece(int p) {
         pieces.remove(Integer.valueOf(p));
         pieces_num[p]--;
-        if(pieces_num[p] < 0) {
-            Log.d("CakePane",  "pieces: " + pieces_num[p]);
-        }
     }
 
 
     //將下方new_cake放入上方
     public void put_cake_to_table(CakePane[][] cakes, CakeView[][] cakeViews, int x, int y) {
 
-        score = 0;
-        full_cake_num = 0;
-
-
         if(cakes[x][y].getPieces().size() > 0 || getPieces().size() == 0) { //遇到已有蛋糕片的位置
             return;
         }
+
+
+        score = 0;
+        full_cake_num = 0;
 
         for(int p : getPieces()) {
             cakes[x][y].place_piece(p);    //取得蛋糕片
             score++;
         }
+        clearPieces();  //清空下方new_cake
 
         if(cakes[x][y].canMix()) {
             cakes[x][y].mix(cakes, cakeViews, x, y);   //蛋糕片交換
@@ -89,6 +80,31 @@ public class CakePane {
         }
 
         clearPieces();  //清空下方new_cake
+
+//        boolean t;
+//        for(int i=0;i<x_max;i++) {
+//            for(int j=0;j<y_max;j++) {
+//                t = false;
+//                String getPieces = "";
+//                String getPiecesNum = "";
+//                getPieces += "(" + i + ", " + j + ") -- ";
+//                getPiecesNum += "(" + i + ", " + j + ") -- ";
+//                for(int p : cakes[i][j].getPieces()) {
+//                    getPieces += p + ", ";
+//                }
+//                for(int k=0;k<6;k++) {
+//                    if(cakes[i][j].getPiecesNum(k) != 0) {
+//                        t= true;
+//                    }
+//                    getPiecesNum += k + ": " + cakes[i][j].getPiecesNum(k) + ", ";
+//                }
+//                if(t) {
+//                    Log.d("CakeSort", "cakes[i][j].getPieces : " + getPieces);
+//                    Log.d("CakeSort", "cakes[i][j].getPiecesNum : " + getPiecesNum) ;
+//                }
+//
+//            }
+//        }
 
         boolean hasFull = false;
         if(complex_cake_possibility == 0) {
@@ -121,6 +137,7 @@ public class CakePane {
 
         count = 0;
         available_cake = find_available_cake(cakes, x, y, p, vis, available_cake);  //可進行交換的所有蛋糕
+        available_cake.remove(available_cake.size() - 1);
 
 
         //判斷要移動到的盤子的位置

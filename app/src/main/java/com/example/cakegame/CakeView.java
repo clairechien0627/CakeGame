@@ -221,7 +221,6 @@ public class CakeView extends AppCompatImageView {
             @Override
             public void onAnimationStart(Animator animation) {
                 soundPlay.getSound("add");
-                Log.d("CakeView", "play add cake");
                 onAnimation = true;
             }
 

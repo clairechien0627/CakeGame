@@ -6,29 +6,114 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:gravity="center"
+    android:padding="40dp"
     tools:context=".MainActivity3">
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        >
 
-    <TextView
-            android:id="@+id/change3"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="You Lose..."
-            android:textSize="50sp"
-            android:gravity="center"
+            android:layout_weight="1"
+            android:layout_gravity="center_vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:gravity="center_vertical"
+                android:text="order : " />
+
+            <FrameLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                >
+
+                <Button
+                    android:id="@+id/choice"
+                    android:layout_width="80dp"
+                    android:layout_height="25dp"
+                    android:layout_gravity="center_vertical"
+                    android:background="@drawable/order_button"
+                    android:gravity="center_vertical"/>
+
+                <!-- Add an invisible view to extend the touch target -->
+                <TextView
+                    android:id="@+id/sortMode"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:textColor="@color/white"
+                    android:text="Score"
+                    />
+            </FrameLayout>
+        </LinearLayout>
+        <TextView
+            android:id="@+id/window_close"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="end"
+            android:layout_gravity="center_vertical"
+            android:text="@string/window_close"
             />
 
-    <Button
-        android:id="@+id/startnewgame"
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/change3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="40dp"
-        android:text="Try Again"
-        android:textSize="40sp"
-        android:background="@drawable/shape_circle"
-        android:maxLines="1"
+        android:layout_gravity="center"
+        android:text="Ranking"
+        android:textSize="35sp"
+        android:gravity="center_horizontal"
         />
 
+    <LinearLayout
+        android:layout_marginTop="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        >
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Rank"
+            android:textSize="18sp"
+            android:gravity="center"
+            android:layout_gravity="center_vertical"/>
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Total Score"
+            android:textSize="18sp"
+            android:gravity="center"
+            android:layout_gravity="center_vertical"/>
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Full Cake"
+            android:textSize="18sp"
+            android:gravity="center"
+            android:layout_gravity="center_vertical"/>
+
+    </LinearLayout>
+
+    <ListView
+        android:id="@+id/ranking_list_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
 
 </LinearLayout>

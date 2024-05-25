@@ -2,4 +2,5 @@
     <string name="app_name">CakeGame</string>
     <string name="start">START</string>
     <string name="cake_description">cake1</string>
+    <string name="window_close">&#xf00d;</string>
 </resources>

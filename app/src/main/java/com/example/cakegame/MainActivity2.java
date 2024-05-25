@@ -134,8 +134,6 @@ public class MainActivity2 extends AppCompatActivity {
                 } else {
                     v.startDrag(clipData, shadowBuilder, v, 0);
                 }
-
-                v.setVisibility(View.INVISIBLE); // 設置拖曳時不可見
                 return true;
             } else {
                 return false;
@@ -153,10 +151,12 @@ public class MainActivity2 extends AppCompatActivity {
         @Override
         public boolean onDrag(View v, DragEvent event) {
             CakeView cakeView = (CakeView) v;
+            CakeView draggedView = (CakeView) event.getLocalState();
+            draggedView.setVisibility(View.INVISIBLE);
             switch (event.getAction()) {
                 case DragEvent.ACTION_DRAG_ENTERED:
-                    cakeView.setImageResource(R.drawable.destination_circle);
 
+                    cakeView.setImageResource(R.drawable.destination_circle);
                     soundPlay.getSound("choose");
                     notEmpty();
                     break;
@@ -165,7 +165,6 @@ public class MainActivity2 extends AppCompatActivity {
                     notEmpty();
                     break;
                 case DragEvent.ACTION_DROP:
-                    CakeView draggedView = (CakeView) event.getLocalState();
                     ViewGroup draggedViewParent = (ViewGroup) draggedView.getParent();
                     int draggedViewIndex = 0;
 
@@ -270,10 +269,8 @@ public class MainActivity2 extends AppCompatActivity {
     private void updateScoreAndFullCake(CakePane currentCake) {
         scoreBoard.getCurrentScore().addScore(currentCake.getScore());
         totalScore = scoreBoard.getCurrentScore().getScore();
-        if(currentCake.getFullCakeNum() > 0) {
-            scoreBoard.getCurrentScore().addFullCake(currentCake.getFullCakeNum());
-            totalFullCakeNum = scoreBoard.getCurrentScore().getFullCake();
-        }
+        scoreBoard.getCurrentScore().addFullCake(currentCake.getFullCakeNum());
+        totalFullCakeNum = scoreBoard.getCurrentScore().getFullCake();
         score.setText("Total Score : " + totalScore);
         fullCake.setText("Full Cake : " + totalFullCakeNum);
     }
