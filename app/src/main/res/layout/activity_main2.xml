@@ -242,7 +242,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            app:srcCompat="@drawable/destination_circle"/>
+            app:srcCompat="@drawable/stroke_circle"/>
 
         <com.example.cakegame.CakeView
             android:id="@+id/cake22"
@@ -250,7 +250,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:layout_marginStart="10dp"
-            app:srcCompat="@drawable/destination_circle"/>
+            app:srcCompat="@drawable/stroke_circle"/>
 
         <com.example.cakegame.CakeView
             android:id="@+id/cake23"
@@ -258,7 +258,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:layout_marginStart="10dp"
-            app:srcCompat="@drawable/destination_circle"/>
+            app:srcCompat="@drawable/stroke_circle"/>
 
         <com.example.cakegame.CakeView
             android:id="@+id/cake24"
@@ -266,7 +266,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:layout_marginStart="10dp"
-            app:srcCompat="@drawable/destination_circle"/>
+            app:srcCompat="@drawable/stroke_circle"/>
 
     </LinearLayout>
 

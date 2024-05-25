@@ -1,5 +1,7 @@
 package com.example.cakegame;
 
+import static com.example.cakegame.MainActivity2.soundPlay;
+
 import android.animation.*;
 import android.content.*;
 import android.graphics.*;
@@ -38,6 +40,8 @@ public class CakeView extends AppCompatImageView {
 
     private int currentPercentage = 0;
 
+    private float[] animatedAngles = new float[6];
+
     private final RectF ovalSpace = new RectF();
 
     private int fullCakeColor;
@@ -71,6 +75,7 @@ public class CakeView extends AppCompatImageView {
         fullCakePaint.setStyle(Paint.Style.FILL);
         fullCakeColor = ContextCompat.getColor(context, R.color.white);
         fullCakePaint.setColor(fullCakeColor);
+        fullCakePaint.setAlpha(0);
 
         radius = 50;
         rectF = new RectF(); // 初始化 RectF 对象
@@ -108,7 +113,7 @@ public class CakeView extends AppCompatImageView {
         centerX = (getRight() - getLeft()) / 2;
         centerY = (getBottom() - getTop()) / 2;
 
-        outRadius = (float) (Math.min(height, width) / 2 * 0.9);
+        outRadius = (float) (Math.min(height, width) / 2 * 0.95);
         ovalSpace.set(centerX - outRadius, centerY - outRadius, centerX + outRadius, centerY + outRadius);
 
         radius = (float) (Math.min(height, width) / 2 * 0.8);
@@ -116,9 +121,9 @@ public class CakeView extends AppCompatImageView {
 
         drawBackgroundArc(canvas);
         drawInnerArc(canvas);
-        drawFullCake(canvas);
-        drawCake(canvas);
 
+        drawCake(canvas);
+        drawFullCake(canvas);
 
     }
 
@@ -172,9 +177,10 @@ public class CakeView extends AppCompatImageView {
             @Override
             public void onAnimationStart(Animator animation) {
                 // 动画開始后的操作
+                soundPlay.getSound("full");
                 onAnimation = true;
-                fillArcPaint.setColor(fillArcColor);
                 fullCakePaint.setColor(colors[p]);
+                fullCakePaint.setAlpha(255);
             }
 
             @Override
@@ -182,6 +188,7 @@ public class CakeView extends AppCompatImageView {
                 // 动画结束后的操作
                 onAnimation = false;
                 fullCakePaint.setColor(fullCakeColor);
+                fullCakePaint.setAlpha(0);
                 fillArcPaint.setColor(parentArcColor);
                 currentPercentage = 0;
             }
@@ -189,6 +196,11 @@ public class CakeView extends AppCompatImageView {
             @Override
             public void onAnimationCancel(Animator animation) {
                 // 动画取消时的操作
+                onAnimation = false;
+                fullCakePaint.setColor(fullCakeColor);
+                fullCakePaint.setAlpha(0);
+                fillArcPaint.setColor(parentArcColor);
+                currentPercentage = 0;
             }
 
             @Override
@@ -198,6 +210,42 @@ public class CakeView extends AppCompatImageView {
         });
         animator.start();
     }
+
+
+    public void animateAddCake() {
+        ValueAnimator animator = ValueAnimator.ofInt(255, 0); // 从不透明到透明
+        animator.setDuration(500); // 动画持续时间
+        animator.addUpdateListener(animation -> {
+            int alpha = (int) animation.getAnimatedValue();
+            fullCakePaint.setAlpha(alpha); // 设置透明度
+            invalidate();
+        });
+        animator.addListener(new Animator.AnimatorListener() {
+            @Override
+            public void onAnimationStart(Animator animation) {
+                soundPlay.getSound("add");
+                Log.d("CakeView", "play add cake");
+                onAnimation = true;
+            }
+
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                onAnimation = false;
+            }
+
+            @Override
+            public void onAnimationCancel(Animator animation) {
+                onAnimation = false;
+            }
+
+            @Override
+            public void onAnimationRepeat(Animator animation) {
+                // Do nothing
+            }
+        });
+        animator.start();
+    }
+
 
     public boolean onAnimation() { return onAnimation;}
 

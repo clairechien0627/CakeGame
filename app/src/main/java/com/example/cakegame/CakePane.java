@@ -26,11 +26,16 @@ public class CakePane {
     private static int score;
     private static int full_cake_num;
 
-    private double complex_cake_possibility = 0.3;
+    private static double complex_cake_possibility;
+    private final double[] diff = new double[]{0.3,0.4,0.5,0};
 
 
     public CakePane() {
 
+    }
+
+    public CakePane(int diff_mode) {
+        complex_cake_possibility = diff[diff_mode];
     }
 
     //放置蛋糕片
@@ -86,10 +91,24 @@ public class CakePane {
 
         }
 
-
-//        add_random_cake(cakes, x, y);   //生成random_cake
-
         clearPieces();  //清空下方new_cake
+
+        boolean hasFull = false;
+        if(complex_cake_possibility == 0) {
+            for(int i=0;i<x_max;i++) {
+                for(int j=0;j<y_max;j++) {
+                    if(cakeViews[i][j].onAnimation()) {
+                        hasFull = true;
+                        return;
+                    }
+                }
+            }
+
+            if(!hasFull) {
+                add_random_cake(cakes, cakeViews, x, y); //生成random_cake
+            }
+
+        }
     }
 
 
@@ -293,7 +312,7 @@ public class CakePane {
         int randomNumCake = (int) (Math.random() * (pieces_max-1) % (pieces_max-1)) + 1;
         int randomCake = (int) (Math.random() * pieces_kind % pieces_kind);
         double rate = Math.random();
-        boolean complex_cake = complex_cake_possibility > rate;
+        boolean complex_cake = rate > complex_cake_possibility;
 
         if(complex_cake) {
             for(int j=0;j<randomNumCake;j++) {
@@ -311,7 +330,7 @@ public class CakePane {
         }
     }
 
-    public void add_random_cake(CakePane[][] cakes, int x, int y) { //生成random_cake
+    public void add_random_cake(CakePane[][] cakes, CakeView[][] cakeViews, int x, int y) { //生成random_cake
         boolean[][] hasPieces = new boolean[x_max][y_max];
         boolean all_full = true;
 
@@ -339,6 +358,7 @@ public class CakePane {
                     int randomCake = (int) (Math.random() * pieces_kind % pieces_kind);
 
                     cakes[randomX][randomY].place_piece(randomCake);
+                    cakeViews[randomX][randomY].animateAddCake();
                 }
                 score += randomNumCake;
 
@@ -359,7 +379,7 @@ public class CakePane {
     }
 
     public boolean canMix() {
-        if(getPieces().size() == getPiecesNum(getPieces().get(0))) {
+        if(getPieces().size() > 0 && getPieces().size() == getPiecesNum(getPieces().get(0))) {
             return true;
         }
         return false;

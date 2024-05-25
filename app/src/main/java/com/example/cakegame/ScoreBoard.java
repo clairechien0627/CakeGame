@@ -19,10 +19,6 @@ public class ScoreBoard {
         return currentScore;
     }
 
-    public void addCurrentScore() {
-        totalScoreBoard.add(currentScore);
-    }
-
     public ArrayList<Score> getScoreBoard_num() { //按編號排序
 
         Collections.sort(totalScoreBoard, new Comparator<Score>() {

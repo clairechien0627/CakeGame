@@ -17,14 +17,14 @@ public class MainActivity2 extends AppCompatActivity {
     public static CakeView[][] cakeViews = new CakeView[5][4];
     public static CakePane[] new_cakes = new CakePane[4];
     public static CakeView[] newCakeView = new CakeView[4];
-    public static int[][] cakeID = {
+    public final int[][] cakeID = {
             {R.id.cake1, R.id.cake2, R.id.cake3, R.id.cake4},
             {R.id.cake5, R.id.cake6, R.id.cake7, R.id.cake8},
             {R.id.cake9, R.id.cake10, R.id.cake11, R.id.cake12},
             {R.id.cake13, R.id.cake14, R.id.cake15, R.id.cake16},
             {R.id.cake17, R.id.cake18, R.id.cake19, R.id.cake20}
     };
-    public int[] newCakeID = {R.id.cake21, R.id.cake22, R.id.cake23, R.id.cake24};
+    public final int[] newCakeID = {R.id.cake21, R.id.cake22, R.id.cake23, R.id.cake24};
 
     public static ScoreBoard scoreBoard;
     public static int totalScore = 0;
@@ -104,7 +104,7 @@ public class MainActivity2 extends AppCompatActivity {
                     ViewGroup.LayoutParams.WRAP_CONTENT,
                     1
             ));
-            newCakeView[i].setImageResource(R.drawable.destination_circle);
+            newCakeView[i].setImageResource(R.drawable.stroke_circle);
             newCakeView[i].setOnTouchListener(new MyTouchListener());
 
             parent.addView(newCakeView[i]);
@@ -113,6 +113,7 @@ public class MainActivity2 extends AppCompatActivity {
             new_cakes[i].refresh();
             newCakeView[i].setCakePane(new_cakes[i]);
             newCakeView[i].setSize(height, width);
+            newCakeView[i].animateAddCake();
         }
 
         getTable();
@@ -263,7 +264,7 @@ public class MainActivity2 extends AppCompatActivity {
             }
         }
         if (allNotEmpty) {
-            scoreBoard.addCurrentScore();
+            soundPlay.getSound("end");
             Intent intent = new Intent(MainActivity2.this, MainActivity3.class);
             startActivity(intent);
         }
@@ -273,7 +274,6 @@ public class MainActivity2 extends AppCompatActivity {
         scoreBoard.getCurrentScore().addScore(currentCake.getScore());
         totalScore = scoreBoard.getCurrentScore().getScore();
         if(currentCake.getFullCakeNum() > 0) {
-            soundPlay.getSound("full");
             scoreBoard.getCurrentScore().addFullCake(currentCake.getFullCakeNum());
             totalFullCakeNum = scoreBoard.getCurrentScore().getFullCake();
         }

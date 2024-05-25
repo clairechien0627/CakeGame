@@ -22,6 +22,9 @@ public class SoundPlay {
 
         soundMap.put("choose", soundPool.load(context, R.raw.choose, 1));
         soundMap.put("full", soundPool.load(context, R.raw.full, 1));
+        soundMap.put("add", soundPool.load(context, R.raw.add, 1));
+        soundMap.put("end", soundPool.load(context, R.raw.end, 1));
+        soundMap.put("start", soundPool.load(context, R.raw.start, 1));
 
 
     }
