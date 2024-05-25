@@ -180,6 +180,7 @@ public class CakeView extends AppCompatImageView {
                 onAnimation = true;
                 fullCakePaint.setColor(colors[p]);
                 fullCakePaint.setAlpha(255);
+                fillArcPaint.setColor(fillArcColor);
                 currentPercentage = 360;
             }
 
