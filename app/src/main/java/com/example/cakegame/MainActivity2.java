@@ -9,9 +9,6 @@ import android.widget.*;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import java.util.ArrayList;
-
-
 public class MainActivity2 extends AppCompatActivity {
     public static CakePane[][] cakes = new CakePane[5][4];
     public static CakeView[][] cakeViews = new CakeView[5][4];

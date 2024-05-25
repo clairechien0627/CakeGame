@@ -6,7 +6,6 @@ import android.animation.*;
 import android.content.*;
 import android.graphics.*;
 import android.util.*;
-import java.util.*;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.AppCompatImageView;
@@ -181,6 +180,7 @@ public class CakeView extends AppCompatImageView {
                 onAnimation = true;
                 fullCakePaint.setColor(colors[p]);
                 fullCakePaint.setAlpha(255);
+                currentPercentage = 360;
             }
 
             @Override
@@ -197,10 +197,6 @@ public class CakeView extends AppCompatImageView {
             public void onAnimationCancel(Animator animation) {
                 // 动画取消时的操作
                 onAnimation = false;
-                fullCakePaint.setColor(fullCakeColor);
-                fullCakePaint.setAlpha(0);
-                fillArcPaint.setColor(parentArcColor);
-                currentPercentage = 0;
             }
 
             @Override
