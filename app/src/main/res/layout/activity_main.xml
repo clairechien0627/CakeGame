@@ -1,104 +1,169 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:gravity="center_horizontal"
-    android:orientation="vertical"
-    android:padding="10dp"
     tools:context=".MainActivity">
 
+
+    <!-- LinearLayout放在這裡 -->
     <LinearLayout
-        android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent"
+        android:background="@color/blue_light"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        android:padding="0dp">
 
         <LinearLayout
-            android:padding="20dp"
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="start">
+            android:orientation="horizontal">
 
-            <ImageView
-                android:id="@+id/rank"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:src="@drawable/ranking_star_solid"
-                app:tint="#673AB7"/>
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="start"
+                android:padding="20dp">
 
+                <ImageView
+                    android:id="@+id/rank"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:src="@drawable/ranking_star_solid"
+                    app:tint="@color/aqua" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="end"
+                android:padding="20dp">
+
+                <ImageView
+                    android:id="@+id/setting"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:src="@drawable/gear_solid"
+                    app:tint="@color/aqua" />
+            </LinearLayout>
         </LinearLayout>
 
-        <LinearLayout
-            android:padding="20dp"
-            android:layout_width="0dp"
+        <TextView
+            android:id="@+id/app_name"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="end">
+            android:layout_marginTop="80dp"
+            android:gravity="center"
+            android:text="@string/app_name"
+            android:textColor="@color/aqua"
+            android:textSize="70sp"
+            android:textStyle="bold" />
 
-            <ImageView
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:src="@drawable/gear_solid"
-                app:tint="#673AB7" />
-        </LinearLayout>
+        <Button
+            android:id="@+id/difficulty0"
+            android:layout_width="120dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="50dp"
+            android:background="@drawable/difficulty_button"
+            android:maxLines="1"
+            android:text="easy"
+            android:textAllCaps="true"
+            android:textSize="15sp"
+            app:backgroundTint="@color/sky_blue" />
+
+        <Button
+            android:id="@+id/difficulty1"
+            android:layout_width="120dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/difficulty_button"
+            android:maxLines="1"
+            android:text="normal"
+            android:textAllCaps="true"
+            android:textSize="15sp"
+            app:backgroundTint="@color/sky_blue" />
+
+        <Button
+            android:id="@+id/difficulty2"
+            android:layout_width="120dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/difficulty_button"
+            android:maxLines="1"
+            android:text="hard"
+            android:textAllCaps="true"
+            android:textSize="15sp"
+            app:backgroundTint="@color/sky_blue" />
+
+        <Button
+            android:id="@+id/difficulty3"
+            android:layout_width="120dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/difficulty_button"
+            android:maxLines="1"
+            android:text="devil"
+            android:textAllCaps="true"
+            android:textSize="15sp"
+            app:backgroundTint="@color/sky_blue" />
+
     </LinearLayout>
 
-    <TextView
-        android:id="@+id/app_name"
+    <ImageView
+        android:id="@+id/backgroundCake1"
+        android:layout_width="141dp"
+        android:layout_height="158dp"
+        android:src="@drawable/cake1"
+        android:layout_marginLeft="0dp"
+        android:layout_marginTop="0dp"  />
+
+    <ImageView
+        android:id="@+id/backgroundCake2"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/app_name"
-        android:textStyle="bold"
-        android:textColor="#673AB7"
-        android:textSize="70sp"
-        android:gravity="center"
-        android:layout_marginTop="80dp"
-        />
+        android:layout_height="137dp"
+        android:layout_marginLeft="300dp"
+        android:layout_marginTop="250dp"
+        android:src="@drawable/cake2" />
 
-    <Button
-        android:id="@+id/difficulty0"
-        android:layout_width="120dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="50dp"
-        android:background="@drawable/difficulty_button"
-        android:maxLines="1"
-        android:text="easy"
-        android:textSize="15sp"
-        android:textAllCaps="true"/>
+    <ImageView
+        android:id="@+id/backgroundCake3"
+        android:layout_width="141dp"
+        android:layout_height="158dp"
+        android:layout_marginLeft="-50dp"
+        android:layout_marginTop="300dp"
+        android:src="@drawable/cake3" />
 
-    <Button
-        android:id="@+id/difficulty1"
-        android:layout_width="120dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:background="@drawable/difficulty_button"
-        android:maxLines="1"
-        android:text="normal"
-        android:textSize="15sp"
-        android:textAllCaps="true"/>
+    <ImageView
+        android:id="@+id/backgroundCake4"
+        android:layout_width="94dp"
+        android:layout_height="101dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="500dp"
+        android:src="@drawable/cake4" />
 
-    <Button
-        android:id="@+id/difficulty2"
-        android:layout_width="120dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:background="@drawable/difficulty_button"
-        android:maxLines="1"
-        android:text="hard"
-        android:textSize="15sp"
-        android:textAllCaps="true"/>
+    <ImageView
+        android:id="@+id/backgroundCake5"
+        android:layout_width="90dp"
+        android:layout_height="128dp"
+        android:layout_marginLeft="150dp"
+        android:layout_marginTop="600dp"
+        android:src="@drawable/cake5" />
 
-    <Button
-        android:id="@+id/difficulty3"
-        android:layout_width="120dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:background="@drawable/difficulty_button"
-        android:maxLines="1"
-        android:text="devil"
-        android:textSize="15sp"
-        android:textAllCaps="true"/>
-</LinearLayout>
+    <ImageView
+        android:id="@+id/backgroundCake6"
+        android:layout_width="141dp"
+        android:layout_height="158dp"
+        android:layout_marginLeft="300dp"
+        android:layout_marginTop="550dp"
+        android:src="@drawable/cake6" />
+
+
+
+
+</FrameLayout>

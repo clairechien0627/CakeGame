@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.example.cakegame">
 
+    <uses-permission android:name="android.permission.VIBRATE" />
     <application
         android:useEmbeddedDex="true"
         android:allowBackup="true"

@@ -1,6 +1,7 @@
 package com.example.cakegame;
 
 import android.annotation.SuppressLint;
+import android.app.Service;
 import android.content.*;
 import android.os.*;
 import android.util.*;
@@ -38,6 +39,8 @@ public class MainActivity2 extends AppCompatActivity {
     private int originalIndex;
     private boolean endGame = false;
     public static SoundPlay soundPlay;
+    public static Vibrator vibrator;
+    public static int vibrateTime = 15;
 
 
     @Override
@@ -80,6 +83,7 @@ public class MainActivity2 extends AppCompatActivity {
             }
             //設置音效
             soundPlay = new SoundPlay(this);
+            vibrator = (Vibrator) getSystemService(Service.VIBRATOR_SERVICE);
             //設置分數
             scoreBoard = new ScoreBoard(cakes[0][0].getMode());
             score = findViewById(R.id.totalScore);
@@ -139,6 +143,7 @@ public class MainActivity2 extends AppCompatActivity {
                 } else {
                     v.startDrag(clipData, shadowBuilder, v, 0);
                 }
+                vibrator.vibrate(vibrateTime);
                 return true;
             } else {
                 return false;
@@ -159,10 +164,15 @@ public class MainActivity2 extends AppCompatActivity {
             CakeView draggedView = (CakeView) event.getLocalState();
             draggedView.setVisibility(View.INVISIBLE);
             switch (event.getAction()) {
+                case DragEvent.ACTION_DRAG_STARTED:
+                    draggedView.setVisibility(View.INVISIBLE);
+                    vibrator.vibrate(vibrateTime);
+                    break;
                 case DragEvent.ACTION_DRAG_ENTERED:
                     if(!cakeView.onAnimation()) {
                         cakeView.setImageResource(R.drawable.destination_circle);
                     }
+                    vibrator.vibrate(vibrateTime);
                     soundPlay.getSound("choose");
                     notEmpty();
                     break;
@@ -218,9 +228,9 @@ public class MainActivity2 extends AppCompatActivity {
                     }
                     break;
                 case DragEvent.ACTION_DRAG_ENDED:
+                    vibrator.vibrate(vibrateTime);
                     if (!dropped) {
-                        View draggedViewEnded = (View) event.getLocalState();
-                        draggedViewEnded.setVisibility(View.VISIBLE);
+                        draggedView.setVisibility(View.VISIBLE);
                     }
                     cakeView.setImageResource(R.drawable.stroke_circle);
                     notEmpty();

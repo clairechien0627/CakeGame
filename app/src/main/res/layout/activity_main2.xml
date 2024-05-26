@@ -9,6 +9,7 @@
     android:paddingLeft="50dp"
     android:paddingRight="50dp"
     android:paddingBottom="30dp"
+    android:background="#C4E1FF"
     android:gravity="center"
     tools:context=".MainActivity2">
 
@@ -19,6 +20,7 @@
         android:text="Total Score : 0"
         android:textSize="25sp"
         android:gravity="center"
+        android:textColor="@color/aqua"
         />
     <TextView
         android:id="@+id/totalFullCakeNum"
@@ -27,6 +29,7 @@
         android:text="Full Cake : 0"
         android:textSize="25sp"
         android:gravity="center"
+        android:textColor="@color/aqua"
         />
 
     <LinearLayout

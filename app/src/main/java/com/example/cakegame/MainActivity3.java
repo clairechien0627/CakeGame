@@ -1,7 +1,9 @@
 package com.example.cakegame;
 
+import android.app.Service;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Vibrator;
 import android.util.Log;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -21,11 +23,14 @@ public class MainActivity3 extends AppCompatActivity implements OrderFragment.On
     RankingAdapter adapter = new RankingAdapter(this, rankingList);
     private int mode;
     private int order;
+    public static Vibrator vibrator;
+    public static int vibrateTime = 15;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main3);
+        vibrator = (Vibrator) getSystemService(Service.VIBRATOR_SERVICE);
 
         mode = 0;
         order = 0;
@@ -43,12 +48,14 @@ public class MainActivity3 extends AppCompatActivity implements OrderFragment.On
 
         ImageView closeBottom = findViewById(R.id.window_close);
         closeBottom.setOnClickListener(v -> {
+            vibrator.vibrate(vibrateTime);
             Intent intent = new Intent(MainActivity3.this, MainActivity.class);
             startActivity(intent);
         });
 
         Button orderButton = findViewById(R.id.order);
         orderButton.setOnClickListener(v -> {
+            vibrator.vibrate(vibrateTime);
             OrderFragment orderFragment = new OrderFragment();
             orderFragment.setOrderListener(MainActivity3.this);
             orderFragment.show(getSupportFragmentManager(), orderFragment.getTag());
@@ -56,6 +63,7 @@ public class MainActivity3 extends AppCompatActivity implements OrderFragment.On
 
         Button modeButton = findViewById(R.id.mode);
         modeButton.setOnClickListener(v -> {
+            vibrator.vibrate(vibrateTime);
             ModeFragment modeFragment = new ModeFragment();
             modeFragment.setModeListener(MainActivity3.this);
             modeFragment.show(getSupportFragmentManager(), modeFragment.getTag());
