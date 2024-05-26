@@ -15,6 +15,7 @@
         <entry key="..\:/Users/clair/AndroidStudioProjects/CakeGame/app/src/main/res/drawable/ic_launcher_background.xml" value="0.12129629629629629" />
         <entry key="..\:/Users/clair/AndroidStudioProjects/CakeGame/app/src/main/res/drawable/order_button.xml" value="0.1259259259259259" />
         <entry key="..\:/Users/clair/AndroidStudioProjects/CakeGame/app/src/main/res/drawable/pieces_circle.xml" value="0.253125" />
+        <entry key="..\:/Users/clair/AndroidStudioProjects/CakeGame/app/src/main/res/drawable/ranking_star_solid.xml" value="0.13055555555555556" />
         <entry key="..\:/Users/clair/AndroidStudioProjects/CakeGame/app/src/main/res/drawable/ripple_effect.xml" value="0.12037037037037036" />
         <entry key="..\:/Users/clair/AndroidStudioProjects/CakeGame/app/src/main/res/drawable/shape_circle.xml" value="0.253125" />
         <entry key="..\:/Users/clair/AndroidStudioProjects/CakeGame/app/src/main/res/drawable/stroke_circle.xml" value="0.253125" />
@@ -22,6 +23,7 @@
         <entry key="..\:/Users/clair/AndroidStudioProjects/CakeGame/app/src/main/res/layout/activity_main2.xml" value="0.264" />
         <entry key="..\:/Users/clair/AndroidStudioProjects/CakeGame/app/src/main/res/layout/activity_main3.xml" value="0.4" />
         <entry key="..\:/Users/clair/AndroidStudioProjects/CakeGame/app/src/main/res/layout/fragement_bottom_sheet.xml" value="0.1" />
+        <entry key="..\:/Users/clair/AndroidStudioProjects/CakeGame/app/src/main/res/layout/fragement_mode.xml" value="0.1" />
       </map>
     </option>
   </component>

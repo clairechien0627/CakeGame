@@ -23,16 +23,20 @@ public class MainActivity2 extends AppCompatActivity {
     };
     public final int[] newCakeID = {R.id.cake21, R.id.cake22, R.id.cake23, R.id.cake24};
 
+
     public static ScoreBoard scoreBoard;
     public static int totalScore = 0;
     public static int totalFullCakeNum = 0;
+
     @SuppressLint("StaticFieldLeak")
     public static TextView score;
     @SuppressLint("StaticFieldLeak")
     public static TextView fullCake;
+
     private static int width;
     private static int height;
     private int originalIndex;
+    private boolean endGame = false;
     public static SoundPlay soundPlay;
 
 
@@ -45,14 +49,8 @@ public class MainActivity2 extends AppCompatActivity {
     }
 
     // 初始化遊戲的設置
+    @SuppressLint("ClickableViewAccessibility")
     private void initializeGame() {
-        //設置音效
-        soundPlay = new SoundPlay(this);
-        //設置分數
-        scoreBoard = new ScoreBoard();
-        score = findViewById(R.id.totalScore);
-        fullCake = findViewById(R.id.totalFullCakeNum);
-
         // 使用 View.post() 方法确保在布局绘制完成后执行初始化操作
         findViewById(R.id.cake1).post(() -> {
             // 获取控件的宽度和高度
@@ -80,6 +78,13 @@ public class MainActivity2 extends AppCompatActivity {
                 newCakeView[i].setCakePane(new_cakes[i]);
                 newCakeView[i].setSize(height, width);
             }
+            //設置音效
+            soundPlay = new SoundPlay(this);
+            //設置分數
+            scoreBoard = new ScoreBoard(cakes[0][0].getMode());
+            score = findViewById(R.id.totalScore);
+            fullCake = findViewById(R.id.totalFullCakeNum);
+
             notEmpty();
             getTable();
         });
@@ -144,7 +149,7 @@ public class MainActivity2 extends AppCompatActivity {
     // 自定義拖曳監聽器類別
     class MyDragListener implements View.OnDragListener {
 
-        private ViewGroup originalParent= findViewById(R.id.newCakeContainer);
+        private final ViewGroup originalParent= findViewById(R.id.newCakeContainer);
         private boolean dropped = false;
 
         @SuppressLint({"UseCompatLoadingForDrawables", "ClickableViewAccessibility"})
@@ -155,8 +160,9 @@ public class MainActivity2 extends AppCompatActivity {
             draggedView.setVisibility(View.INVISIBLE);
             switch (event.getAction()) {
                 case DragEvent.ACTION_DRAG_ENTERED:
-
-                    cakeView.setImageResource(R.drawable.destination_circle);
+                    if(!cakeView.onAnimation()) {
+                        cakeView.setImageResource(R.drawable.destination_circle);
+                    }
                     soundPlay.getSound("choose");
                     notEmpty();
                     break;
@@ -249,6 +255,9 @@ public class MainActivity2 extends AppCompatActivity {
 
     // 檢查是否所有格子都不空
     private void notEmpty(){
+        if(endGame) {
+            return;
+        }
         boolean allNotEmpty = true;
         for(int i = 0; i < 5; i++){
             for(int j = 0; j < 4; j++){
@@ -260,12 +269,16 @@ public class MainActivity2 extends AppCompatActivity {
             }
         }
         if (allNotEmpty) {
+            endGame = true;
             soundPlay.getSound("end");
+//            Log.d("CakeSort", "allNotEmpty");
+            scoreBoard.addCurrentScore();
             Intent intent = new Intent(MainActivity2.this, MainActivity3.class);
             startActivity(intent);
         }
     }
 
+    @SuppressLint("SetTextI18n")
     private void updateScoreAndFullCake(CakePane currentCake) {
         scoreBoard.getCurrentScore().addScore(currentCake.getScore());
         totalScore = scoreBoard.getCurrentScore().getScore();

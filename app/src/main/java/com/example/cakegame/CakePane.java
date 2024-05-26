@@ -21,6 +21,7 @@ public class CakePane {
     private static int score;
     private static int full_cake_num;
 
+    private static int mode;
     private static double complex_cake_possibility;
     private final double[] diff = new double[]{0.3, 0.4, 0.5, 0};
 
@@ -30,6 +31,7 @@ public class CakePane {
     }
 
     public CakePane(int mode) {
+        this.mode = mode;
         complex_cake_possibility = diff[mode];
     }
 
@@ -40,13 +42,13 @@ public class CakePane {
 
         Collections.sort(pieces, Integer::compareTo);
 
-        full(p);    //判斷蛋糕是否已滿
     }
 
     //刪除蛋糕片
     public void erase_piece(int p) {
         pieces.remove(Integer.valueOf(p));
         pieces_num[p]--;
+        Log.d("CakePane", "erase: " + "p --" + pieces_num[p]);
     }
 
 
@@ -79,7 +81,6 @@ public class CakePane {
 
         }
 
-        clearPieces();  //清空下方new_cake
 
 //        boolean t;
 //        for(int i=0;i<x_max;i++) {
@@ -106,20 +107,16 @@ public class CakePane {
 //            }
 //        }
 
-        boolean hasFull = false;
         if(complex_cake_possibility == 0) {
             for(int i=0;i<x_max;i++) {
                 for(int j=0;j<y_max;j++) {
                     if(cakeViews[i][j].onAnimation()) {
-                        hasFull = true;
                         return;
                     }
                 }
             }
 
-            if(!hasFull) {
-                add_random_cake(cakes, cakeViews, x, y); //生成random_cake
-            }
+            add_random_cake(cakes, cakeViews, x, y); //生成random_cake
 
         }
     }
@@ -164,7 +161,7 @@ public class CakePane {
         }
 
         if(count >= pieces_max) {
-            cakeViews[x][y].animateProgress(p);;
+            cakeViews[x][y].animateProgress(p);
         }
 
         fill_cake.add(new int[] {x,y}); //x, y 為起初new_cake被放到的位置，也就是判斷的中心點
@@ -187,6 +184,7 @@ public class CakePane {
                 place_pieces(cakes, fill_cake.get(0)[0], fill_cake.get(0)[1], p, vis);  //進行遞迴判斷
             }
 
+            cakes[fill_cake.get(0)[0]][fill_cake.get(0)[1]].full(p);
             fill_cake.remove(0);    //已被放置完成
 
         }
@@ -289,15 +287,11 @@ public class CakePane {
 
 
     //蛋糕已滿後消失
-    public boolean full(int p) {
+    public void full(int p) {
         if(pieces_num[p] == pieces_max) {
             clearPieces();
-
             full_cake_num++;
-
-            return true;
         }
-        return false;
     }
 
 
@@ -306,10 +300,8 @@ public class CakePane {
 
     //將蛋糕片移動到目的地
     public void move(CakePane to, CakePane from, int p) {
-
         to.place_piece(p);
         from.erase_piece(p);
-
     }
 
     //清空蛋糕片
@@ -393,20 +385,17 @@ public class CakePane {
     }
 
     public boolean canMix() {
-        if(getPieces().size() > 0 && getPieces().size() == getPiecesNum(getPieces().get(0))) {
-            return true;
-        }
-        return false;
+        return getPieces().size() > 0 && getPieces().size() == getPiecesNum(getPieces().get(0));
     }
 
     //超出邊界
     public boolean out_of_boundary(int x, int y) {
-        if(x < 0 || x >= x_max || y < 0 || y >= y_max) {
-            return true;
-        }
-        return false;
+        return x < 0 || x >= x_max || y < 0 || y >= y_max;
     }
 
+    public int getMode() {
+        return mode;
+    }
 
     public int getPiecesNum(int n) {
         return pieces_num[n];

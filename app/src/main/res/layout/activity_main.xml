@@ -5,32 +5,80 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:gravity="center"
+    android:gravity="center_horizontal"
     android:orientation="vertical"
-    android:padding="0dp"
+    android:padding="10dp"
     tools:context=".MainActivity">
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:padding="20dp"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="start">
+
+            <ImageView
+                android:id="@+id/rank"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:src="@drawable/ranking_star_solid"
+                app:tint="#673AB7"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:padding="20dp"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="end">
+
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:src="@drawable/gear_solid"
+                app:tint="#673AB7" />
+        </LinearLayout>
+    </LinearLayout>
 
     <TextView
         android:id="@+id/app_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:gravity="center"
         android:text="@string/app_name"
+        android:textStyle="bold"
         android:textColor="#673AB7"
         android:textSize="70sp"
-        android:textStyle="bold" />
-
-
+        android:gravity="center"
+        android:layout_marginTop="80dp"
+        />
 
     <Button
-        android:id="@+id/difficulty1"
+        android:id="@+id/difficulty0"
         android:layout_width="120dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="50dp"
         android:background="@drawable/difficulty_button"
         android:maxLines="1"
         android:text="easy"
-        android:textSize="15sp" />
+        android:textSize="15sp"
+        android:textAllCaps="true"/>
+
+    <Button
+        android:id="@+id/difficulty1"
+        android:layout_width="120dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/difficulty_button"
+        android:maxLines="1"
+        android:text="normal"
+        android:textSize="15sp"
+        android:textAllCaps="true"/>
 
     <Button
         android:id="@+id/difficulty2"
@@ -39,8 +87,9 @@
         android:layout_marginTop="20dp"
         android:background="@drawable/difficulty_button"
         android:maxLines="1"
-        android:text="normal"
-        android:textSize="15sp" />
+        android:text="hard"
+        android:textSize="15sp"
+        android:textAllCaps="true"/>
 
     <Button
         android:id="@+id/difficulty3"
@@ -49,16 +98,7 @@
         android:layout_marginTop="20dp"
         android:background="@drawable/difficulty_button"
         android:maxLines="1"
-        android:text="hard"
-        android:textSize="15sp" />
-
-    <Button
-        android:id="@+id/difficulty4"
-        android:layout_width="120dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:background="@drawable/difficulty_button"
-        android:maxLines="1"
         android:text="devil"
-        android:textSize="15sp" />
+        android:textSize="15sp"
+        android:textAllCaps="true"/>
 </LinearLayout>

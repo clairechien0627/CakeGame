@@ -20,18 +20,32 @@
             android:orientation="vertical">
 
             <com.google.android.material.button.MaterialButton
-                android:id="@+id/shareButton"
+                android:id="@+id/easyButton"
                 style="@style/DialogButton"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Total Score"/>
+                android:text="Easy"/>
 
             <com.google.android.material.button.MaterialButton
-                android:id="@+id/linkButton"
+                android:id="@+id/normalButton"
                 style="@style/DialogButton"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Full Cake" />
+                android:text="Normal" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/hardButton"
+                style="@style/DialogButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Hard" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/devilButton"
+                style="@style/DialogButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Devil" />
         </LinearLayout>
     </ScrollView>
 </LinearLayout>

@@ -1,5 +1,7 @@
 package com.example.cakegame;
 
+import android.util.Log;
+
 import java.util.*;
 
 public class ScoreBoard {
@@ -10,13 +12,22 @@ public class ScoreBoard {
     private Score currentScore;
 
 
-    public ScoreBoard(){
+    public ScoreBoard() {}
+
+    public ScoreBoard(int mode){
         count_num++;
-        currentScore = new Score(count_num);
+        currentScore = new Score(mode, count_num);
+
     }
+
 
     public Score getCurrentScore() {
         return currentScore;
+    }
+
+    public void addCurrentScore() {
+        totalScoreBoard.add(currentScore);
+        Log.d("ScoreBoard", "add score");
     }
 
     public ArrayList<Score> getScoreBoard_num() { //按編號排序
@@ -37,12 +48,20 @@ public class ScoreBoard {
 
 
 
-    public ArrayList<Score> getScoreBoard_score() { //按分數排序
+    public ArrayList<Score> getScoreBoard_score(int mode) { //按分數排序
 
-        Collections.sort(totalScoreBoard, new Comparator<Score>() {
+        ArrayList<Score> scoreBoard = new ArrayList<>();
+
+        for(Score s : totalScoreBoard) {
+            if(s.getMode() == mode) {
+                scoreBoard.add(s);
+            }
+        }
+
+        Collections.sort(scoreBoard, new Comparator<Score>() {
             @Override
             public int compare(Score o1, Score o2) {
-                int result = Integer.compare(o1.getScore(), o2.getScore());
+                int result = Integer.compare(o2.getScore(), o1.getScore());
                 if (result == 0) {
                     result = Integer.compare(o1.getNum(), o2.getNum());
                 }
@@ -53,16 +72,16 @@ public class ScoreBoard {
 
         int count = 0;
         int count_rank = 0;
-        for(int i=0;i<totalScoreBoard.size();i++){
+        for(int i=0;i<scoreBoard.size();i++){
             if(count > count_rank){
                 continue;
             }
 
-            totalScoreBoard.get(count).setRank(count_rank + 1);
+            scoreBoard.get(count).setRank(count_rank + 1);
             count++;
 
-            while(count < totalScoreBoard.size() && totalScoreBoard.get(count).getScore() == totalScoreBoard.get(count - 1).getScore()) {
-                totalScoreBoard.get(count).setRank(count_rank + 1);
+            while(count < scoreBoard.size() && scoreBoard.get(count).getScore() == scoreBoard.get(count - 1).getScore()) {
+                scoreBoard.get(count).setRank(count_rank + 1);
                 count++;
             }
 
@@ -70,17 +89,25 @@ public class ScoreBoard {
         }
 
 
-        return totalScoreBoard;
+        return scoreBoard;
     }
 
 
 
-    public ArrayList<Score> getScoreBoard_cake() { //按蛋糕數量排序
+    public ArrayList<Score> getScoreBoard_cake(int mode) { //按蛋糕數量排序
+
+        ArrayList<Score> scoreBoard = new ArrayList<>();
+
+        for(Score s : totalScoreBoard) {
+            if(s.getMode() == mode) {
+                scoreBoard.add(s);
+            }
+        }
 
         Collections.sort(totalScoreBoard, new Comparator<Score>() {
             @Override
             public int compare(Score o1, Score o2) {
-                int result = Integer.compare(o1.getFullCake(), o2.getFullCake());
+                int result = Integer.compare(o2.getFullCake(), o1.getFullCake());
                 if (result == 0) {
                     result = Integer.compare(o1.getNum(), o2.getNum());
                 }
@@ -90,23 +117,24 @@ public class ScoreBoard {
 
         int count = 0;
         int count_rank = 0;
-        for(int i=0;i<totalScoreBoard.size();i++){
+        for(int i=0;i<scoreBoard.size();i++){
             if(count > count_rank){
                 continue;
             }
 
-            totalScoreBoard.get(count).setRank(count_rank + 1);
+            scoreBoard.get(count).setRank(count_rank + 1);
             count++;
 
-            while(count < totalScoreBoard.size() && totalScoreBoard.get(count).getFullCake() == totalScoreBoard.get(count - 1).getFullCake()) {
-                totalScoreBoard.get(count).setRank(count_rank + 1);
+            while(count < scoreBoard.size() && scoreBoard.get(count).getScore() == scoreBoard.get(count - 1).getScore()) {
+                scoreBoard.get(count).setRank(count_rank + 1);
                 count++;
             }
 
             count_rank++;
         }
 
-        return totalScoreBoard;
+
+        return scoreBoard;
     }
 
 
@@ -116,14 +144,15 @@ public class ScoreBoard {
 
     public class Score {
 
-
-        private int score;
+        private int mode;
         private int num;
+        private int score;
         private int full_cake;
         private int rank;
 
 
-        public Score(int n) {
+        public Score(int m, int n) {
+            mode = m;
             num = n;
             score = 0;
             full_cake = 0;
@@ -141,12 +170,16 @@ public class ScoreBoard {
             rank = r;
         }
 
-
-        public int getScore() { return score;}
+        public int getMode() { return mode;}
 
         public int getNum() { return num;}
 
+        public int getScore() { return score;}
+
         public int getFullCake() { return full_cake;}
+
+        public int getRank() { return rank;}
+
 
 
     }

@@ -12,7 +12,7 @@ import androidx.annotation.Nullable;
 
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 
-public class BottomSheetFragment extends BottomSheetDialogFragment {
+public class OrderFragment extends BottomSheetDialogFragment {
 
     public interface OnDialogButtonFragmentListener {
         void onSelectDialog(String select);
@@ -20,47 +20,45 @@ public class BottomSheetFragment extends BottomSheetDialogFragment {
 
     public OnDialogButtonFragmentListener listener;
 
-
     @Override
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
         if (context instanceof OnDialogButtonFragmentListener) {
             listener = (OnDialogButtonFragmentListener) context;
         } else {
-            throw new RuntimeException(context.toString()
-                    + " must implement OnDialogButtonFragmentListener");
+            throw new RuntimeException(context + " must implement OnDialogButtonFragmentListener");
         }
     }
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragement_bottom_sheet, container, false);
+        return inflater.inflate(R.layout.fragement_order, container, false);
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        Button shareButton = view.findViewById(R.id.shareButton);
-        Button linkButton = view.findViewById(R.id.linkButton);
+        Button scoreButton = view.findViewById(R.id.scoreButton);
+        Button cakeButton = view.findViewById(R.id.cakeButton);
 
-        shareButton.setOnClickListener(v -> {
+        scoreButton.setOnClickListener(v -> {
             if (listener != null) {
-                listener.onSelectDialog("Share");
+                listener.onSelectDialog("Score");
             }
             dismiss();
         });
 
-        linkButton.setOnClickListener(v -> {
+        cakeButton.setOnClickListener(v -> {
             if (listener != null) {
-                listener.onSelectDialog("Link");
+                listener.onSelectDialog("Cake");
             }
             dismiss();
         });
     }
 
-    public void setListener(OnDialogButtonFragmentListener listener) {
+    public void setOrderListener(OnDialogButtonFragmentListener listener) {
         this.listener = listener;
     }
 }
