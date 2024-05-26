@@ -54,6 +54,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
         ImageView[] backgroundCake = new ImageView[6];
+        boolean[] shake = {true, true, true, true, true, true};
 
         backgroundCake[0] = findViewById(R.id.backgroundCake1);
         backgroundCake[1] = findViewById(R.id.backgroundCake2);
@@ -62,9 +63,22 @@ public class MainActivity extends AppCompatActivity {
         backgroundCake[4] = findViewById(R.id.backgroundCake5);
         backgroundCake[5] = findViewById(R.id.backgroundCake6);
 
+        for (int i = 0; i < 6; i++) {
+            Background.startShakeAnimation(backgroundCake[i]);
+        }
+
         // 啟動搖晃動畫
         for (int i = 0; i < 6; i++) {
-            Background.startShakeAnimation(this, backgroundCake[i]);
+            final int index = i; // 使用 final 变量保存索引
+            backgroundCake[i].setOnClickListener(v -> {
+                shake[index] = !shake[index];
+                if(shake[index]) {
+                    Background.startShakeAnimation(backgroundCake[index]);
+                }
+                else {
+                    Background.startRotateAnimation(backgroundCake[index]);
+                }
+            });
         }
 
 
