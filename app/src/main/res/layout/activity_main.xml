@@ -5,10 +5,19 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#C4E1FF"
     android:gravity="center"
     android:orientation="vertical"
     android:padding="0dp"
     tools:context=".MainActivity">
+
+    <ImageView
+        android:id="@+id/imageView2"
+        android:layout_width="100dp"
+        android:layout_height="65dp"
+        android:layout_marginLeft="180dp"
+        android:layout_marginTop="-100dip"
+        app:srcCompat="@drawable/cake1" />
 
     <TextView
         android:id="@+id/app_name"
@@ -16,10 +25,9 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         android:text="@string/app_name"
-        android:textColor="#673AB7"
+        android:textColor="#639ECD"
         android:textSize="70sp"
         android:textStyle="bold" />
-
 
 
     <Button
@@ -30,7 +38,8 @@
         android:background="@drawable/difficulty_button"
         android:maxLines="1"
         android:text="easy"
-        android:textSize="15sp" />
+        android:textSize="15sp"
+        app:backgroundTint="#6F30A9DF" />
 
     <Button
         android:id="@+id/difficulty2"
@@ -40,7 +49,8 @@
         android:background="@drawable/difficulty_button"
         android:maxLines="1"
         android:text="normal"
-        android:textSize="15sp" />
+        android:textSize="15sp"
+        app:backgroundTint="#6F30A9DF" />
 
     <Button
         android:id="@+id/difficulty3"
@@ -50,7 +60,8 @@
         android:background="@drawable/difficulty_button"
         android:maxLines="1"
         android:text="hard"
-        android:textSize="15sp" />
+        android:textSize="15sp"
+        app:backgroundTint="#6F30A9DF" />
 
     <Button
         android:id="@+id/difficulty4"
@@ -60,5 +71,7 @@
         android:background="@drawable/difficulty_button"
         android:maxLines="1"
         android:text="devil"
-        android:textSize="15sp" />
+        android:textSize="15sp"
+        app:backgroundTint="#6F30A9DF" />
+
 </LinearLayout>

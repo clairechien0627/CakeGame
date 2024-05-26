@@ -9,6 +9,7 @@
     android:paddingLeft="50dp"
     android:paddingRight="50dp"
     android:paddingBottom="30dp"
+    android:background="#C4E1FF"
     android:gravity="center"
     tools:context=".MainActivity2">
 
