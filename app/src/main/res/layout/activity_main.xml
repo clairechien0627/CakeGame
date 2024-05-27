@@ -45,12 +45,13 @@
                 android:gravity="end"
                 android:padding="20dp">
 
-                <ImageView
-                    android:id="@+id/setting"
+                <com.example.cakegame.CustomSelector
+                    android:id="@+id/selectDialog"
                     android:layout_width="30dp"
                     android:layout_height="30dp"
-                    android:src="@drawable/gear_solid"
-                    app:tint="@color/aqua" />
+                    android:layout_centerVertical="true"
+                    android:background="@drawable/gear_solid"
+                    android:backgroundTint="@color/aqua" />
             </LinearLayout>
         </LinearLayout>
 

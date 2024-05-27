@@ -51,6 +51,11 @@ public class MainActivity2 extends AppCompatActivity {
         initializeGame(); // 初始化遊戲
     }
 
+    @Override
+    protected void onPause() {
+        super.onPause();
+    }
+
     // 初始化遊戲的設置
     @SuppressLint("ClickableViewAccessibility")
     private void initializeGame() {

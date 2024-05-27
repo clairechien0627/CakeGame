@@ -63,7 +63,7 @@ public class ScoreBoard {
             public int compare(Score o1, Score o2) {
                 int result = Integer.compare(o2.getScore(), o1.getScore());
                 if (result == 0) {
-                    result = Integer.compare(o1.getNum(), o2.getNum());
+                    result = Integer.compare(o2.getFullCake(), o1.getFullCake());
                 }
                 return result;
             }
@@ -109,7 +109,7 @@ public class ScoreBoard {
             public int compare(Score o1, Score o2) {
                 int result = Integer.compare(o2.getFullCake(), o1.getFullCake());
                 if (result == 0) {
-                    result = Integer.compare(o1.getNum(), o2.getNum());
+                    result = Integer.compare(o2.getScore(), o1.getScore());
                 }
                 return result;
             }

@@ -71,6 +71,11 @@ public class MainActivity3 extends AppCompatActivity implements OrderFragment.On
     }
 
     @Override
+    protected void onPause() {
+        super.onPause();
+    }
+
+    @Override
     public void onSelectDialog(String select) {
         Log.d("CakeSort", select);
         Toast.makeText(this, "Select " + select, Toast.LENGTH_SHORT).show();

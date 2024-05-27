@@ -1,5 +1,6 @@
 package com.example.cakegame;
 
+import android.annotation.SuppressLint;
 import android.app.Service;
 import android.content.Intent;
 import android.os.Bundle;
@@ -15,7 +16,7 @@ public class MainActivity extends AppCompatActivity {
 
     public static SoundPlay soundPlay;
     public static ImageView rank;
-    public static ImageView setting;
+    public static CustomSelector selectDialog;
     public static Vibrator vibrator;
     public static int vibrateTime = 15;
 
@@ -38,9 +39,30 @@ public class MainActivity extends AppCompatActivity {
             startAnimationAndNavigate(rank, MainActivity3.class);
         });
 
-        setting = findViewById(R.id.setting);
-        setting.setOnClickListener(v -> {
-            vibrator.vibrate(vibrateTime);
+        selectDialog = findViewById(R.id.selectDialog);
+
+        int[] drawables = {R.drawable.volume_high_solid, R.drawable.phone_shake_svgrepo_com};
+
+        selectDialog.setSelectIcon(drawables);
+
+        selectDialog.setListener(new CustomSelector.IconSelectListener() {
+            @Override
+            public void onOpen() {
+                // Do something when dialog opens
+                vibrator.vibrate(vibrateTime);
+            }
+
+            @Override
+            public void onSelected(int iconIndex) {
+                // Handle icon selection
+                vibrator.vibrate(vibrateTime);
+            }
+
+            @Override
+            public void onCancel() {
+                // Do something when dialog cancels
+                vibrator.vibrate(vibrateTime);
+            }
         });
 
 
@@ -83,6 +105,11 @@ public class MainActivity extends AppCompatActivity {
 
 
 
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
     }
 
     private void startAnimationAndNavigate(View view, Class<?> destinationActivity) {
