@@ -1,7 +1,5 @@
 package com.example.cakegame;
 
-import static com.example.cakegame.MainActivity2.soundPlay;
-
 import android.animation.*;
 import android.content.*;
 import android.graphics.*;
@@ -176,7 +174,7 @@ public class CakeView extends AppCompatImageView {
             @Override
             public void onAnimationStart(Animator animation) {
                 // 动画開始后的操作
-                soundPlay.playSound("full");
+                SoundPlay.playSound("full");
                 onAnimation = true;
                 fullCakePaint.setColor(colors[p]);
                 fullCakePaint.setAlpha(255);
@@ -220,7 +218,7 @@ public class CakeView extends AppCompatImageView {
         animator.addListener(new Animator.AnimatorListener() {
             @Override
             public void onAnimationStart(Animator animation) {
-                soundPlay.playSound("add");
+                SoundPlay.playSound("add");
                 onAnimation = true;
             }
 

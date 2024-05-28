@@ -1,7 +1,5 @@
 package com.example.cakegame;
 
-import static com.example.cakegame.MainActivity.soundPlay;
-
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.*;
@@ -103,9 +101,7 @@ public class CustomSelector extends LinearLayout {
         soundFrameLayout.addView(soundOverlayImageView);
 
         soundImageView.setOnClickListener(v -> {
-            new Handler().postDelayed(() -> {
-                dismissDialog();
-            }, 500);
+            new Handler().postDelayed(this::dismissDialog, 500);
             if (soundOverlayImageView.getVisibility() == View.INVISIBLE) {
                 soundOverlayImageView.setVisibility(View.VISIBLE);
                 soundImageView.setVisibility(View.INVISIBLE);
@@ -113,19 +109,17 @@ public class CustomSelector extends LinearLayout {
             } else {
                 soundOverlayImageView.setVisibility(View.INVISIBLE);
                 soundImageView.setVisibility(View.VISIBLE);
-                SoundPlay.playSound("click");
                 SoundPlay.setMute(false);
+                SoundPlay.playSound("click");
             }
         });
         soundOverlayImageView.setOnClickListener(v -> {
-            new Handler().postDelayed(() -> {
-                dismissDialog();
-            }, 500);
+            new Handler().postDelayed(this::dismissDialog, 500);
             if (soundOverlayImageView.getVisibility() == View.INVISIBLE) {
                 soundImageView.setVisibility(View.INVISIBLE);
                 soundOverlayImageView.setVisibility(View.VISIBLE);
-                SoundPlay.playSound("click");
                 SoundPlay.setMute(false);
+                SoundPlay.playSound("click");
             } else {
                 soundImageView.setVisibility(View.VISIBLE);
                 soundOverlayImageView.setVisibility(View.INVISIBLE);
@@ -155,9 +149,7 @@ public class CustomSelector extends LinearLayout {
         frameLayout.addView(overlayImageView);
 
         shakeImageView.setOnClickListener(v -> {
-            new Handler().postDelayed(() -> {
-                dismissDialog();
-            }, 500);
+            new Handler().postDelayed(this::dismissDialog, 500);
             if (overlayImageView.getVisibility() == View.INVISIBLE) {
                 overlayImageView.setVisibility(View.VISIBLE);
                 VibrationHelper.setVibrate(false);

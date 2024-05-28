@@ -31,8 +31,6 @@ public class MainActivity3 extends AppCompatActivity implements OrderFragment.On
     private int currentMode;
     private int currentNum = 0;
     private ListView listView;
-    public static SoundPlay soundPlay;
-    public static VibrationHelper vibrationHelper;
     private View itemView;
 
     @Override
@@ -41,8 +39,6 @@ public class MainActivity3 extends AppCompatActivity implements OrderFragment.On
         setContentView(R.layout.activity_main3);
         vibrator = (Vibrator) getSystemService(Service.VIBRATOR_SERVICE);
         listView = findViewById(R.id.ranking_list_view);
-        soundPlay = new SoundPlay(this);
-        vibrationHelper = VibrationHelper.getInstance(this);
 
         Intent intentFrom = getIntent();
         from = intentFrom.getStringExtra("from");
@@ -122,8 +118,8 @@ public class MainActivity3 extends AppCompatActivity implements OrderFragment.On
     @Override
     public void onSelectDialog(String select) {
         Log.d("CakeSort", select);
-        soundPlay.playSound("click");
-        vibrationHelper.vibrate();
+        SoundPlay.playSound("click");
+        VibrationHelper.vibrate();
         Toast.makeText(this, "Select " + select, Toast.LENGTH_SHORT).show();
         TextView orderText = findViewById(R.id.orderText);
         TextView modeText = findViewById(R.id.modeText);

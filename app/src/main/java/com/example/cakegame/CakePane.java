@@ -31,8 +31,8 @@ public class CakePane {
     }
 
     //設置模式 (在MainActivity1)
-    public CakePane(int mode) {
-        this.mode = mode;
+    public static void setMode(int mode) {
+        CakePane.mode = mode;
         complex_cake_possibility = difficulty[mode];
     }
 
@@ -312,11 +312,14 @@ public class CakePane {
             }
         }
 
+        if(all_full) {
+            return;
+        }
+
         randomX = (int) (Math.random() * (x_max-1) % (x_max-1));
         randomY = (int) (Math.random() * (y_max-1) % (y_max-1));
 
-
-        while(!all_full) {
+        while(true) {
             if(!hasPieces[randomX][randomY]) {
                 int randomNumCake = (int) (Math.random() * (pieces_max-1) % (pieces_max-1)) + 1;
 

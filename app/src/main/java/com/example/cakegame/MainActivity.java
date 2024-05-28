@@ -1,10 +1,8 @@
 package com.example.cakegame;
 
 import android.annotation.SuppressLint;
-import android.app.Service;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Vibrator;
 import android.util.Log;
 import android.view.animation.*;
 import android.widget.Button;
@@ -15,8 +13,10 @@ import androidx.appcompat.app.AppCompatActivity;
 
 public class MainActivity extends AppCompatActivity {
 
+    @SuppressLint("StaticFieldLeak")
     public static SoundPlay soundPlay;
     public static VibrationHelper vibrationHelper;
+    @SuppressLint("StaticFieldLeak")
     public static ImageView rank;
     public static CustomSelector selectDialog;
 
@@ -27,7 +27,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         soundPlay = new SoundPlay(this);
         vibrationHelper = VibrationHelper.getInstance(this);
-        vibrationHelper.vibrate();
+        VibrationHelper.vibrate();
 
         Button[] difficulty = new Button[4];
         difficulty[0] = findViewById(R.id.difficulty0);
@@ -37,8 +37,8 @@ public class MainActivity extends AppCompatActivity {
 
         rank = findViewById(R.id.rank);
         rank.setOnClickListener(v -> {
-            vibrationHelper.vibrate();
-            soundPlay.playSound("click");
+            VibrationHelper.vibrate();
+            SoundPlay.playSound("click");
             startAnimationAndNavigate(rank, MainActivity3.class);
         });
 
@@ -49,13 +49,13 @@ public class MainActivity extends AppCompatActivity {
             public void onOpen() {
                 // 當對話框打開時執行
                 Log.d("CustomSelector", "open");
-                vibrationHelper.vibrate();
+                VibrationHelper.vibrate();
             }
 
             @Override
             public void onCancel() {
                 // 當對話框取消時執行
-                vibrationHelper.vibrate();
+                VibrationHelper.vibrate();
             }
         });
 
@@ -63,9 +63,9 @@ public class MainActivity extends AppCompatActivity {
         for (int i = 0; i < 4; i++) {
             final int index = i; // 使用 final 變量保存索引
             difficulty[i].setOnClickListener(v -> {
-                CakePane cakepane = new CakePane(index);
-                vibrationHelper.vibrate();
-                soundPlay.playSound("start");
+                CakePane.setMode(index);
+                VibrationHelper.vibrate();
+                SoundPlay.playSound("start");
                 startAnimationAndNavigate(difficulty[index], MainActivity2.class);
             });
         }

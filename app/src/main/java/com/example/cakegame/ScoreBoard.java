@@ -143,9 +143,9 @@ public class ScoreBoard {
 
 
 
-    public class Score {
+    public static class Score {
 
-        private int mode;
+        private final int mode;
         private int num;
         private int score;
         private int full_cake;
