@@ -16,8 +16,7 @@ public class ScoreBoard {
 
     public ScoreBoard(int mode){
         count_num++;
-        currentScore = new Score(mode, count_num);
-
+        currentScore = new Score(mode);
     }
 
 
@@ -26,11 +25,13 @@ public class ScoreBoard {
     }
 
     public void addCurrentScore() {
+        count_num++;
         totalScoreBoard.add(currentScore);
+        currentScore.setNum(count_num);
         Log.d("ScoreBoard", "add score");
     }
 
-    public ArrayList<Score> getScoreBoard_num() { //按編號排序
+    public static ArrayList<Score> getScoreBoard_num() { //按編號排序
 
         Collections.sort(totalScoreBoard, new Comparator<Score>() {
             @Override
@@ -48,7 +49,7 @@ public class ScoreBoard {
 
 
 
-    public ArrayList<Score> getScoreBoard_score(int mode) { //按分數排序
+    public static ArrayList<Score> getScoreBoard_score(int mode) { //按分數排序
 
         ArrayList<Score> scoreBoard = new ArrayList<>();
 
@@ -94,7 +95,7 @@ public class ScoreBoard {
 
 
 
-    public ArrayList<Score> getScoreBoard_cake(int mode) { //按蛋糕數量排序
+    public static ArrayList<Score> getScoreBoard_cake(int mode) { //按蛋糕數量排序
 
         ArrayList<Score> scoreBoard = new ArrayList<>();
 
@@ -151,9 +152,8 @@ public class ScoreBoard {
         private int rank;
 
 
-        public Score(int m, int n) {
+        public Score(int m) {
             mode = m;
-            num = n;
             score = 0;
             full_cake = 0;
         }
@@ -168,6 +168,10 @@ public class ScoreBoard {
 
         public void setRank(int r) {
             rank = r;
+        }
+
+        public void setNum(int n) {
+            num = n;
         }
 
         public int getMode() { return mode;}

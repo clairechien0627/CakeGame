@@ -20,24 +20,30 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:padding="20dp">
 
-            <LinearLayout
+            <ImageView
+                android:id="@+id/rank"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_gravity="start"
+                android:src="@drawable/ranking_star_solid"
+                app:tint="@color/aqua" />
+
+            <View
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:gravity="start"
-                android:padding="20dp">
+                android:layout_height="0dp"
+                android:layout_weight="1" />
 
-                <ImageView
-                    android:id="@+id/rank"
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:src="@drawable/ranking_star_solid"
-                    app:tint="@color/aqua" />
+            <com.example.cakegame.CustomSelector
+                android:id="@+id/selectDialog"
+                android:layout_width="100dp"
+                android:layout_height="90dp"
+                android:layout_gravity="end" />
 
-            </LinearLayout>
         </LinearLayout>
+
 
         <TextView
             android:id="@+id/app_name"
@@ -112,14 +118,14 @@
         android:id="@+id/backgroundCake2"
         android:layout_width="89dp"
         android:layout_height="99dp"
-        android:layout_marginLeft="330dp"
-        android:layout_marginTop="300dp"
+        android:layout_marginLeft="300dp"
+        android:layout_marginTop="100dp"
         android:src="@drawable/cake2" />
 
     <ImageView
         android:id="@+id/backgroundCake3"
-        android:layout_width="126dp"
-        android:layout_height="138dp"
+        android:layout_width="105dp"
+        android:layout_height="119dp"
         android:layout_marginLeft="-50dp"
         android:layout_marginTop="300dp"
         android:src="@drawable/cake3" />
@@ -129,15 +135,15 @@
         android:layout_width="94dp"
         android:layout_height="101dp"
         android:layout_marginLeft="20dp"
-        android:layout_marginTop="500dp"
+        android:layout_marginTop="600dp"
         android:src="@drawable/cake4" />
 
     <ImageView
         android:id="@+id/backgroundCake5"
         android:layout_width="90dp"
         android:layout_height="128dp"
-        android:layout_marginLeft="150dp"
-        android:layout_marginTop="600dp"
+        android:layout_marginLeft="300dp"
+        android:layout_marginTop="300dp"
         android:src="@drawable/cake5" />
 
     <ImageView
@@ -148,12 +154,7 @@
         android:layout_marginTop="550dp"
         android:src="@drawable/cake6" />
 
-    <com.example.cakegame.CustomSelector
-        android:id="@+id/selectDialog"
-        android:layout_width="100dp"
-        android:layout_height="90dp"
-        android:layout_marginLeft="290dp"
-        android:layout_marginTop="20dp" />
+
 
 
 

@@ -38,6 +38,7 @@ public class MainActivity extends AppCompatActivity {
         rank = findViewById(R.id.rank);
         rank.setOnClickListener(v -> {
             vibrationHelper.vibrate();
+            soundPlay.playSound("click");
             startAnimationAndNavigate(rank, MainActivity3.class);
         });
 
@@ -64,6 +65,7 @@ public class MainActivity extends AppCompatActivity {
             difficulty[i].setOnClickListener(v -> {
                 CakePane cakepane = new CakePane(index);
                 vibrationHelper.vibrate();
+                soundPlay.playSound("start");
                 startAnimationAndNavigate(difficulty[index], MainActivity2.class);
             });
         }
@@ -77,6 +79,10 @@ public class MainActivity extends AppCompatActivity {
         backgroundCake[3] = findViewById(R.id.backgroundCake4);
         backgroundCake[4] = findViewById(R.id.backgroundCake5);
         backgroundCake[5] = findViewById(R.id.backgroundCake6);
+
+        for(int i = 0;i < 6; i++) {
+            Background.startShakeAnimation(backgroundCake[i]);
+        }
 
         // 啟動搖晃動畫
         for (int i = 0; i < 6; i++) {
@@ -125,7 +131,6 @@ public class MainActivity extends AppCompatActivity {
 
         // 步驟4：開始動畫
         view.startAnimation(animSet);
-        soundPlay.playSound("start");
 
         Intent intent = new Intent(MainActivity.this, destinationActivity);
         startActivity(intent);

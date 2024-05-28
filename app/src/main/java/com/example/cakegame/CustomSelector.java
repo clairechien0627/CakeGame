@@ -1,5 +1,7 @@
 package com.example.cakegame;
 
+import static com.example.cakegame.MainActivity.soundPlay;
+
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.*;
@@ -111,6 +113,7 @@ public class CustomSelector extends LinearLayout {
             } else {
                 soundOverlayImageView.setVisibility(View.INVISIBLE);
                 soundImageView.setVisibility(View.VISIBLE);
+                SoundPlay.playSound("click");
                 SoundPlay.setMute(false);
             }
         });
@@ -121,6 +124,7 @@ public class CustomSelector extends LinearLayout {
             if (soundOverlayImageView.getVisibility() == View.INVISIBLE) {
                 soundImageView.setVisibility(View.INVISIBLE);
                 soundOverlayImageView.setVisibility(View.VISIBLE);
+                SoundPlay.playSound("click");
                 SoundPlay.setMute(false);
             } else {
                 soundImageView.setVisibility(View.VISIBLE);

@@ -29,6 +29,7 @@ public class SoundPlay {
         soundMap.put("add", soundPool.load(context, R.raw.add, 1));
         soundMap.put("end", soundPool.load(context, R.raw.end, 1));
         soundMap.put("start", soundPool.load(context, R.raw.start, 1));
+        soundMap.put("click", soundPool.load(context, R.raw.click, 1));
 
         AudioManager audioManager = (AudioManager) context.getSystemService(Context.AUDIO_SERVICE);
 
@@ -39,7 +40,7 @@ public class SoundPlay {
         }
     }
 
-    public void playSound(String soundName) {
+    public static void playSound(String soundName) {
         soundPool.play(soundMap.get(soundName), volume, volume, 0, 0, 1);
     }
 
