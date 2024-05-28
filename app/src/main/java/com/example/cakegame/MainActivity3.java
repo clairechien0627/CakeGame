@@ -23,14 +23,13 @@ public class MainActivity3 extends AppCompatActivity implements OrderFragment.On
     RankingAdapter adapter = new RankingAdapter(this, rankingList);
     private int mode;
     private int order;
-    public static Vibrator vibrator;
-    public static int vibrateTime = 15;
+    public static VibrationHelper vibrationHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main3);
-        vibrator = (Vibrator) getSystemService(Service.VIBRATOR_SERVICE);
+        vibrationHelper = VibrationHelper.getInstance(this);
 
         mode = 0;
         order = 0;
@@ -48,14 +47,14 @@ public class MainActivity3 extends AppCompatActivity implements OrderFragment.On
 
         ImageView closeBottom = findViewById(R.id.window_close);
         closeBottom.setOnClickListener(v -> {
-            vibrator.vibrate(vibrateTime);
+            vibrationHelper.vibrate();
             Intent intent = new Intent(MainActivity3.this, MainActivity.class);
             startActivity(intent);
         });
 
         Button orderButton = findViewById(R.id.order);
         orderButton.setOnClickListener(v -> {
-            vibrator.vibrate(vibrateTime);
+            vibrationHelper.vibrate();
             OrderFragment orderFragment = new OrderFragment();
             orderFragment.setOrderListener(MainActivity3.this);
             orderFragment.show(getSupportFragmentManager(), orderFragment.getTag());
@@ -63,7 +62,7 @@ public class MainActivity3 extends AppCompatActivity implements OrderFragment.On
 
         Button modeButton = findViewById(R.id.mode);
         modeButton.setOnClickListener(v -> {
-            vibrator.vibrate(vibrateTime);
+            vibrationHelper.vibrate();
             ModeFragment modeFragment = new ModeFragment();
             modeFragment.setModeListener(MainActivity3.this);
             modeFragment.show(getSupportFragmentManager(), modeFragment.getTag());

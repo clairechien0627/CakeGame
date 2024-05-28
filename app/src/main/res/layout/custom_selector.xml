@@ -1,36 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="300dp"
-    android:layout_height="200dp"
-    android:gravity="center_horizontal"
+    android:layout_width="100dp"
+    android:layout_height="90dp"
     android:padding="0dp">
+    <LinearLayout
+        android:id="@+id/dialog_select_linearlayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="0dp"
+        android:layout_below="@+id/select_imageview"
+        android:gravity="center_vertical"
+        >
         <LinearLayout
-            android:id="@+id/dialog_select_linearlayout"
+            android:id="@+id/iconLinearLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:padding="0dp"
-            android:layout_above="@+id/select_imageview"
-            android:layout_marginBottom="-5dp"
-            android:gravity="center_vertical"
+            android:padding="5dp"
+            android:layout_marginTop="15dp"
             >
-            <LinearLayout
-                android:id="@+id/iconLinearLayout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:padding="5dp"
-                android:layout_marginBottom="20dp"
-                >
-            </LinearLayout>
         </LinearLayout>
+    </LinearLayout>
 
-        <ImageView
-            android:id="@+id/select_imageview"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:layout_alignParentBottom="true"
-            android:layout_centerHorizontal="true"
-            />
+    <ImageView
+        android:id="@+id/select_imageview"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="5dp"
+        android:background="@drawable/gear_solid"
+        android:backgroundTint="@color/aqua"
+        />
 
-    </RelativeLayout>
+</RelativeLayout>

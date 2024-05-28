@@ -5,6 +5,7 @@ import android.app.Service;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Vibrator;
+import android.util.Log;
 import android.view.animation.*;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -15,17 +16,18 @@ import androidx.appcompat.app.AppCompatActivity;
 public class MainActivity extends AppCompatActivity {
 
     public static SoundPlay soundPlay;
+    public static VibrationHelper vibrationHelper;
     public static ImageView rank;
     public static CustomSelector selectDialog;
-    public static Vibrator vibrator;
-    public static int vibrateTime = 15;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        vibrator = (Vibrator) getSystemService(Service.VIBRATOR_SERVICE);
         soundPlay = new SoundPlay(this);
+        vibrationHelper = VibrationHelper.getInstance(this);
+        vibrationHelper.vibrate();
 
         Button[] difficulty = new Button[4];
         difficulty[0] = findViewById(R.id.difficulty0);
@@ -35,42 +37,39 @@ public class MainActivity extends AppCompatActivity {
 
         rank = findViewById(R.id.rank);
         rank.setOnClickListener(v -> {
-            vibrator.vibrate(vibrateTime);
+            vibrationHelper.vibrate();
             startAnimationAndNavigate(rank, MainActivity3.class);
         });
 
         selectDialog = findViewById(R.id.selectDialog);
 
-        int[] drawables = {R.drawable.volume_high_solid, R.drawable.phone_shake_svgrepo_com};
-
-        selectDialog.setSelectIcon(drawables);
-
         selectDialog.setListener(new CustomSelector.IconSelectListener() {
             @Override
             public void onOpen() {
-                // Do something when dialog opens
-                vibrator.vibrate(vibrateTime);
+                // 當對話框打開時執行
+                Log.d("CustomSelector", "open");
+                vibrationHelper.vibrate();
             }
 
             @Override
             public void onSelected(int iconIndex) {
-                // Handle icon selection
-                vibrator.vibrate(vibrateTime);
+                // 處理圖標選擇
+                vibrationHelper.vibrate();
             }
 
             @Override
             public void onCancel() {
-                // Do something when dialog cancels
-                vibrator.vibrate(vibrateTime);
+                // 當對話框取消時執行
+                vibrationHelper.vibrate();
             }
         });
 
 
         for (int i = 0; i < 4; i++) {
-            final int index = i; // 使用 final 变量保存索引
+            final int index = i; // 使用 final 變量保存索引
             difficulty[i].setOnClickListener(v -> {
                 CakePane cakepane = new CakePane(index);
-                vibrator.vibrate(vibrateTime);
+                vibrationHelper.vibrate();
                 startAnimationAndNavigate(difficulty[index], MainActivity2.class);
             });
         }
@@ -85,13 +84,9 @@ public class MainActivity extends AppCompatActivity {
         backgroundCake[4] = findViewById(R.id.backgroundCake5);
         backgroundCake[5] = findViewById(R.id.backgroundCake6);
 
-        for (int i = 0; i < 6; i++) {
-            Background.startShakeAnimation(backgroundCake[i]);
-        }
-
         // 啟動搖晃動畫
         for (int i = 0; i < 6; i++) {
-            final int index = i; // 使用 final 变量保存索引
+            final int index = i; // 使用 final 變量保存索引
             backgroundCake[i].setOnClickListener(v -> {
                 shake[index] = !shake[index];
                 if(shake[index]) {
@@ -113,30 +108,30 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void startAnimationAndNavigate(View view, Class<?> destinationActivity) {
-        // 新增一个动画集合
+        // 新增一個動畫集合
         AnimationSet animSet = new AnimationSet(true);
 
-        // 步骤2：放大1.2倍的动画
+        // 步驟2：放大1.2倍的動畫
         ScaleAnimation scaleAnimation = new ScaleAnimation(
                 1.0f, 1.2f, 1.0f, 1.2f,
                 Animation.RELATIVE_TO_SELF, 0.5f,
                 Animation.RELATIVE_TO_SELF, 0.5f);
         scaleAnimation.setDuration(200);
 
-        // 步骤3：旋转-20度的动画
+        // 步驟3：旋轉-20度的動畫
         RotateAnimation rotateAnimation = new RotateAnimation(
                 0.0f, -20f,
                 RotateAnimation.RELATIVE_TO_SELF, 0.5f,
                 RotateAnimation.RELATIVE_TO_SELF, 0.5f);
         rotateAnimation.setDuration(200);
 
-        // 将放大及旋转的动画放入动画集合
+        // 將放大及旋轉的動畫放入動畫集合
         animSet.addAnimation(scaleAnimation);
         animSet.addAnimation(rotateAnimation);
 
-        // 步骤4：开始动画
+        // 步驟4：開始動畫
         view.startAnimation(animSet);
-        soundPlay.getSound("start");
+        soundPlay.playSound("start");
 
         Intent intent = new Intent(MainActivity.this, destinationActivity);
         startActivity(intent);

@@ -176,7 +176,7 @@ public class CakeView extends AppCompatImageView {
             @Override
             public void onAnimationStart(Animator animation) {
                 // 动画開始后的操作
-                soundPlay.getSound("full");
+                soundPlay.playSound("full");
                 onAnimation = true;
                 fullCakePaint.setColor(colors[p]);
                 fullCakePaint.setAlpha(255);
@@ -220,7 +220,7 @@ public class CakeView extends AppCompatImageView {
         animator.addListener(new Animator.AnimatorListener() {
             @Override
             public void onAnimationStart(Animator animation) {
-                soundPlay.getSound("add");
+                soundPlay.playSound("add");
                 onAnimation = true;
             }
 

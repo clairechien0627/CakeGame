@@ -15,15 +15,14 @@ public class MainActivity2 extends AppCompatActivity {
     public static CakeView[][] cakeViews = new CakeView[5][4];
     public static CakePane[] new_cakes = new CakePane[4];
     public static CakeView[] newCakeView = new CakeView[4];
-    public final int[][] cakeID = {
+    public static final int[][] cakeID = {
             {R.id.cake1, R.id.cake2, R.id.cake3, R.id.cake4},
             {R.id.cake5, R.id.cake6, R.id.cake7, R.id.cake8},
             {R.id.cake9, R.id.cake10, R.id.cake11, R.id.cake12},
             {R.id.cake13, R.id.cake14, R.id.cake15, R.id.cake16},
             {R.id.cake17, R.id.cake18, R.id.cake19, R.id.cake20}
     };
-    public final int[] newCakeID = {R.id.cake21, R.id.cake22, R.id.cake23, R.id.cake24};
-
+    public static final int[] newCakeID = {R.id.cake21, R.id.cake22, R.id.cake23, R.id.cake24};
 
     public static ScoreBoard scoreBoard;
     public static int totalScore = 0;
@@ -36,12 +35,10 @@ public class MainActivity2 extends AppCompatActivity {
 
     private static int width;
     private static int height;
+    public static SoundPlay soundPlay;
+    public static VibrationHelper vibrationHelper;
     private int originalIndex;
     private boolean endGame = false;
-    public static SoundPlay soundPlay;
-    public static Vibrator vibrator;
-    public static int vibrateTime = 15;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -88,7 +85,7 @@ public class MainActivity2 extends AppCompatActivity {
             }
             //設置音效
             soundPlay = new SoundPlay(this);
-            vibrator = (Vibrator) getSystemService(Service.VIBRATOR_SERVICE);
+            vibrationHelper = VibrationHelper.getInstance(this);
             //設置分數
             scoreBoard = new ScoreBoard(cakes[0][0].getMode());
             score = findViewById(R.id.totalScore);
@@ -148,7 +145,7 @@ public class MainActivity2 extends AppCompatActivity {
                 } else {
                     v.startDrag(clipData, shadowBuilder, v, 0);
                 }
-                vibrator.vibrate(vibrateTime);
+                vibrationHelper.vibrate();
                 return true;
             } else {
                 return false;
@@ -171,14 +168,14 @@ public class MainActivity2 extends AppCompatActivity {
             switch (event.getAction()) {
                 case DragEvent.ACTION_DRAG_STARTED:
                     draggedView.setVisibility(View.INVISIBLE);
-                    vibrator.vibrate(vibrateTime);
+                    vibrationHelper.vibrate();
                     break;
                 case DragEvent.ACTION_DRAG_ENTERED:
                     if(!cakeView.onAnimation()) {
                         cakeView.setImageResource(R.drawable.destination_circle);
                     }
-                    vibrator.vibrate(vibrateTime);
-                    soundPlay.getSound("choose");
+                    vibrationHelper.vibrate();
+                    soundPlay.playSound("choose");
                     notEmpty();
                     break;
                 case DragEvent.ACTION_DRAG_EXITED:
@@ -186,6 +183,7 @@ public class MainActivity2 extends AppCompatActivity {
                     notEmpty();
                     break;
                 case DragEvent.ACTION_DROP:
+                    vibrationHelper.vibrate();
                     ViewGroup draggedViewParent = (ViewGroup) draggedView.getParent();
                     int draggedViewIndex = 0;
 
@@ -233,7 +231,6 @@ public class MainActivity2 extends AppCompatActivity {
                     }
                     break;
                 case DragEvent.ACTION_DRAG_ENDED:
-                    vibrator.vibrate(vibrateTime);
                     if (!dropped) {
                         draggedView.setVisibility(View.VISIBLE);
                     }
@@ -285,7 +282,7 @@ public class MainActivity2 extends AppCompatActivity {
         }
         if (allNotEmpty) {
             endGame = true;
-            soundPlay.getSound("end");
+            soundPlay.playSound("end");
 //            Log.d("CakeSort", "allNotEmpty");
             scoreBoard.addCurrentScore();
             Intent intent = new Intent(MainActivity2.this, MainActivity3.class);

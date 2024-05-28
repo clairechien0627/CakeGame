@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.*;
 import android.graphics.drawable.BitmapDrawable;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.View;
 import android.view.animation.*;
 import android.widget.ImageView;
@@ -11,8 +12,8 @@ import android.widget.LinearLayout;
 import androidx.annotation.Nullable;
 
 public class CustomSelector extends LinearLayout {
-    private int[] drawables = new int[0];
-    private boolean isOpen = false;
+    private int[] drawables = {R.drawable.volume_high_solid, R.drawable.phone_shake_svgrepo_com}; // 圖標資源的ID陣列
+    private boolean isOpen = false; // 是否打開對話框的標誌
     private static final int ROW_HEIGHT = 150;
 
     public interface IconSelectListener {
@@ -34,6 +35,7 @@ public class CustomSelector extends LinearLayout {
         displayDialog(false);
 
         findViewById(R.id.select_imageview).setOnClickListener(v -> {
+            Log.d("CakeSort", "listener");
             rotateSelectImageView();
             displayDialog(!isOpen);
             if (isOpen) {
@@ -43,11 +45,6 @@ public class CustomSelector extends LinearLayout {
             }
             isOpen = !isOpen;
         });
-    }
-
-    public void setSelectIcon(int[] drawables) {
-        this.drawables = drawables;
-        drawDialog();
     }
 
     private void rotateSelectImageView() {
@@ -67,35 +64,34 @@ public class CustomSelector extends LinearLayout {
     private void drawDialog() {
         int triangleWidth = 50;
         int triangleHeight = 40;
-        int imagesPerRow = 3;
-        int imageRows = (int) Math.ceil((double) drawables.length / imagesPerRow);
 
         LinearLayout iconLinearLayout = findViewById(R.id.iconLinearLayout);
         iconLinearLayout.removeAllViews();
+        LinearLayout imageLayout = new LinearLayout(getContext());
+        imageLayout.setOrientation(LinearLayout.HORIZONTAL);
 
-        for (int i = 0; i < imageRows; i++) {
-            LinearLayout imageLayout = new LinearLayout(getContext());
-            imageLayout.setOrientation(LinearLayout.HORIZONTAL);
-
-            for (int j = 0; j < imagesPerRow; j++) {
-                int index = i * imagesPerRow + j;
-                if (index < drawables.length) {
-                    ImageView imageView = new ImageView(getContext());
-                    imageView.setImageResource(drawables[index]);
-                    imageView.setLayoutParams(new LayoutParams(0, LayoutParams.WRAP_CONTENT, 1.0f));
-                    imageView.setOnClickListener(v -> {
-                        dismissDialog();
-                        listener.onSelected(index);
-                    });
-                    imageLayout.addView(imageView);
-                }
-            }
-
-            iconLinearLayout.addView(imageLayout);
+        for (int j = 0; j < 2; j++) {
+            int index = j;
+            ImageView imageView = new ImageView(getContext());
+            imageView.setImageResource(drawables[index]);
+            // 設置圖標的寬度和高度限制為30dp
+            imageView.setLayoutParams(new LinearLayout.LayoutParams(
+                    dpToPx(getContext(), 30), // 寬度為30dp
+                    dpToPx(getContext(), 30), // 高度為30dp
+                    1
+            ));
+            imageView.setOnClickListener(v -> {
+                dismissDialog();
+                listener.onSelected(index);
+            });
+            imageLayout.addView(imageView);
         }
 
+        iconLinearLayout.addView(imageLayout);
+
+
         int dialogWidth = 500;
-        int dialogHeight = imageRows * ROW_HEIGHT + triangleHeight;
+        int dialogHeight = ROW_HEIGHT + triangleHeight;
 
         Bitmap bitmap = Bitmap.createBitmap(dialogWidth, dialogHeight, Bitmap.Config.ARGB_8888);
         Paint p = new Paint();
@@ -105,13 +101,12 @@ public class CustomSelector extends LinearLayout {
         Canvas canvas = new Canvas(bitmap);
 
         Path path = new Path();
-        path.moveTo(0, 0);
-        path.lineTo(dialogWidth, 0);
-        path.lineTo(dialogWidth, dialogHeight - triangleHeight);
-        path.lineTo(dialogWidth / 2f + triangleWidth / 2f, dialogHeight - triangleHeight);
-        path.lineTo(dialogWidth / 2f, dialogHeight);
-        path.lineTo(dialogWidth / 2f - triangleWidth / 2f, dialogHeight - triangleHeight);
-        path.lineTo(0, dialogHeight - triangleHeight);
+        RectF rectF = new RectF(0, triangleHeight, dialogWidth, dialogHeight);
+        float cornerRadius = 20; // 圓角的半徑
+        path.addRoundRect(rectF, cornerRadius, cornerRadius, Path.Direction.CW);
+        path.moveTo(dialogWidth - triangleWidth - 60, triangleHeight);
+        path.lineTo(dialogWidth - triangleWidth/2f - 60, 0);
+        path.lineTo(dialogWidth - 60, triangleHeight);
         path.close();
 
         canvas.drawPath(path, p);
@@ -136,5 +131,10 @@ public class CustomSelector extends LinearLayout {
 
     public void setListener(IconSelectListener listener) {
         this.listener = listener;
+    }
+
+    private int dpToPx(Context context, int dp) {
+        float density = context.getResources().getDisplayMetrics().density;
+        return (int) (dp * density + 0.5f); // 四捨五入
     }
 }
