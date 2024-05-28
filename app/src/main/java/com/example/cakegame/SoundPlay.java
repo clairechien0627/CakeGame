@@ -1,6 +1,5 @@
 package com.example.cakegame;
 
-import android.annotation.SuppressLint;
 import android.content.*;
 import android.media.*;
 import java.util.*;
@@ -8,10 +7,9 @@ import java.util.*;
 public class SoundPlay {
 
     private static SoundPool soundPool;
-    private static final HashMap<String, Integer> soundMap = new HashMap<>();
+    private static HashMap<String, Integer> soundMap = new HashMap<>();
     private static float volume;
     private static boolean isMuted = false;
-    @SuppressLint("StaticFieldLeak")
     private static Context context;
 
     public SoundPlay(Context context) {

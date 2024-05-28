@@ -66,6 +66,7 @@
             android:text="easy"
             android:textAllCaps="true"
             android:textSize="15sp"
+            android:textColor="@color/white"
             app:backgroundTint="@color/sky_blue" />
 
         <Button
@@ -78,6 +79,7 @@
             android:text="normal"
             android:textAllCaps="true"
             android:textSize="15sp"
+            android:textColor="@color/white"
             app:backgroundTint="@color/sky_blue" />
 
         <Button
@@ -90,6 +92,7 @@
             android:text="hard"
             android:textAllCaps="true"
             android:textSize="15sp"
+            android:textColor="@color/white"
             app:backgroundTint="@color/sky_blue" />
 
         <Button
@@ -102,6 +105,7 @@
             android:text="devil"
             android:textAllCaps="true"
             android:textSize="15sp"
+            android:textColor="@color/white"
             app:backgroundTint="@color/sky_blue" />
 
     </LinearLayout>

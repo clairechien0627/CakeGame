@@ -1,8 +1,10 @@
 package com.example.cakegame;
 
 import android.annotation.SuppressLint;
+import android.app.Service;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Vibrator;
 import android.util.Log;
 import android.view.animation.*;
 import android.widget.Button;
@@ -27,7 +29,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         soundPlay = new SoundPlay(this);
         vibrationHelper = VibrationHelper.getInstance(this);
-        VibrationHelper.vibrate();
+        vibrationHelper.vibrate();
 
         Button[] difficulty = new Button[4];
         difficulty[0] = findViewById(R.id.difficulty0);
@@ -37,8 +39,8 @@ public class MainActivity extends AppCompatActivity {
 
         rank = findViewById(R.id.rank);
         rank.setOnClickListener(v -> {
-            VibrationHelper.vibrate();
-            SoundPlay.playSound("click");
+            vibrationHelper.vibrate();
+            soundPlay.playSound("click");
             startAnimationAndNavigate(rank, MainActivity3.class);
         });
 
@@ -49,13 +51,13 @@ public class MainActivity extends AppCompatActivity {
             public void onOpen() {
                 // 當對話框打開時執行
                 Log.d("CustomSelector", "open");
-                VibrationHelper.vibrate();
+                vibrationHelper.vibrate();
             }
 
             @Override
             public void onCancel() {
                 // 當對話框取消時執行
-                VibrationHelper.vibrate();
+                vibrationHelper.vibrate();
             }
         });
 
@@ -64,8 +66,8 @@ public class MainActivity extends AppCompatActivity {
             final int index = i; // 使用 final 變量保存索引
             difficulty[i].setOnClickListener(v -> {
                 CakePane.setMode(index);
-                VibrationHelper.vibrate();
-                SoundPlay.playSound("start");
+                vibrationHelper.vibrate();
+                soundPlay.playSound("start");
                 startAnimationAndNavigate(difficulty[index], MainActivity2.class);
             });
         }

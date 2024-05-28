@@ -1,6 +1,7 @@
 package com.example.cakegame;
 
 import android.annotation.SuppressLint;
+import android.app.Service;
 import android.content.*;
 import android.os.*;
 import android.util.*;
@@ -34,6 +35,8 @@ public class MainActivity2 extends AppCompatActivity {
 
     private static int width;
     private static int height;
+    public static SoundPlay soundPlay;
+    public static VibrationHelper vibrationHelper;
     private int originalIndex;
     private boolean endGame = false;
 
@@ -81,7 +84,8 @@ public class MainActivity2 extends AppCompatActivity {
                 newCakeView[i].setSize(height, width);
             }
             //設置音效
-
+            soundPlay = new SoundPlay(this);
+            vibrationHelper = VibrationHelper.getInstance(this);
             //設置分數
             scoreBoard = new ScoreBoard(cakes[0][0].getMode());
             score = findViewById(R.id.totalScore);
@@ -141,7 +145,7 @@ public class MainActivity2 extends AppCompatActivity {
                 } else {
                     v.startDrag(clipData, shadowBuilder, v, 0);
                 }
-                VibrationHelper.vibrate();
+                vibrationHelper.vibrate();
                 return true;
             } else {
                 return false;
@@ -164,14 +168,14 @@ public class MainActivity2 extends AppCompatActivity {
             switch (event.getAction()) {
                 case DragEvent.ACTION_DRAG_STARTED:
                     draggedView.setVisibility(View.INVISIBLE);
-                    VibrationHelper.vibrate();
+                    vibrationHelper.vibrate();
                     break;
                 case DragEvent.ACTION_DRAG_ENTERED:
                     if(!cakeView.onAnimation()) {
                         cakeView.setImageResource(R.drawable.destination_circle);
                     }
-                    VibrationHelper.vibrate();
-                    SoundPlay.playSound("choose");
+                    vibrationHelper.vibrate();
+                    soundPlay.playSound("choose");
                     notEmpty();
                     break;
                 case DragEvent.ACTION_DRAG_EXITED:
@@ -179,7 +183,7 @@ public class MainActivity2 extends AppCompatActivity {
                     notEmpty();
                     break;
                 case DragEvent.ACTION_DROP:
-                    VibrationHelper.vibrate();
+                    vibrationHelper.vibrate();
                     ViewGroup draggedViewParent = (ViewGroup) draggedView.getParent();
                     int draggedViewIndex = 0;
 
@@ -278,7 +282,7 @@ public class MainActivity2 extends AppCompatActivity {
         }
         if (allNotEmpty) {
             endGame = true;
-            SoundPlay.playSound("end");
+            soundPlay.playSound("end");
 //            Log.d("CakeSort", "allNotEmpty");
             scoreBoard.addCurrentScore();
             Intent intent = new Intent(MainActivity2.this, MainActivity3.class);

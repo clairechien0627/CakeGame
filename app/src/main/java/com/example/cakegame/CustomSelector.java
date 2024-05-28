@@ -1,5 +1,7 @@
 package com.example.cakegame;
 
+import static com.example.cakegame.MainActivity.soundPlay;
+
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.*;
@@ -105,12 +107,12 @@ public class CustomSelector extends LinearLayout {
             if (soundOverlayImageView.getVisibility() == View.INVISIBLE) {
                 soundOverlayImageView.setVisibility(View.VISIBLE);
                 soundImageView.setVisibility(View.INVISIBLE);
-                SoundPlay.setMute(true);
+                soundPlay.setMute(true);
             } else {
                 soundOverlayImageView.setVisibility(View.INVISIBLE);
                 soundImageView.setVisibility(View.VISIBLE);
-                SoundPlay.setMute(false);
-                SoundPlay.playSound("click");
+                soundPlay.setMute(false);
+                soundPlay.playSound("click");
             }
         });
         soundOverlayImageView.setOnClickListener(v -> {
@@ -118,12 +120,12 @@ public class CustomSelector extends LinearLayout {
             if (soundOverlayImageView.getVisibility() == View.INVISIBLE) {
                 soundImageView.setVisibility(View.INVISIBLE);
                 soundOverlayImageView.setVisibility(View.VISIBLE);
-                SoundPlay.setMute(false);
-                SoundPlay.playSound("click");
+                soundPlay.setMute(false);
+                soundPlay.playSound("click");
             } else {
                 soundImageView.setVisibility(View.VISIBLE);
                 soundOverlayImageView.setVisibility(View.INVISIBLE);
-                SoundPlay.setMute(true);
+                soundPlay.setMute(true);
             }
         });
         imageLayout.addView(soundFrameLayout);
@@ -191,7 +193,7 @@ public class CustomSelector extends LinearLayout {
         findViewById(R.id.dialog_select_linearlayout).setVisibility(display ? View.VISIBLE : View.GONE);
         if (display) {
             ScaleAnimation anim = new ScaleAnimation(0, 1, 0, 1,
-                    Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 1f);
+                    Animation.RELATIVE_TO_SELF, 0.8f, Animation.RELATIVE_TO_SELF, 0f);
             anim.setDuration(300);
             findViewById(R.id.dialog_select_linearlayout).startAnimation(anim);
         }
