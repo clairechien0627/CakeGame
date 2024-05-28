@@ -3,24 +3,22 @@
     android:layout_width="100dp"
     android:layout_height="90dp"
     android:padding="0dp">
+
     <LinearLayout
         android:id="@+id/dialog_select_linearlayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="0dp"
         android:layout_below="@+id/select_imageview"
         android:gravity="center_vertical"
-        >
+        android:orientation="vertical">
+
         <LinearLayout
             android:id="@+id/iconLinearLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:padding="5dp"
             android:layout_marginTop="15dp"
-            >
-        </LinearLayout>
+            android:orientation="vertical"
+            android:padding="5dp"></LinearLayout>
     </LinearLayout>
 
     <ImageView

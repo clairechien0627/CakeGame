@@ -52,12 +52,6 @@ public class MainActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onSelected(int iconIndex) {
-                // 處理圖標選擇
-                vibrationHelper.vibrate();
-            }
-
-            @Override
             public void onCancel() {
                 // 當對話框取消時執行
                 vibrationHelper.vibrate();

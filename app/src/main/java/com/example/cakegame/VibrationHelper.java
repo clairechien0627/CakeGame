@@ -6,7 +6,7 @@ import android.os.Vibrator;
 public class VibrationHelper {
     private static VibrationHelper instance;
     private static long vibrateTime = 15;
-    private Vibrator vibrator;
+    private static Vibrator vibrator;
     private static boolean isVibrationEnabled = true;
 
     private VibrationHelper(Context context) {
@@ -20,7 +20,7 @@ public class VibrationHelper {
         return instance;
     }
 
-    public void vibrate() {
+    public static void vibrate() {
         if (isVibrationEnabled && vibrator != null) {
             vibrator.vibrate(vibrateTime);
         }

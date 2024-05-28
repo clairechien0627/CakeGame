@@ -20,10 +20,11 @@
         <entry key="..\:/Users/clair/AndroidStudioProjects/CakeGame/app/src/main/res/drawable/shape_circle.xml" value="0.253125" />
         <entry key="..\:/Users/clair/AndroidStudioProjects/CakeGame/app/src/main/res/drawable/slash_solid.xml" value="0.1925925925925926" />
         <entry key="..\:/Users/clair/AndroidStudioProjects/CakeGame/app/src/main/res/drawable/stroke_circle.xml" value="0.253125" />
-        <entry key="..\:/Users/clair/AndroidStudioProjects/CakeGame/app/src/main/res/layout/activity_main.xml" value="0.264" />
+        <entry key="..\:/Users/clair/AndroidStudioProjects/CakeGame/app/src/main/res/drawable/volume_xmark_solid.xml" value="0.1" />
+        <entry key="..\:/Users/clair/AndroidStudioProjects/CakeGame/app/src/main/res/layout/activity_main.xml" value="0.2" />
         <entry key="..\:/Users/clair/AndroidStudioProjects/CakeGame/app/src/main/res/layout/activity_main2.xml" value="0.264" />
         <entry key="..\:/Users/clair/AndroidStudioProjects/CakeGame/app/src/main/res/layout/activity_main3.xml" value="0.4" />
-        <entry key="..\:/Users/clair/AndroidStudioProjects/CakeGame/app/src/main/res/layout/custom_selector.xml" value="0.4" />
+        <entry key="..\:/Users/clair/AndroidStudioProjects/CakeGame/app/src/main/res/layout/custom_selector.xml" value="0.1" />
         <entry key="..\:/Users/clair/AndroidStudioProjects/CakeGame/app/src/main/res/layout/fragement_bottom_sheet.xml" value="0.1" />
         <entry key="..\:/Users/clair/AndroidStudioProjects/CakeGame/app/src/main/res/layout/fragement_mode.xml" value="0.1" />
       </map>

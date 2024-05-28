@@ -1,24 +1,27 @@
 package com.example.cakegame;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.*;
 import android.graphics.drawable.BitmapDrawable;
 import android.util.AttributeSet;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 import android.view.animation.*;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import androidx.annotation.Nullable;
 
+import android.os.Handler;
+
 public class CustomSelector extends LinearLayout {
-    private int[] drawables = {R.drawable.volume_high_solid, R.drawable.phone_shake_svgrepo_com}; // 圖標資源的ID陣列
     private boolean isOpen = false; // 是否打開對話框的標誌
     private static final int ROW_HEIGHT = 150;
 
     public interface IconSelectListener {
         void onOpen();
-        void onSelected(int iconIndex);
         void onCancel();
     }
 
@@ -61,6 +64,7 @@ public class CustomSelector extends LinearLayout {
         findViewById(R.id.select_imageview).startAnimation(animRotate);
     }
 
+    @SuppressLint("UseCompatLoadingForDrawables")
     private void drawDialog() {
         int triangleWidth = 50;
         int triangleHeight = 40;
@@ -69,23 +73,97 @@ public class CustomSelector extends LinearLayout {
         iconLinearLayout.removeAllViews();
         LinearLayout imageLayout = new LinearLayout(getContext());
         imageLayout.setOrientation(LinearLayout.HORIZONTAL);
+        imageLayout.setWeightSum(2);
 
-        for (int j = 0; j < 2; j++) {
-            int index = j;
-            ImageView imageView = new ImageView(getContext());
-            imageView.setImageResource(drawables[index]);
-            // 設置圖標的寬度和高度限制為30dp
-            imageView.setLayoutParams(new LinearLayout.LayoutParams(
-                    dpToPx(getContext(), 30), // 寬度為30dp
-                    dpToPx(getContext(), 30), // 高度為30dp
-                    1
-            ));
-            imageView.setOnClickListener(v -> {
+        FrameLayout soundFrameLayout = new FrameLayout(getContext());
+        LinearLayout.LayoutParams frameLayoutParams = new LinearLayout.LayoutParams(
+                0,
+                LinearLayout.LayoutParams.WRAP_CONTENT,
+                1 // Weight as 1
+        );
+        frameLayoutParams.gravity = Gravity.CENTER; // Set gravity to center
+        soundFrameLayout.setLayoutParams(frameLayoutParams);
+
+        ImageView soundImageView = new ImageView(getContext());
+        soundImageView.setImageResource(R.drawable.volume_high_solid);
+        FrameLayout.LayoutParams soundImageLayoutParams = new FrameLayout.LayoutParams(
+                dpToPx(getContext(), 25),
+                dpToPx(getContext(), 25)
+        );
+        soundImageLayoutParams.gravity = Gravity.CENTER;
+        soundImageView.setLayoutParams(soundImageLayoutParams);
+        soundFrameLayout.addView(soundImageView);
+
+        ImageView soundOverlayImageView = new ImageView(getContext());
+        soundOverlayImageView.setImageResource(R.drawable.volume_xmark_solid);
+        soundOverlayImageView.setLayoutParams(soundImageLayoutParams);
+        soundOverlayImageView.setVisibility(View.INVISIBLE);
+        soundFrameLayout.addView(soundOverlayImageView);
+
+        soundImageView.setOnClickListener(v -> {
+            new Handler().postDelayed(() -> {
                 dismissDialog();
-                listener.onSelected(index);
-            });
-            imageLayout.addView(imageView);
-        }
+            }, 500);
+            if (soundOverlayImageView.getVisibility() == View.INVISIBLE) {
+                soundOverlayImageView.setVisibility(View.VISIBLE);
+                soundImageView.setVisibility(View.INVISIBLE);
+                SoundPlay.setMute(true);
+            } else {
+                soundOverlayImageView.setVisibility(View.INVISIBLE);
+                soundImageView.setVisibility(View.VISIBLE);
+                SoundPlay.setMute(false);
+            }
+        });
+        soundOverlayImageView.setOnClickListener(v -> {
+            new Handler().postDelayed(() -> {
+                dismissDialog();
+            }, 500);
+            if (soundOverlayImageView.getVisibility() == View.INVISIBLE) {
+                soundImageView.setVisibility(View.INVISIBLE);
+                soundOverlayImageView.setVisibility(View.VISIBLE);
+                SoundPlay.setMute(false);
+            } else {
+                soundImageView.setVisibility(View.VISIBLE);
+                soundOverlayImageView.setVisibility(View.INVISIBLE);
+                SoundPlay.setMute(true);
+            }
+        });
+        imageLayout.addView(soundFrameLayout);
+
+        FrameLayout frameLayout = new FrameLayout(getContext());
+        frameLayoutParams.gravity = Gravity.CENTER; // Set gravity to center
+        frameLayout.setLayoutParams(frameLayoutParams);
+
+        ImageView shakeImageView = new ImageView(getContext());
+        shakeImageView.setImageResource(R.drawable.phone_shake_svgrepo_com);
+        FrameLayout.LayoutParams shakeImageLayoutParams = new FrameLayout.LayoutParams(
+                dpToPx(getContext(), 30),
+                dpToPx(getContext(), 30)
+        );
+        shakeImageLayoutParams.gravity = Gravity.CENTER;
+        shakeImageView.setLayoutParams(shakeImageLayoutParams);
+        frameLayout.addView(shakeImageView);
+
+        ImageView overlayImageView = new ImageView(getContext());
+        overlayImageView.setImageResource(R.drawable.slash_solid);
+        overlayImageView.setLayoutParams(shakeImageLayoutParams);
+        overlayImageView.setVisibility(View.INVISIBLE);
+        frameLayout.addView(overlayImageView);
+
+        shakeImageView.setOnClickListener(v -> {
+            new Handler().postDelayed(() -> {
+                dismissDialog();
+            }, 500);
+            if (overlayImageView.getVisibility() == View.INVISIBLE) {
+                overlayImageView.setVisibility(View.VISIBLE);
+                VibrationHelper.setVibrate(false);
+            } else {
+                overlayImageView.setVisibility(View.INVISIBLE);
+                VibrationHelper.setVibrate(true);
+                VibrationHelper.vibrate();
+            }
+        });
+        imageLayout.addView(frameLayout);
 
         iconLinearLayout.addView(imageLayout);
 

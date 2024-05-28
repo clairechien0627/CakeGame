@@ -286,6 +286,7 @@ public class MainActivity2 extends AppCompatActivity {
 //            Log.d("CakeSort", "allNotEmpty");
             scoreBoard.addCurrentScore();
             Intent intent = new Intent(MainActivity2.this, MainActivity3.class);
+            intent.putExtra("from", "MainActivity2");
             startActivity(intent);
         }
     }

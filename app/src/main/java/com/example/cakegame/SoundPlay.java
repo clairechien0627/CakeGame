@@ -43,7 +43,7 @@ public class SoundPlay {
         soundPool.play(soundMap.get(soundName), volume, volume, 0, 0, 1);
     }
 
-    public void setMute(boolean mute) {
+    public static void setMute(boolean mute) {
         isMuted = mute;
         if (isMuted) {
             volume = 0f;
