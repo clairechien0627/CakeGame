@@ -105,7 +105,7 @@ public class ScoreBoard {
             }
         }
 
-        Collections.sort(totalScoreBoard, new Comparator<Score>() {
+        Collections.sort(scoreBoard, new Comparator<Score>() {
             @Override
             public int compare(Score o1, Score o2) {
                 int result = Integer.compare(o2.getFullCake(), o1.getFullCake());
