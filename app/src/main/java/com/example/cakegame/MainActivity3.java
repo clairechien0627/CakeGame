@@ -28,8 +28,10 @@ public class MainActivity3 extends AppCompatActivity implements OrderFragment.On
     public static int vibrateTime = 15;
     private String from;
     private int currentIndex;
-    private int currentNum;
+    private int currentMode;
+    private int currentNum = 0;
     private ListView listView;
+    private View itemView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,9 +43,14 @@ public class MainActivity3 extends AppCompatActivity implements OrderFragment.On
         Intent intentFrom = getIntent();
         from = intentFrom.getStringExtra("from");
         order = 0;
-        ArrayList<ScoreBoard.Score> numArrayList = scoreBoard.getScoreBoard_num();
-        mode = numArrayList.get(numArrayList.size() - 1).getMode();
-        currentNum = numArrayList.get(numArrayList.size() - 1).getNum();
+        mode = 0;
+        if (from != null && from.equals("MainActivity2")) {
+            ArrayList<ScoreBoard.Score> numArrayList = scoreBoard.getScoreBoard_num();
+            mode = numArrayList.get(numArrayList.size() - 1).getMode();
+            currentMode = mode;
+            currentNum = numArrayList.get(numArrayList.size() - 1).getNum();
+        }
+
 
         TextView modeText = findViewById(R.id.modeText);
         if (mode == 0) {
@@ -68,7 +75,7 @@ public class MainActivity3 extends AppCompatActivity implements OrderFragment.On
         if (from != null && from.equals("MainActivity2")) {
             listView.smoothScrollToPositionFromTop(currentIndex, 10);
             listView.postDelayed(() -> {
-                View itemView = listView.getChildAt(currentIndex - listView.getFirstVisiblePosition());
+                itemView = listView.getChildAt(currentIndex - listView.getFirstVisiblePosition());
                 if (itemView != null) {
                     itemView.setBackgroundResource(R.color.blue_light);
                 }
@@ -76,11 +83,11 @@ public class MainActivity3 extends AppCompatActivity implements OrderFragment.On
         }
 
         // Add more rankings as needed
-
         listView.setAdapter(adapter);
 
         ImageView closeBottom = findViewById(R.id.window_close);
         closeBottom.setOnClickListener(v -> {
+            resetItemViewBackgrounds();
             vibrator.vibrate(vibrateTime);
             Intent intent = new Intent(MainActivity3.this, MainActivity.class);
             startActivity(intent);
@@ -118,7 +125,7 @@ public class MainActivity3 extends AppCompatActivity implements OrderFragment.On
         Intent intentFrom = getIntent();
         from = intentFrom.getStringExtra("from");
         currentIndex = 0;
-        currentNum = 0;
+        resetItemViewBackgrounds();
 
         if (select.equals("Easy")) {
             mode = 0;
@@ -146,8 +153,11 @@ public class MainActivity3 extends AppCompatActivity implements OrderFragment.On
                 ScoreBoard.Score score = scoreArrayList.get(i);
                 rankingList.add(new Ranking(score.getRank(), score.getScore(), score.getFullCake()));
                 Log.d("CakeSort", score.getRank() + " " + score.getScore() + " " + score.getFullCake());
+                if(score.getNum() == currentNum){
+                    currentIndex = i;
+                }
             }
-            if (from != null && from.equals("MainActivity2")) {
+            if (from != null && from.equals("MainActivity2") && mode == currentMode) {
                 listView.smoothScrollToPositionFromTop(currentIndex, 10);
                 listView.postDelayed(() -> {
                     View itemView = listView.getChildAt(currentIndex - listView.getFirstVisiblePosition());
@@ -162,8 +172,11 @@ public class MainActivity3 extends AppCompatActivity implements OrderFragment.On
                 ScoreBoard.Score score = scoreArrayList.get(i);
                 rankingList.add(new Ranking(score.getRank(), score.getScore(), score.getFullCake()));
                 Log.d("CakeSort", score.getRank() + " " + score.getScore() + " " + score.getFullCake());
+                if(score.getNum() == currentNum){
+                    currentIndex = i;
+                }
             }
-            if (from != null && from.equals("MainActivity2")) {
+            if (from != null && from.equals("MainActivity2") && mode == currentMode) {
                 listView.smoothScrollToPositionFromTop(currentIndex, 10);
                 listView.postDelayed(() -> {
                     View itemView = listView.getChildAt(currentIndex - listView.getFirstVisiblePosition());
@@ -174,5 +187,14 @@ public class MainActivity3 extends AppCompatActivity implements OrderFragment.On
             }
         }
         adapter.notifyDataSetChanged();
+    }
+
+    private void resetItemViewBackgrounds() {
+        for (int i = 0; i < listView.getChildCount(); i++) {
+            View itemView = listView.getChildAt(i);
+            if (itemView != null) {
+                itemView.setBackgroundResource(0); // 設置背景為透明
+            }
+        }
     }
 }
