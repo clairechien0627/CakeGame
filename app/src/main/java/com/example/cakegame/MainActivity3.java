@@ -24,25 +24,18 @@ public class MainActivity3 extends AppCompatActivity implements OrderFragment.On
     RankingAdapter adapter = new RankingAdapter(this, rankingList);
     private int mode;
     private int order;
-    public static Vibrator vibrator;
-    public static int vibrateTime = 15;
     private String from;
     private int currentIndex;
     private int currentMode;
     private int currentNum = 0;
     private ListView listView;
-    public static SoundPlay soundPlay;
-    public static VibrationHelper vibrationHelper;
     private View itemView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main3);
-        vibrator = (Vibrator) getSystemService(Service.VIBRATOR_SERVICE);
         listView = findViewById(R.id.ranking_list_view);
-        soundPlay = new SoundPlay(this);
-        vibrationHelper = VibrationHelper.getInstance(this);
 
         Intent intentFrom = getIntent();
         from = intentFrom.getStringExtra("from");
@@ -92,14 +85,14 @@ public class MainActivity3 extends AppCompatActivity implements OrderFragment.On
         ImageView closeBottom = findViewById(R.id.window_close);
         closeBottom.setOnClickListener(v -> {
             resetItemViewBackgrounds();
-            vibrator.vibrate(vibrateTime);
+            VibrationHelper.vibrate();
             Intent intent = new Intent(MainActivity3.this, MainActivity.class);
             startActivity(intent);
         });
 
         Button orderButton = findViewById(R.id.order);
         orderButton.setOnClickListener(v -> {
-            vibrator.vibrate(vibrateTime);
+            VibrationHelper.vibrate();
             OrderFragment orderFragment = new OrderFragment();
             orderFragment.setOrderListener(MainActivity3.this);
             orderFragment.show(getSupportFragmentManager(), orderFragment.getTag());
@@ -107,7 +100,7 @@ public class MainActivity3 extends AppCompatActivity implements OrderFragment.On
 
         Button modeButton = findViewById(R.id.mode);
         modeButton.setOnClickListener(v -> {
-            vibrator.vibrate(vibrateTime);
+            VibrationHelper.vibrate();
             ModeFragment modeFragment = new ModeFragment();
             modeFragment.setModeListener(MainActivity3.this);
             modeFragment.show(getSupportFragmentManager(), modeFragment.getTag());
@@ -122,8 +115,8 @@ public class MainActivity3 extends AppCompatActivity implements OrderFragment.On
     @Override
     public void onSelectDialog(String select) {
         Log.d("CakeSort", select);
-        soundPlay.playSound("click");
-        vibrationHelper.vibrate();
+        SoundPlay.playSound("click");
+        VibrationHelper.vibrate();
         Toast.makeText(this, "Select " + select, Toast.LENGTH_SHORT).show();
         TextView orderText = findViewById(R.id.orderText);
         TextView modeText = findViewById(R.id.modeText);

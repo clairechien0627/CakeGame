@@ -1,7 +1,5 @@
 package com.example.cakegame;
 
-import static com.example.cakegame.MainActivity.soundPlay;
-
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.*;
@@ -107,12 +105,14 @@ public class CustomSelector extends LinearLayout {
             if (soundOverlayImageView.getVisibility() == View.INVISIBLE) {
                 soundOverlayImageView.setVisibility(View.VISIBLE);
                 soundImageView.setVisibility(View.INVISIBLE);
-                soundPlay.setMute(true);
+                SoundPlay.setMute(true);
+                Log.d("CustomSelector", "Muted");
             } else {
                 soundOverlayImageView.setVisibility(View.INVISIBLE);
                 soundImageView.setVisibility(View.VISIBLE);
-                soundPlay.setMute(false);
-                soundPlay.playSound("click");
+                SoundPlay.setMute(false);
+                SoundPlay.playSound("click");
+                Log.d("CustomSelector", "unMuted");
             }
         });
         soundOverlayImageView.setOnClickListener(v -> {
@@ -120,12 +120,14 @@ public class CustomSelector extends LinearLayout {
             if (soundOverlayImageView.getVisibility() == View.INVISIBLE) {
                 soundImageView.setVisibility(View.INVISIBLE);
                 soundOverlayImageView.setVisibility(View.VISIBLE);
-                soundPlay.setMute(false);
-                soundPlay.playSound("click");
+                SoundPlay.setMute(true);
+                Log.d("CustomSelector", "Muted");
             } else {
                 soundImageView.setVisibility(View.VISIBLE);
                 soundOverlayImageView.setVisibility(View.INVISIBLE);
-                soundPlay.setMute(true);
+                SoundPlay.setMute(false);
+                SoundPlay.playSound("click");
+                Log.d("CustomSelector", "unMuted");
             }
         });
         imageLayout.addView(soundFrameLayout);

@@ -126,7 +126,7 @@ public class ScoreBoard {
             scoreBoard.get(count).setRank(count_rank + 1);
             count++;
 
-            while(count < scoreBoard.size() && scoreBoard.get(count).getScore() == scoreBoard.get(count - 1).getScore()) {
+            while(count < scoreBoard.size() && scoreBoard.get(count).getFullCake() == scoreBoard.get(count - 1).getFullCake()) {
                 scoreBoard.get(count).setRank(count_rank + 1);
                 count++;
             }

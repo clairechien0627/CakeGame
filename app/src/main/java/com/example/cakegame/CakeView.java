@@ -1,7 +1,5 @@
 package com.example.cakegame;
 
-import static com.example.cakegame.MainActivity2.soundPlay;
-
 import android.animation.*;
 import android.content.*;
 import android.graphics.*;
@@ -31,6 +29,15 @@ public class CakeView extends AppCompatImageView {
             0xFF00FF00, // 绿色
             0xFF0000FF, // 蓝色
             0xFF800080  // 紫色
+    };
+
+    int[] colors2 = new int[]{
+            0xFFFF8181, // 红色
+            0xFFFFA962, // 橙色
+            0xFFFFFA5B, // 黄色
+            0xFF81E75F, // 绿色
+            0xFF81FFFB, // 蓝色
+            0xFFB679DB  // 紫色
     };
 
     public static final int ARC_FULL_ROTATION_DEGREE = 360;
@@ -68,7 +75,7 @@ public class CakeView extends AppCompatImageView {
         for (int i = 0; i < 6; i++) {
             paints[i] = new Paint();
             paints[i].setStyle(Paint.Style.FILL);
-            paints[i].setColor(colors[i]);
+            paints[i].setColor(colors2[i]);
         }
 
         fullCakePaint.setStyle(Paint.Style.FILL);
@@ -176,9 +183,9 @@ public class CakeView extends AppCompatImageView {
             @Override
             public void onAnimationStart(Animator animation) {
                 // 动画開始后的操作
-                soundPlay.playSound("full");
+                SoundPlay.playSound("full");
                 onAnimation = true;
-                fullCakePaint.setColor(colors[p]);
+                fullCakePaint.setColor(colors2[p]);
                 fullCakePaint.setAlpha(255);
                 fillArcPaint.setColor(fillArcColor);
                 currentPercentage = 360;
@@ -220,7 +227,7 @@ public class CakeView extends AppCompatImageView {
         animator.addListener(new Animator.AnimatorListener() {
             @Override
             public void onAnimationStart(Animator animation) {
-                soundPlay.playSound("add");
+                SoundPlay.playSound("add");
                 onAnimation = true;
             }
 
