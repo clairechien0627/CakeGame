@@ -1,9 +1,8 @@
 package com.example.cakegame;
 
-import android.app.Service;
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Vibrator;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -31,6 +30,7 @@ public class MainActivity3 extends AppCompatActivity implements OrderFragment.On
     private ListView listView;
     private View itemView;
 
+    @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,7 +42,7 @@ public class MainActivity3 extends AppCompatActivity implements OrderFragment.On
         order = 0;
         mode = 0;
         if (from != null && from.equals("MainActivity2")) {
-            ArrayList<ScoreBoard.Score> numArrayList = scoreBoard.getScoreBoard_num();
+            ArrayList<ScoreBoard.Score> numArrayList = ScoreBoard.getScoreBoard_num();
             mode = numArrayList.get(numArrayList.size() - 1).getMode();
             currentMode = mode;
             currentNum = numArrayList.get(numArrayList.size() - 1).getNum();
@@ -60,7 +60,7 @@ public class MainActivity3 extends AppCompatActivity implements OrderFragment.On
             modeText.setText("Devil");
         }
 
-        ArrayList<ScoreBoard.Score> scoreArrayList = scoreBoard.getScoreBoard_score(mode);
+        ArrayList<ScoreBoard.Score> scoreArrayList = ScoreBoard.getScoreBoard_score(mode);
         for (int i = 0; i < scoreArrayList.size(); i++) {
             ScoreBoard.Score score = scoreArrayList.get(i);
             rankingList.add(new Ranking(score.getRank(), score.getScore(), score.getFullCake()));
@@ -112,6 +112,7 @@ public class MainActivity3 extends AppCompatActivity implements OrderFragment.On
         super.onPause();
     }
 
+    @SuppressLint("SetTextI18n")
     @Override
     public void onSelectDialog(String select) {
         Log.d("CakeSort", select);
@@ -126,28 +127,35 @@ public class MainActivity3 extends AppCompatActivity implements OrderFragment.On
         currentIndex = 0;
         resetItemViewBackgrounds();
 
-        if (select.equals("Easy")) {
-            mode = 0;
-            modeText.setText("Easy");
-        } else if (select.equals("Normal")) {
-            mode = 1;
-            modeText.setText("Normal");
-        } else if (select.equals("Hard")) {
-            mode = 2;
-            modeText.setText("Hard");
-        } else if (select.equals("Devil")) {
-            mode = 3;
-            modeText.setText("Devil");
-        } else if (select.equals("Score")) {
-            order = 0;
-            orderText.setText("Score");
-        } else if (select.equals("Cake")) {
-            order = 1;
-            orderText.setText("Cake");
+        switch (select) {
+            case "Easy":
+                mode = 0;
+                modeText.setText("Easy");
+                break;
+            case "Normal":
+                mode = 1;
+                modeText.setText("Normal");
+                break;
+            case "Hard":
+                mode = 2;
+                modeText.setText("Hard");
+                break;
+            case "Devil":
+                mode = 3;
+                modeText.setText("Devil");
+                break;
+            case "Score":
+                order = 0;
+                orderText.setText("Score");
+                break;
+            case "Cake":
+                order = 1;
+                orderText.setText("Cake");
+                break;
         }
 
         if (order == 0) {
-            ArrayList<ScoreBoard.Score> scoreArrayList = scoreBoard.getScoreBoard_score(mode);
+            ArrayList<ScoreBoard.Score> scoreArrayList = ScoreBoard.getScoreBoard_score(mode);
             for (int i = 0; i < scoreArrayList.size(); i++) {
                 ScoreBoard.Score score = scoreArrayList.get(i);
                 rankingList.add(new Ranking(score.getRank(), score.getScore(), score.getFullCake()));
@@ -166,7 +174,7 @@ public class MainActivity3 extends AppCompatActivity implements OrderFragment.On
                 }, 500);
             }
         } else if (order == 1) {
-            ArrayList<ScoreBoard.Score> scoreArrayList = scoreBoard.getScoreBoard_cake(mode);
+            ArrayList<ScoreBoard.Score> scoreArrayList = ScoreBoard.getScoreBoard_cake(mode);
             for (int i = 0; i < scoreArrayList.size(); i++) {
                 ScoreBoard.Score score = scoreArrayList.get(i);
                 rankingList.add(new Ranking(score.getRank(), score.getScore(), score.getFullCake()));

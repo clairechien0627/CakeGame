@@ -81,7 +81,7 @@ public class RandomFallCake extends View {
         while (iterator.hasNext()) {
             BitmapPosition bp = iterator.next();
             long elapsedTime = currentTime - bp.startTime;
-            int newY = (int) (bp.y + elapsedTime / 50.0); // 调整速度
+            int newY = (int) (bp.y + elapsedTime / 300.0); // 调整速度
 
             if (newY > viewHeight) {
                 // 移出屏幕，移除图像

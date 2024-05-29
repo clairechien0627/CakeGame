@@ -29,4 +29,8 @@ public class VibrationHelper {
     public static void setVibrate(boolean enabled) {
         isVibrationEnabled = enabled;
     }
+
+    public static boolean getVibrate() {
+        return isVibrationEnabled;
+    }
 }

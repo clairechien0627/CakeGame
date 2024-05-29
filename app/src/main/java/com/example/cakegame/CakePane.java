@@ -356,7 +356,7 @@ public class CakePane {
         return x < 0 || x >= x_max || y < 0 || y >= y_max;
     }
 
-    public int getMode() {
+    public static int getMode() {
         return mode;
     }
 

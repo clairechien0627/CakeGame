@@ -1,7 +1,6 @@
 package com.example.cakegame;
 
 import android.annotation.SuppressLint;
-import android.app.Service;
 import android.content.*;
 import android.os.*;
 import android.util.*;
@@ -39,6 +38,7 @@ public class MainActivity2 extends AppCompatActivity {
     private static int height;
     private int originalIndex;
     private boolean endGame = false;
+    public static CustomSelector selectDialog1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,6 +46,7 @@ public class MainActivity2 extends AppCompatActivity {
         setContentView(R.layout.activity_main2);
 
         initializeGame(); // 初始化遊戲
+        initializeBackground();
     }
 
     @Override
@@ -84,16 +85,36 @@ public class MainActivity2 extends AppCompatActivity {
                 newCakeView[i].setSize(height, width);
             }
             //設置分數
-            scoreBoard = new ScoreBoard(cakes[0][0].getMode());
+            scoreBoard = new ScoreBoard(CakePane.getMode());
             score = findViewById(R.id.totalScore);
             fullCake = findViewById(R.id.totalFullCakeNum);
-
-            randomFallCakeView = findViewById(R.id.random_fall_cake_view);
 
             notEmpty();
             getTable();
         });
     }
+
+    // 初始化遊戲的背景
+    private void initializeBackground() {
+        randomFallCakeView = findViewById(R.id.random_fall_cake_view);
+
+        selectDialog1 = findViewById(R.id.selectDialog1);
+
+        selectDialog1.setListener(new CustomSelector.IconSelectListener() {
+
+            @Override
+            public void onOpen() {
+                Log.d("CakeSort", "open");
+                VibrationHelper.vibrate();
+            }
+
+            @Override
+            public void onCancel() {
+                VibrationHelper.vibrate();
+            }
+        });
+    }
+
 
     // 重置可拖曳的蛋糕
     @SuppressLint("ClickableViewAccessibility")
@@ -172,8 +193,6 @@ public class MainActivity2 extends AppCompatActivity {
                     VibrationHelper.vibrate();
                     break;
                 case DragEvent.ACTION_DRAG_ENTERED:
-
-                    randomFallCakeView.generateNewRandomImage();
                     if(!cakeView.onAnimation()) {
                         cakeView.setImageResource(R.drawable.destination_circle);
                     }
@@ -276,10 +295,9 @@ public class MainActivity2 extends AppCompatActivity {
         boolean allNotEmpty = true;
         for(int i = 0; i < 5; i++){
             for(int j = 0; j < 4; j++){
-                if(cakes[i][j].getPieces().isEmpty()){
+                if(cakes[i][j].getPieces().isEmpty()) {
                     allNotEmpty = false;
-                } else {
-                    cakeViews[i][j].setImageResource(R.drawable.pieces_circle);
+                    break;
                 }
             }
         }
@@ -302,5 +320,9 @@ public class MainActivity2 extends AppCompatActivity {
         totalFullCakeNum = scoreBoard.getCurrentScore().getFullCake();
         score.setText("Total Score : " + totalScore);
         fullCake.setText("Full Cake : " + totalFullCakeNum);
+
+        for(int i=0;i<currentCake.getFullCakeNum();i++) {
+            randomFallCakeView.generateNewRandomImage();
+        }
     }
 }

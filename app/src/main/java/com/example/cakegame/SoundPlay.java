@@ -61,4 +61,8 @@ public class SoundPlay {
         }
     }
 
+    public static boolean getMute() {
+        return isMuted;
+    }
+
 }

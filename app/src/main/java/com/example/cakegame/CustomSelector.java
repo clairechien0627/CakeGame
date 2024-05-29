@@ -4,17 +4,15 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.*;
 import android.graphics.drawable.BitmapDrawable;
+import android.os.Handler;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.animation.*;
-import android.widget.FrameLayout;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
-import androidx.annotation.Nullable;
+import android.widget.*;
 
-import android.os.Handler;
+import androidx.annotation.Nullable;
 
 public class CustomSelector extends LinearLayout {
     private boolean isOpen = false; // 是否打開對話框的標誌
@@ -73,7 +71,6 @@ public class CustomSelector extends LinearLayout {
         iconLinearLayout.removeAllViews();
         LinearLayout imageLayout = new LinearLayout(getContext());
         imageLayout.setOrientation(LinearLayout.HORIZONTAL);
-        imageLayout.setWeightSum(2);
 
         FrameLayout soundFrameLayout = new FrameLayout(getContext());
         LinearLayout.LayoutParams frameLayoutParams = new LinearLayout.LayoutParams(
@@ -83,7 +80,6 @@ public class CustomSelector extends LinearLayout {
         );
         frameLayoutParams.gravity = Gravity.CENTER; // Set gravity to center
         soundFrameLayout.setLayoutParams(frameLayoutParams);
-
         ImageView soundImageView = new ImageView(getContext());
         soundImageView.setImageResource(R.drawable.volume_high_solid);
         FrameLayout.LayoutParams soundImageLayoutParams = new FrameLayout.LayoutParams(
@@ -93,12 +89,16 @@ public class CustomSelector extends LinearLayout {
         soundImageLayoutParams.gravity = Gravity.CENTER;
         soundImageView.setLayoutParams(soundImageLayoutParams);
         soundFrameLayout.addView(soundImageView);
-
         ImageView soundOverlayImageView = new ImageView(getContext());
         soundOverlayImageView.setImageResource(R.drawable.volume_xmark_solid);
         soundOverlayImageView.setLayoutParams(soundImageLayoutParams);
-        soundOverlayImageView.setVisibility(View.INVISIBLE);
+
         soundFrameLayout.addView(soundOverlayImageView);
+        if(!SoundPlay.getMute()){
+            soundOverlayImageView.setVisibility(View.INVISIBLE);
+        }else {
+            soundImageView.setVisibility(View.INVISIBLE);
+        }
 
         soundImageView.setOnClickListener(v -> {
             new Handler().postDelayed(this::dismissDialog, 500);
@@ -130,12 +130,11 @@ public class CustomSelector extends LinearLayout {
                 Log.d("CustomSelector", "unMuted");
             }
         });
-        imageLayout.addView(soundFrameLayout);
 
+        imageLayout.addView(soundFrameLayout);
         FrameLayout frameLayout = new FrameLayout(getContext());
         frameLayoutParams.gravity = Gravity.CENTER; // Set gravity to center
         frameLayout.setLayoutParams(frameLayoutParams);
-
         ImageView shakeImageView = new ImageView(getContext());
         shakeImageView.setImageResource(R.drawable.phone_shake_svgrepo_com);
         FrameLayout.LayoutParams shakeImageLayoutParams = new FrameLayout.LayoutParams(
@@ -145,13 +144,14 @@ public class CustomSelector extends LinearLayout {
         shakeImageLayoutParams.gravity = Gravity.CENTER;
         shakeImageView.setLayoutParams(shakeImageLayoutParams);
         frameLayout.addView(shakeImageView);
-
         ImageView overlayImageView = new ImageView(getContext());
         overlayImageView.setImageResource(R.drawable.slash_solid);
         overlayImageView.setLayoutParams(shakeImageLayoutParams);
-        overlayImageView.setVisibility(View.INVISIBLE);
         frameLayout.addView(overlayImageView);
 
+        if(VibrationHelper.getVibrate()){
+            overlayImageView.setVisibility(View.INVISIBLE);
+        }
         shakeImageView.setOnClickListener(v -> {
             new Handler().postDelayed(this::dismissDialog, 500);
             if (overlayImageView.getVisibility() == View.INVISIBLE) {
@@ -164,9 +164,7 @@ public class CustomSelector extends LinearLayout {
             }
         });
         imageLayout.addView(frameLayout);
-
         iconLinearLayout.addView(imageLayout);
-
 
         int dialogWidth = 500;
         int dialogHeight = ROW_HEIGHT + triangleHeight;
