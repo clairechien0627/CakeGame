@@ -1,276 +1,279 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:paddingLeft="50dp"
-    android:paddingRight="50dp"
-    android:paddingBottom="30dp"
-    android:background="#C4E1FF"
-    android:gravity="center"
+    android:background="@color/blue_light"
     tools:context=".MainActivity2">
 
-    <TextView
-        android:id="@+id/totalScore"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Total Score : 0"
-        android:textSize="25sp"
-        android:gravity="center"
-        android:textColor="@color/aqua"
-        />
-    <TextView
-        android:id="@+id/totalFullCakeNum"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Full Cake : 0"
-        android:textSize="25sp"
-        android:gravity="center"
-        android:textColor="@color/aqua"
-        />
+    <!-- 新增的 RandomImageView -->
+    <com.example.cakegame.RandomFallCake
+        android:id="@+id/random_fall_cake_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
 
     <LinearLayout
+        android:id="@+id/main"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:baselineAligned="false"
-        android:layout_marginTop="10dp"
-        android:orientation="horizontal">
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:paddingLeft="50dp"
+        android:paddingRight="50dp"
+        android:paddingBottom="30dp"
+        android:gravity="center">
 
-        <com.example.cakegame.CakeView
-            android:id="@+id/cake1"
-            android:layout_width="0dp"
+        <TextView
+            android:id="@+id/totalScore"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            app:srcCompat="@drawable/stroke_circle"/>
+            android:text="Total Score : 0"
+            android:textSize="25sp"
+            android:gravity="center"
+            android:textColor="@color/aqua" />
 
-        <com.example.cakegame.CakeView
-            android:id="@+id/cake2"
-            android:layout_width="0dp"
+        <TextView
+            android:id="@+id/totalFullCakeNum"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:layout_marginStart="10dp"
-            app:srcCompat="@drawable/stroke_circle"/>
+            android:text="Full Cake : 0"
+            android:textSize="25sp"
+            android:gravity="center"
+            android:textColor="@color/aqua" />
 
-        <com.example.cakegame.CakeView
-            android:id="@+id/cake3"
-            android:layout_width="0dp"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:layout_marginStart="10dp"
-            app:srcCompat="@drawable/stroke_circle"/>
+            android:baselineAligned="false"
+            android:layout_marginTop="10dp"
+            android:orientation="horizontal">
 
-        <com.example.cakegame.CakeView
-            android:id="@+id/cake4"
-            android:layout_width="0dp"
+            <com.example.cakegame.CakeView
+                android:id="@+id/cake1"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                app:srcCompat="@drawable/stroke_circle" />
+
+            <com.example.cakegame.CakeView
+                android:id="@+id/cake2"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginStart="10dp"
+                app:srcCompat="@drawable/stroke_circle" />
+
+            <com.example.cakegame.CakeView
+                android:id="@+id/cake3"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginStart="10dp"
+                app:srcCompat="@drawable/stroke_circle" />
+
+            <com.example.cakegame.CakeView
+                android:id="@+id/cake4"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginStart="10dp"
+                app:srcCompat="@drawable/stroke_circle" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:layout_marginStart="10dp"
-            app:srcCompat="@drawable/stroke_circle"/>
+            android:baselineAligned="false"
+            android:layout_marginTop="15dp"
+            android:orientation="horizontal">
 
+            <com.example.cakegame.CakeView
+                android:id="@+id/cake5"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                app:srcCompat="@drawable/stroke_circle" />
+
+            <com.example.cakegame.CakeView
+                android:id="@+id/cake6"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginStart="10dp"
+                app:srcCompat="@drawable/stroke_circle" />
+
+            <com.example.cakegame.CakeView
+                android:id="@+id/cake7"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginStart="10dp"
+                app:srcCompat="@drawable/stroke_circle" />
+
+            <com.example.cakegame.CakeView
+                android:id="@+id/cake8"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginStart="10dp"
+                app:srcCompat="@drawable/stroke_circle" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:baselineAligned="false"
+            android:layout_marginTop="15dp"
+            android:orientation="horizontal">
+
+            <com.example.cakegame.CakeView
+                android:id="@+id/cake9"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                app:srcCompat="@drawable/stroke_circle" />
+
+            <com.example.cakegame.CakeView
+                android:id="@+id/cake10"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginStart="10dp"
+                app:srcCompat="@drawable/stroke_circle" />
+
+            <com.example.cakegame.CakeView
+                android:id="@+id/cake11"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginStart="10dp"
+                app:srcCompat="@drawable/stroke_circle" />
+
+            <com.example.cakegame.CakeView
+                android:id="@+id/cake12"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginStart="10dp"
+                app:srcCompat="@drawable/stroke_circle" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:baselineAligned="false"
+            android:layout_marginTop="15dp"
+            android:orientation="horizontal">
+
+            <com.example.cakegame.CakeView
+                android:id="@+id/cake13"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                app:srcCompat="@drawable/stroke_circle" />
+
+            <com.example.cakegame.CakeView
+                android:id="@+id/cake14"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginStart="10dp"
+                app:srcCompat="@drawable/stroke_circle" />
+
+            <com.example.cakegame.CakeView
+                android:id="@+id/cake15"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginStart="10dp"
+                app:srcCompat="@drawable/stroke_circle" />
+
+            <com.example.cakegame.CakeView
+                android:id="@+id/cake16"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginStart="10dp"
+                app:srcCompat="@drawable/stroke_circle" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:baselineAligned="false"
+            android:layout_marginTop="15dp"
+            android:orientation="horizontal">
+
+            <com.example.cakegame.CakeView
+                android:id="@+id/cake17"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                app:srcCompat="@drawable/stroke_circle" />
+
+            <com.example.cakegame.CakeView
+                android:id="@+id/cake18"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginStart="10dp"
+                app:srcCompat="@drawable/stroke_circle" />
+
+            <com.example.cakegame.CakeView
+                android:id="@+id/cake19"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginStart="10dp"
+                app:srcCompat="@drawable/stroke_circle" />
+
+            <com.example.cakegame.CakeView
+                android:id="@+id/cake20"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginStart="10dp"
+                app:srcCompat="@drawable/stroke_circle" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/newCakeContainer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:baselineAligned="false"
+            android:layout_marginTop="50dp"
+            android:orientation="horizontal">
+
+            <com.example.cakegame.CakeView
+                android:id="@+id/cake21"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                app:srcCompat="@drawable/stroke_circle" />
+
+            <com.example.cakegame.CakeView
+                android:id="@+id/cake22"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginStart="10dp"
+                app:srcCompat="@drawable/stroke_circle" />
+
+            <com.example.cakegame.CakeView
+                android:id="@+id/cake23"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginStart="10dp"
+                app:srcCompat="@drawable/stroke_circle" />
+
+            <com.example.cakegame.CakeView
+                android:id="@+id/cake24"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginStart="10dp"
+                app:srcCompat="@drawable/stroke_circle" />
+        </LinearLayout>
     </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:baselineAligned="false"
-        android:layout_marginTop="15dp"
-        android:orientation="horizontal">
-
-        <com.example.cakegame.CakeView
-            android:id="@+id/cake5"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            app:srcCompat="@drawable/stroke_circle"/>
-
-        <com.example.cakegame.CakeView
-            android:id="@+id/cake6"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:layout_marginStart="10dp"
-            app:srcCompat="@drawable/stroke_circle"/>
-
-        <com.example.cakegame.CakeView
-            android:id="@+id/cake7"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:layout_marginStart="10dp"
-            app:srcCompat="@drawable/stroke_circle"/>
-
-        <com.example.cakegame.CakeView
-            android:id="@+id/cake8"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:layout_marginStart="10dp"
-            app:srcCompat="@drawable/stroke_circle"/>
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:baselineAligned="false"
-        android:layout_marginTop="15dp"
-        android:orientation="horizontal">
-
-        <com.example.cakegame.CakeView
-            android:id="@+id/cake9"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            app:srcCompat="@drawable/stroke_circle"/>
-
-        <com.example.cakegame.CakeView
-            android:id="@+id/cake10"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:layout_marginStart="10dp"
-            app:srcCompat="@drawable/stroke_circle"/>
-
-        <com.example.cakegame.CakeView
-            android:id="@+id/cake11"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:layout_marginStart="10dp"
-            app:srcCompat="@drawable/stroke_circle"/>
-
-        <com.example.cakegame.CakeView
-            android:id="@+id/cake12"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:layout_marginStart="10dp"
-            app:srcCompat="@drawable/stroke_circle"/>
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:baselineAligned="false"
-        android:layout_marginTop="15dp"
-        android:orientation="horizontal">
-
-        <com.example.cakegame.CakeView
-            android:id="@+id/cake13"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            app:srcCompat="@drawable/stroke_circle"/>
-
-        <com.example.cakegame.CakeView
-            android:id="@+id/cake14"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:layout_marginStart="10dp"
-            app:srcCompat="@drawable/stroke_circle"/>
-
-        <com.example.cakegame.CakeView
-            android:id="@+id/cake15"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:layout_marginStart="10dp"
-            app:srcCompat="@drawable/stroke_circle"/>
-
-        <com.example.cakegame.CakeView
-            android:id="@+id/cake16"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:layout_marginStart="10dp"
-            app:srcCompat="@drawable/stroke_circle"/>
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:baselineAligned="false"
-        android:layout_marginTop="15dp"
-        android:orientation="horizontal">
-
-        <com.example.cakegame.CakeView
-            android:id="@+id/cake17"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            app:srcCompat="@drawable/stroke_circle"/>
-
-        <com.example.cakegame.CakeView
-            android:id="@+id/cake18"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:layout_marginStart="10dp"
-            app:srcCompat="@drawable/stroke_circle"/>
-
-        <com.example.cakegame.CakeView
-            android:id="@+id/cake19"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:layout_marginStart="10dp"
-            app:srcCompat="@drawable/stroke_circle"/>
-
-        <com.example.cakegame.CakeView
-            android:id="@+id/cake20"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:layout_marginStart="10dp"
-            app:srcCompat="@drawable/stroke_circle"/>
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/newCakeContainer"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:baselineAligned="false"
-        android:layout_marginTop="50dp"
-        android:orientation="horizontal">
-
-        <com.example.cakegame.CakeView
-            android:id="@+id/cake21"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            app:srcCompat="@drawable/stroke_circle"/>
-
-        <com.example.cakegame.CakeView
-            android:id="@+id/cake22"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:layout_marginStart="10dp"
-            app:srcCompat="@drawable/stroke_circle"/>
-
-        <com.example.cakegame.CakeView
-            android:id="@+id/cake23"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:layout_marginStart="10dp"
-            app:srcCompat="@drawable/stroke_circle"/>
-
-        <com.example.cakegame.CakeView
-            android:id="@+id/cake24"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:layout_marginStart="10dp"
-            app:srcCompat="@drawable/stroke_circle"/>
-
-    </LinearLayout>
-
-</LinearLayout>
+</FrameLayout>

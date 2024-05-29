@@ -33,6 +33,8 @@ public class MainActivity2 extends AppCompatActivity {
     @SuppressLint("StaticFieldLeak")
     public static TextView fullCake;
 
+    public RandomFallCake randomFallCakeView;
+
     private static int width;
     private static int height;
     private int originalIndex;
@@ -81,11 +83,12 @@ public class MainActivity2 extends AppCompatActivity {
                 newCakeView[i].setCakePane(new_cakes[i]);
                 newCakeView[i].setSize(height, width);
             }
-            //設置音效
             //設置分數
             scoreBoard = new ScoreBoard(cakes[0][0].getMode());
             score = findViewById(R.id.totalScore);
             fullCake = findViewById(R.id.totalFullCakeNum);
+
+            randomFallCakeView = findViewById(R.id.random_fall_cake_view);
 
             notEmpty();
             getTable();
@@ -160,13 +163,17 @@ public class MainActivity2 extends AppCompatActivity {
         public boolean onDrag(View v, DragEvent event) {
             CakeView cakeView = (CakeView) v;
             CakeView draggedView = (CakeView) event.getLocalState();
-            draggedView.setVisibility(View.INVISIBLE);
+            if(draggedView == null) {
+                return false;
+            }
             switch (event.getAction()) {
                 case DragEvent.ACTION_DRAG_STARTED:
                     draggedView.setVisibility(View.INVISIBLE);
                     VibrationHelper.vibrate();
                     break;
                 case DragEvent.ACTION_DRAG_ENTERED:
+
+                    randomFallCakeView.generateNewRandomImage();
                     if(!cakeView.onAnimation()) {
                         cakeView.setImageResource(R.drawable.destination_circle);
                     }
