@@ -1,192 +1,202 @@
 package com.example.cakegame;
 
+import android.os.Build;
 import android.util.Log;
 
-import java.util.*;
+import androidx.annotation.RequiresApi;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
 public class ScoreBoard {
 
-    private static ArrayList<Score> totalScoreBoard = new ArrayList<>();
+    private static ArrayList<Score> totalScoreBoard = new ArrayList<>(); // 儲存所有玩家的分數資料
+    private static int countNum = 0; // 計數，用於分配每個分數資料的唯一編號
 
-    private static int count_num = 0;
-    private Score currentScore;
-
+    private Score currentScore; // 目前的遊戲分數
 
     public ScoreBoard() {}
 
+    // 建構函式，初始化新的遊戲分數
     public ScoreBoard(int mode){
-        count_num++;
+        countNum++;
         currentScore = new Score(mode);
     }
 
-
+    // 取得目前的遊戲分數
     public Score getCurrentScore() {
         return currentScore;
     }
 
+    // 新增目前的遊戲分數到總分排行榜中
     public void addCurrentScore() {
-        count_num++;
+        countNum++;
         totalScoreBoard.add(currentScore);
-        currentScore.setNum(count_num);
+        currentScore.setNum(countNum);
         Log.d("ScoreBoard", "add score");
     }
 
-    public static ArrayList<Score> getScoreBoard_num() { //按編號排序
+    // 取得按編號排序的分數排行榜
+    @RequiresApi(api = Build.VERSION_CODES.N)
+    public static ArrayList<Score> getScoreBoard_num() {
+        Collections.sort(totalScoreBoard, Comparator.comparingInt(Score::getNum));
 
-        Collections.sort(totalScoreBoard, new Comparator<Score>() {
-            @Override
-            public int compare(Score o1, Score o2) {
-                return Integer.compare(o1.getNum(), o2.getNum());
-            }
-        });
-
-        for(int i=0;i<totalScoreBoard.size();i++){
-            totalScoreBoard.get(i).setRank(i+1);
+        // 更新排名
+        for (int i = 0; i < totalScoreBoard.size(); i++) {
+            totalScoreBoard.get(i).setRank(i + 1);
         }
 
         return totalScoreBoard;
     }
 
-
-
-    public static ArrayList<Score> getScoreBoard_score(int mode) { //按分數排序
-
+    // 取得按分數排序的分數排行榜
+    @RequiresApi(api = Build.VERSION_CODES.N)
+    public static ArrayList<Score> getScoreBoard_score(int mode) {
         ArrayList<Score> scoreBoard = new ArrayList<>();
 
-        for(Score s : totalScoreBoard) {
-            if(s.getMode() == mode) {
+        // 篩選指定模式的分數資料
+        for (Score s : totalScoreBoard) {
+            if (s.getMode() == mode) {
                 scoreBoard.add(s);
             }
         }
 
-        Collections.sort(scoreBoard, new Comparator<Score>() {
-            @Override
-            public int compare(Score o1, Score o2) {
-                int result = Integer.compare(o2.getScore(), o1.getScore());
-                if (result == 0) {
-                    result = Integer.compare(o2.getFullCake(), o1.getFullCake());
-                }
-                return result;
+        // 根據分數和蛋糕數量排序
+        scoreBoard.sort((o1, o2) -> {
+            int result = Integer.compare(o2.getScore(), o1.getScore());
+            if (result == 0) {
+                result = Integer.compare(o2.getFullCake(), o1.getFullCake());
             }
+            return result;
         });
 
-
+        // 更新排名
         int count = 0;
-        int count_rank = 0;
-        for(int i=0;i<scoreBoard.size();i++){
-            if(count > count_rank){
+        int countRank = 0;
+        for (int i = 0; i < scoreBoard.size(); i++) {
+            if (count > countRank) {
                 continue;
             }
 
-            scoreBoard.get(count).setRank(count_rank + 1);
+            scoreBoard.get(count).setRank(countRank + 1);
             count++;
 
-            while(count < scoreBoard.size() && scoreBoard.get(count).getScore() == scoreBoard.get(count - 1).getScore()) {
-                scoreBoard.get(count).setRank(count_rank + 1);
+            while (count < scoreBoard.size() && scoreBoard.get(count).getScore() == scoreBoard.get(count - 1).getScore()) {
+                scoreBoard.get(count).setRank(countRank + 1);
                 count++;
             }
 
-            count_rank++;
+            countRank++;
         }
-
 
         return scoreBoard;
     }
 
-
-
-    public static ArrayList<Score> getScoreBoard_cake(int mode) { //按蛋糕數量排序
-
+    // 取得按蛋糕數量排序的分數排行榜
+    @RequiresApi(api = Build.VERSION_CODES.N)
+    public static ArrayList<Score> getScoreBoard_cake(int mode) {
         ArrayList<Score> scoreBoard = new ArrayList<>();
 
-        for(Score s : totalScoreBoard) {
-            if(s.getMode() == mode) {
+        // 篩選指定模式的分數資料
+        for (Score s : totalScoreBoard) {
+            if (s.getMode() == mode) {
                 scoreBoard.add(s);
             }
         }
 
-        Collections.sort(scoreBoard, new Comparator<Score>() {
-            @Override
-            public int compare(Score o1, Score o2) {
-                int result = Integer.compare(o2.getFullCake(), o1.getFullCake());
-                if (result == 0) {
-                    result = Integer.compare(o2.getScore(), o1.getScore());
-                }
-                return result;
+        // 根據蛋糕數量和分數排序
+        scoreBoard.sort((o1, o2) -> {
+            int result = Integer.compare(o2.getFullCake(), o1.getFullCake());
+            if (result == 0) {
+                result = Integer.compare(o2.getScore(), o1.getScore());
             }
+            return result;
         });
 
+        // 更新排名
         int count = 0;
-        int count_rank = 0;
-        for(int i=0;i<scoreBoard.size();i++){
-            if(count > count_rank){
+        int countRank = 0;
+        for (int i = 0; i < scoreBoard.size(); i++) {
+            if (count > countRank) {
                 continue;
             }
 
-            scoreBoard.get(count).setRank(count_rank + 1);
+            scoreBoard.get(count).setRank(countRank + 1);
             count++;
 
-            while(count < scoreBoard.size() && scoreBoard.get(count).getFullCake() == scoreBoard.get(count - 1).getFullCake()) {
-                scoreBoard.get(count).setRank(count_rank + 1);
+            while (count < scoreBoard.size() && scoreBoard.get(count).getFullCake() == scoreBoard.get(count - 1).getFullCake()) {
+                scoreBoard.get(count).setRank(countRank + 1);
                 count++;
             }
 
-            count_rank++;
+            countRank++;
         }
-
 
         return scoreBoard;
     }
 
-
-
-
-
-
+    // 定義遊戲分數的類別
     public static class Score {
 
-        private final int mode;
-        private int num;
-        private int score;
-        private int full_cake;
-        private int rank;
+        private final int mode; // 分數對應的遊戲模式
+        private int num; // 分數的唯一編號
+        private int score; // 分數
+        private int fullCake; // 蛋糕數量
+        private int rank; // 排名
 
-
-        public Score(int m) {
-            mode = m;
+        // 建構函式，初始化遊戲分數的屬性
+        public Score(int mode) {
+            this.mode = mode;
             score = 0;
-            full_cake = 0;
+            fullCake = 0;
         }
 
-        public void addScore(int s) {
-            score += s;
+        // 增加分數
+        public void addScore(int score) {
+            this.score += score;
         }
 
-        public void addFullCake(int f) {
-            full_cake += f;
+        // 增加蛋糕數量
+        public void addFullCake(int fullCake) {
+            this.fullCake += fullCake;
         }
 
-        public void setRank(int r) {
-            rank = r;
+        // 設定排名
+        public void setRank(int rank) {
+            this.rank = rank;
         }
 
-        public void setNum(int n) {
-            num = n;
+        // 設定分數的唯一編號
+        public void setNum(int num) {
+            this.num = num;
         }
 
-        public int getMode() { return mode;}
+        // 取得遊戲模式
+        public int getMode() {
+            return mode;
+        }
 
-        public int getNum() { return num;}
+        // 取得分數的唯一編號
+        public int getNum() {
+            return num;
+        }
 
-        public int getScore() { return score;}
+        // 取得分數
+        public int getScore() {
+            return score;
+        }
 
-        public int getFullCake() { return full_cake;}
+        // 取得蛋糕
+        // 取得蛋糕數量
+        public int getFullCake() {
+            return fullCake;
+        }
 
-        public int getRank() { return rank;}
-
-
-
+        // 取得排名
+        public int getRank() {
+            return rank;
+        }
     }
-
-
 }
+

@@ -95,7 +95,7 @@ public class CustomSelector extends LinearLayout {
         soundOverlayImageView.setLayoutParams(soundImageLayoutParams);
 
         soundFrameLayout.addView(soundOverlayImageView);
-        if(!SoundPlay.getMute()){
+        if(!SoundPlay.isMuted()){
             soundOverlayImageView.setVisibility(View.INVISIBLE);
         }else {
             soundImageView.setVisibility(View.INVISIBLE);
