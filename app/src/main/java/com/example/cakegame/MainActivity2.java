@@ -16,12 +16,12 @@ public class MainActivity2 extends AppCompatActivity {
     private static final int NUM_COLS = 4;
 
     // 2D數組保存蛋糕信息
-    private static CakePane[][] cakes = new CakePane[NUM_ROWS][NUM_COLS];
-    private static CakeView[][] cakeViews = new CakeView[NUM_ROWS][NUM_COLS];
+    private CakePane[][] cakes = new CakePane[NUM_ROWS][NUM_COLS];
+    private CakeView[][] cakeViews = new CakeView[NUM_ROWS][NUM_COLS];
 
     // 保存新的蛋糕信息
-    private static CakePane[] newCakes = new CakePane[NUM_COLS];
-    private static CakeView[] newCakeViews = new CakeView[NUM_COLS];
+    private CakePane[] newCakes = new CakePane[NUM_COLS];
+    private CakeView[] newCakeViews = new CakeView[NUM_COLS];
 
     // 各個蛋糕視圖的ID
     private static final int[][] CAKE_ID = {
@@ -37,11 +37,13 @@ public class MainActivity2 extends AppCompatActivity {
 
     // 記分板和分數相關變量
     private static ScoreBoard scoreBoard;
-    private static int totalScore = 0;
-    private static int totalFullCakeNum = 0;
+    private int totalScore = 0;
+    private int totalFullCakeNum = 0;
 
     // 記分板顯示的TextView
+    @SuppressLint("StaticFieldLeak")
     private static TextView scoreTextView;
+    @SuppressLint("StaticFieldLeak")
     private static TextView fullCakeTextView;
 
     // 隨機掉落蛋糕的視圖
@@ -56,9 +58,6 @@ public class MainActivity2 extends AppCompatActivity {
 
     // 遊戲結束標誌
     private boolean endGame = false;
-
-    // 自定義選擇器
-    private static CustomSelector selectDialog1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -109,6 +108,7 @@ public class MainActivity2 extends AppCompatActivity {
     }
 
     // 初始化新的蛋糕
+    @SuppressLint("ClickableViewAccessibility")
     private void initializeNewCakes() {
         for (int i = 0; i < NUM_COLS; i++) {
             newCakes[i] = new CakePane();
@@ -130,7 +130,8 @@ public class MainActivity2 extends AppCompatActivity {
     // 初始化背景相關視圖和選擇器
     private void initializeBackground() {
         randomFallCakeView = findViewById(R.id.random_fall_cake_view);
-        selectDialog1 = findViewById(R.id.selectDialog1);
+        // 自定義選擇器
+        CustomSelector selectDialog1 = findViewById(R.id.selectDialog1);
 
         selectDialog1.setListener(new CustomSelector.IconSelectListener() {
             @Override
@@ -162,6 +163,7 @@ public class MainActivity2 extends AppCompatActivity {
     }
 
     // 創建新的蛋糕視圖
+    @SuppressLint("ClickableViewAccessibility")
     private CakeView createNewCakeView(int index) {
         CakeView newCakeView = new CakeView(this);
         newCakeView.setId(NEW_CAKE_ID[index]);
@@ -179,7 +181,7 @@ public class MainActivity2 extends AppCompatActivity {
     }
 
     // 觸摸監聽器，處理蛋糕的拖動
-    private class MyTouchListener implements View.OnTouchListener {
+    private static class MyTouchListener implements View.OnTouchListener {
         @SuppressLint("ClickableViewAccessibility")
         @Override
         public boolean onTouch(View v, MotionEvent event) {
@@ -294,6 +296,7 @@ public class MainActivity2 extends AppCompatActivity {
         }
 
         // 最終處理放置後的操作
+        @SuppressLint("ClickableViewAccessibility")
         private void finalizeDrop(ViewGroup draggedViewParent, CakeView draggedView) {
             draggedViewParent.removeView(draggedView);
             if (!dropped) {
