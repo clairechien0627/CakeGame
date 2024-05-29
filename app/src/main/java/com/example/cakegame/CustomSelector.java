@@ -37,6 +37,7 @@ public class CustomSelector extends LinearLayout {
 
         findViewById(R.id.select_imageview).setOnClickListener(v -> {
             Log.d("CakeSort", "listener");
+            drawDialog();
             rotateSelectImageView();
             displayDialog(!isOpen);
             if (isOpen) {

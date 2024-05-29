@@ -1,10 +1,8 @@
 package com.example.cakegame;
 
 import android.annotation.SuppressLint;
-import android.app.Service;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Vibrator;
 import android.util.Log;
 import android.view.animation.*;
 import android.widget.Button;
@@ -46,20 +44,7 @@ public class MainActivity extends AppCompatActivity {
 
         selectDialog = findViewById(R.id.selectDialog);
 
-        selectDialog.setListener(new CustomSelector.IconSelectListener() {
-            @Override
-            public void onOpen() {
-                // 當對話框打開時執行
-                Log.d("CustomSelector", "open");
-                vibrationHelper.vibrate();
-            }
-
-            @Override
-            public void onCancel() {
-                // 當對話框取消時執行
-                vibrationHelper.vibrate();
-            }
-        });
+        setSelectDialogListener();
 
 
         for (int i = 0; i < 4; i++) {
@@ -108,6 +93,28 @@ public class MainActivity extends AppCompatActivity {
     protected void onPause() {
         super.onPause();
     }
+
+    protected void onResume() {
+        super.onResume();
+        setSelectDialogListener();
+    }
+
+    private void setSelectDialogListener() {
+        selectDialog.setListener(new CustomSelector.IconSelectListener() {
+            @Override
+            public void onOpen() {
+                Log.d("CakeSort", "open");
+                vibrationHelper.vibrate();
+            }
+
+            @Override
+            public void onCancel() {
+                vibrationHelper.vibrate();
+            }
+        });
+    }
+
+
 
     private void startAnimationAndNavigate(View view, Class<?> destinationActivity) {
         // 新增一個動畫集合
