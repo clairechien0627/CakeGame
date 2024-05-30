@@ -289,6 +289,15 @@
             android:orientation="horizontal"
             android:padding="20dp">
 
+            <TextView
+                android:id="@+id/difficultyMode"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Easy"
+                android:textSize="15sp"
+                android:gravity="start"
+                android:textColor="@color/aqua" />
+
             <View
                 android:layout_width="0dp"
                 android:layout_height="0dp"

@@ -12,8 +12,8 @@ import androidx.appcompat.app.AppCompatActivity;
 public class MainActivity2 extends AppCompatActivity {
 
     // 常量: 行數和列數
-    private static final int NUM_ROWS = 5;
-    private static final int NUM_COLS = 4;
+    private final int NUM_ROWS = 5;
+    private final int NUM_COLS = 4;
 
     // 2D數組保存蛋糕信息
     private CakePane[][] cakes = new CakePane[NUM_ROWS][NUM_COLS];
@@ -24,7 +24,7 @@ public class MainActivity2 extends AppCompatActivity {
     private CakeView[] newCakeViews = new CakeView[NUM_COLS];
 
     // 各個蛋糕視圖的ID
-    private static final int[][] CAKE_ID = {
+    private final int[][] CAKE_ID = {
             {R.id.cake1, R.id.cake2, R.id.cake3, R.id.cake4},
             {R.id.cake5, R.id.cake6, R.id.cake7, R.id.cake8},
             {R.id.cake9, R.id.cake10, R.id.cake11, R.id.cake12},
@@ -33,25 +33,28 @@ public class MainActivity2 extends AppCompatActivity {
     };
 
     // 新蛋糕的ID
-    private static final int[] NEW_CAKE_ID = {R.id.cake21, R.id.cake22, R.id.cake23, R.id.cake24};
+    private final int[] NEW_CAKE_ID = {R.id.cake21, R.id.cake22, R.id.cake23, R.id.cake24};
 
     // 記分板和分數相關變量
-    private static ScoreBoard scoreBoard;
-    private int totalScore = 0;
-    private int totalFullCakeNum = 0;
+    private ScoreBoard scoreBoard;
+
+    //難度TextView
+    @SuppressLint("StaticFieldLeak")
+    private TextView difficultyTextView;
+    private final String[] difficulty = {"Easy", "Normal", "Hard", "Devil"};
 
     // 記分板顯示的TextView
     @SuppressLint("StaticFieldLeak")
-    private static TextView scoreTextView;
+    private TextView scoreTextView;
     @SuppressLint("StaticFieldLeak")
-    private static TextView fullCakeTextView;
+    private TextView fullCakeTextView;
 
     // 隨機掉落蛋糕的視圖
-    private static RandomFallCake randomFallCakeView;
+    private RandomFallCake randomFallCakeView;
 
     // 保存視圖的寬高
-    private static int width;
-    private static int height;
+    private int width;
+    private int height;
 
     // 原始拖動蛋糕的索引
     private static int originalIndex;
@@ -130,6 +133,10 @@ public class MainActivity2 extends AppCompatActivity {
     // 初始化背景相關視圖和選擇器
     private void initializeBackground() {
         randomFallCakeView = findViewById(R.id.random_fall_cake_view);
+        //遊戲難度顯示4
+        difficultyTextView = findViewById(R.id.difficultyMode);
+        difficultyTextView.setText(difficulty[CakePane.getMode()]);
+
         // 自定義選擇器
         CustomSelector selectDialog1 = findViewById(R.id.selectDialog1);
 
@@ -379,9 +386,9 @@ public class MainActivity2 extends AppCompatActivity {
     private void updateScoreAndFullCake(CakePane currentCake) {
         // 更新記分板和蛋糕數量
         scoreBoard.getCurrentScore().addScore(currentCake.getScore());
-        totalScore = scoreBoard.getCurrentScore().getScore();
+        int totalScore = scoreBoard.getCurrentScore().getScore();
         scoreBoard.getCurrentScore().addFullCake(currentCake.getFullCakeNum());
-        totalFullCakeNum = scoreBoard.getCurrentScore().getFullCake();
+        int totalFullCakeNum = scoreBoard.getCurrentScore().getFullCake();
 
         scoreTextView.setText("Total Score : " + totalScore);
         fullCakeTextView.setText("Full Cake : " + totalFullCakeNum);

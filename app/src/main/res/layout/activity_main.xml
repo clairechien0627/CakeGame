@@ -36,16 +36,16 @@
         android:id="@+id/backgroundCake4"
         android:layout_width="94dp"
         android:layout_height="101dp"
-        android:layout_marginLeft="20dp"
-        android:layout_marginTop="600dp"
+        android:layout_marginLeft="310dp"
+        android:layout_marginTop="350dp"
         android:src="@drawable/cake4" />
 
     <ImageView
         android:id="@+id/backgroundCake5"
         android:layout_width="90dp"
         android:layout_height="128dp"
-        android:layout_marginLeft="300dp"
-        android:layout_marginTop="300dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="600dp"
         android:src="@drawable/cake5" />
 
     <ImageView

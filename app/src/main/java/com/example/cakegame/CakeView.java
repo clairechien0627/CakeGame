@@ -43,12 +43,12 @@ public class CakeView extends AppCompatImageView {
     };
 
     private static final int[] colors3 = new int[]{
-            0xFF606C38,
-            0xFFFFA962,
-            0xFF283618,
-            0xFFEECE9F,
-            0xFFDDA15E,
-            0xFFBC6C25
+            0xFFE07A5F,
+            0xFF7A5151,
+            0xFF3D405B,
+            0xFF5F797B,
+            0xFF81B29A,
+            0xFFF2CC8F
     };
 
     private static final int[] colors4 = new int[]{

@@ -18,14 +18,14 @@ public class MainActivity extends AppCompatActivity {
 
     // 靜態變量，用於播放聲音
     @SuppressLint("StaticFieldLeak")
-    public static SoundPlay soundPlay;
+    public SoundPlay soundPlay;
     // 靜態變量，用於控制震動
-    public static VibrationHelper vibrationHelper;
+    public VibrationHelper vibrationHelper;
     // 靜態變量，用於顯示排行榜
     @SuppressLint("StaticFieldLeak")
-    public static ImageView rank;
+    public ImageView rank;
     // 自定義選擇對話框
-    public static CustomSelector selectDialog;
+    public CustomSelector selectDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,13 +59,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onPause() {
         super.onPause();
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        // 設置選擇對話框的監聽器
-        setSelectDialogListener();
+        // 停止動畫或釋放資源可以放在這裡
     }
 
     // 初始化相關元素和功能
@@ -117,8 +111,7 @@ public class MainActivity extends AppCompatActivity {
                 for(int j=0;j<6;j++) {
                     if(j == index) {
                         Background.startRotateAnimation(cakes[j]);
-                    }
-                    else {
+                    } else {
                         Background.startShakeAnimation(cakes[j]);
                     }
                 }
@@ -165,11 +158,27 @@ public class MainActivity extends AppCompatActivity {
         animSet.addAnimation(scaleAnimation);
         animSet.addAnimation(rotateAnimation);
 
+        // 設置動畫監聽器，當動畫結束後導航到指定的 Activity
+        animSet.setAnimationListener(new Animation.AnimationListener() {
+            @Override
+            public void onAnimationStart(Animation animation) {
+                // 動畫開始時的操作
+            }
+
+            @Override
+            public void onAnimationEnd(Animation animation) {
+                // 動畫結束時的操作，進行跳轉
+                Intent intent = new Intent(MainActivity.this, destinationActivity);
+                startActivity(intent);
+            }
+
+            @Override
+            public void onAnimationRepeat(Animation animation) {
+                // 動畫重複時的操作
+            }
+        });
+
         // 開始動畫
         view.startAnimation(animSet);
-
-        // 導航到指定的 Activity
-        Intent intent = new Intent(MainActivity.this, destinationActivity);
-        startActivity(intent);
     }
 }

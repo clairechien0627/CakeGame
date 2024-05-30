@@ -72,22 +72,17 @@ public class ScoreBoard {
         });
 
         // 更新排名
-        int count = 0;
-        int countRank = 0;
-        for (int i = 0; i < scoreBoard.size(); i++) {
-            if (count > countRank) {
-                continue;
+        int countRank = 1;
+        int currentRank = 1;
+        int prevScore = Integer.MIN_VALUE;
+
+        for (Score score : scoreBoard) {
+            if (score.getScore() != prevScore) {
+                countRank = currentRank;
             }
-
-            scoreBoard.get(count).setRank(countRank + 1);
-            count++;
-
-            while (count < scoreBoard.size() && scoreBoard.get(count).getScore() == scoreBoard.get(count - 1).getScore()) {
-                scoreBoard.get(count).setRank(countRank + 1);
-                count++;
-            }
-
-            countRank++;
+            score.setRank(countRank);
+            prevScore = score.getScore();
+            currentRank++;
         }
 
         return scoreBoard;
@@ -115,22 +110,17 @@ public class ScoreBoard {
         });
 
         // 更新排名
-        int count = 0;
-        int countRank = 0;
-        for (int i = 0; i < scoreBoard.size(); i++) {
-            if (count > countRank) {
-                continue;
+        int countRank = 1;
+        int currentRank = 1;
+        int prevFullCake = Integer.MIN_VALUE;
+
+        for (Score score : scoreBoard) {
+            if (score.getFullCake() != prevFullCake) {
+                countRank = currentRank;
             }
-
-            scoreBoard.get(count).setRank(countRank + 1);
-            count++;
-
-            while (count < scoreBoard.size() && scoreBoard.get(count).getFullCake() == scoreBoard.get(count - 1).getFullCake()) {
-                scoreBoard.get(count).setRank(countRank + 1);
-                count++;
-            }
-
-            countRank++;
+            score.setRank(countRank);
+            prevFullCake = score.getFullCake();
+            currentRank++;
         }
 
         return scoreBoard;
