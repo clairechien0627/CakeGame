@@ -117,6 +117,7 @@ public class RandomFallCake extends View {
                 BitmapPosition bp = iterator.next();
                 if (touchX >= bp.x && touchX <= bp.x + imageWidth && touchY >= bp.y && touchY <= bp.y + imageHeight) {
                     // 檢測到點擊在圖像區域內
+                    SoundPlay.playSoundHappybirthday();
                     iterator.remove();
                     invalidate();
                     break;

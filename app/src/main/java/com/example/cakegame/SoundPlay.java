@@ -7,6 +7,7 @@ import android.media.AudioManager;
 import android.media.SoundPool;
 
 import java.util.HashMap;
+import java.util.Random;
 
 public class SoundPlay {
 
@@ -14,6 +15,7 @@ public class SoundPlay {
     private static SoundPool soundPool;
     // 保存音效文件的資源 ID 映射
     private static final HashMap<String, Integer> soundMap = new HashMap<>();
+    private static final int[] soundHappybirthday = new int[5];
     // 設置音量
     private static float volume;
     // 靜音狀態
@@ -45,6 +47,12 @@ public class SoundPlay {
         loadSound(R.raw.start, "start");
         loadSound(R.raw.click, "click");
 
+        loadSoundHappybirthday(R.raw.happybirthday1, 0);
+        loadSoundHappybirthday(R.raw.happybirthday2, 1);
+        loadSoundHappybirthday(R.raw.happybirthday3, 2);
+        loadSoundHappybirthday(R.raw.happybirthday4, 3);
+        loadSoundHappybirthday(R.raw.happybirthday5, 4);
+
         // 初始化音量
         AudioManager audioManager = (AudioManager) context.getSystemService(Context.AUDIO_SERVICE);
         if (audioManager != null) {
@@ -59,10 +67,23 @@ public class SoundPlay {
         soundMap.put(soundName, soundPool.load(context, resourceId, 1));
     }
 
+
+    private static void loadSoundHappybirthday(int resourceId, int index) {
+        soundHappybirthday[index] = soundPool.load(context, resourceId, 1);
+    }
+
     // 播放音效
     public static void playSound(String soundName) {
         if (!isMuted) {
             soundPool.play(soundMap.get(soundName), volume, volume, 0, 0, 1);
+        }
+    }
+
+    public static void playSoundHappybirthday() {
+        if (!isMuted) {
+            Random random = new Random();
+            int randomIndex = random.nextInt(5);
+            soundPool.play(soundHappybirthday[randomIndex], volume, volume, 0, 0, 1);
         }
     }
 
