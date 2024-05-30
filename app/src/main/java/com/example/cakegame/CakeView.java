@@ -9,6 +9,8 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.widget.AppCompatImageView;
 import androidx.core.content.ContextCompat;
 
+import java.util.Random;
+
 public class CakeView extends AppCompatImageView {
 
     private int height, width;
@@ -22,7 +24,7 @@ public class CakeView extends AppCompatImageView {
     private int centerY;
     private boolean onAnimation = false;
 
-    int[] colors = new int[]{
+    private static final int[] colors = new int[]{
             0xFFFF0000, // 红色
             0xFFFFA500, // 橙色
             0xFFFFFF00, // 黄色
@@ -31,22 +33,60 @@ public class CakeView extends AppCompatImageView {
             0xFF800080  // 紫色
     };
 
-    int[] colors2 = new int[]{
-            0xFFFF8181, // 红色
-            0xFFFFA962, // 橙色
-            0xFFFFFA5B, // 黄色
-            0xFF81E75F, // 绿色
-            0xFF81FFFB, // 蓝色
-            0xFFB679DB  // 紫色
+    private static final int[] colors2 = new int[]{
+            0xFFEA5959,
+            0xFFFFA962,
+            0xFFFFFA5B,
+            0xFF81E75F,
+            0xFF81FFFB,
+            0xFFB679DB
     };
+
+    private static final int[] colors3 = new int[]{
+            0xFF606C38,
+            0xFFFFA962,
+            0xFF283618,
+            0xFFEECE9F,
+            0xFFDDA15E,
+            0xFFBC6C25
+    };
+
+    private static final int[] colors4 = new int[]{
+            0xFF006D77,
+            0xFF42999B,
+            0xFF83C5BE,
+            0xFFFFDDD2,
+            0xFFF1B9A5,
+            0xFFF69474
+    };
+
+    private static final int[] colors5 = new int[]{
+            0xFF177E89,
+            0xFF084C61,
+            0xFFE4A6B1,
+            0xFFDB3A34,
+            0xFFFFC857,
+            0xFF323031
+    };
+
+    private static final int[] colors6 = new int[]{
+            0xFFF686DE,
+            0xFFFF8709,
+            0xFFFFE70A,
+            0xFF4DFFED,
+            0xFF3A86FF,
+            0xFF8338EC
+    };
+
+    private static int[] currentcolors = colors;
+
+    private static int[][] allColors = {colors, colors2, colors3, colors4, colors5, colors6};
 
     public static final int ARC_FULL_ROTATION_DEGREE = 360;
     public static final double PERCENTAGE_DIVIDER = 100.0;
     public static final String PERCENTAGE_VALUE_HOLDER = "percentage";
 
     private int currentPercentage = 0;
-
-    private float[] animatedAngles = new float[6];
 
     private final RectF ovalSpace = new RectF();
 
@@ -75,7 +115,7 @@ public class CakeView extends AppCompatImageView {
         for (int i = 0; i < 6; i++) {
             paints[i] = new Paint();
             paints[i].setStyle(Paint.Style.FILL);
-            paints[i].setColor(colors2[i]);
+            paints[i].setColor(currentcolors[i]);
         }
 
         fullCakePaint.setStyle(Paint.Style.FILL);
@@ -127,7 +167,6 @@ public class CakeView extends AppCompatImageView {
 
         drawBackgroundArc(canvas);
         drawInnerArc(canvas);
-
         drawCake(canvas);
         drawFullCake(canvas);
 
@@ -152,6 +191,7 @@ public class CakeView extends AppCompatImageView {
         startAngle = -90;
         for (int i = 0; i < 6; i++) {
             int pieces = cakepane.getPiecesNum(i);
+            paints[i].setColor(currentcolors[i]);
             canvas.drawArc(rectF, startAngle, 45 * pieces, true, paints[i]);
             startAngle += 45 * pieces;
         }
@@ -185,7 +225,7 @@ public class CakeView extends AppCompatImageView {
                 // 动画開始后的操作
                 SoundPlay.playSound("full");
                 onAnimation = true;
-                fullCakePaint.setColor(colors2[p]);
+                fullCakePaint.setColor(currentcolors[p]);
                 fullCakePaint.setAlpha(255);
                 fillArcPaint.setColor(fillArcColor);
                 currentPercentage = 360;
@@ -252,4 +292,7 @@ public class CakeView extends AppCompatImageView {
 
     public boolean onAnimation() { return onAnimation;}
 
+    public static void setCakePaint(int colorIndex) {
+        currentcolors = allColors[colorIndex % allColors.length];
+    }
 }

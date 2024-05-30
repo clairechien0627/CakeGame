@@ -14,7 +14,7 @@ import java.util.Random;
 public class Background {
     // 創建一個搖晃動畫
     public static void startShakeAnimation(ImageView imageView) {
-        RotateAnimation shake = new RotateAnimation((float) Math.random()*360, (float) Math.random()*360, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
+        RotateAnimation shake = new RotateAnimation(-10, 10, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
         shake.setDuration(1000); // 持續時間 1 秒
         shake.setRepeatCount(Animation.INFINITE); // 無限循環
         shake.setRepeatMode(Animation.REVERSE); // 反向重複

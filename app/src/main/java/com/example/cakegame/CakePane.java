@@ -16,8 +16,7 @@ public class CakePane {
     private int[] pieces_num = new int[]{0,0,0,0,0,0};		//花色的各自數量array版，像這樣 {0,0,0,0,0}
 
     private int count;
-    private int randomX;
-    private int randomY;
+    private Random random = new Random();
     private static int score;
     private static int full_cake_num;
 
@@ -316,15 +315,15 @@ public class CakePane {
             return;
         }
 
-        randomX = (int) (Math.random() * (x_max-1) % (x_max-1));
-        randomY = (int) (Math.random() * (y_max-1) % (y_max-1));
+        int randomX = random.nextInt(x_max);
+        int randomY = random.nextInt(y_max);
 
         while(true) {
             if(!hasPieces[randomX][randomY]) {
-                int randomNumCake = (int) (Math.random() * (pieces_max-1) % (pieces_max-1)) + 1;
+                int randomNumCake = random.nextInt(pieces_max);
 
                 for(int j=0;j<randomNumCake;j++) {
-                    int randomCake = (int) (Math.random() * pieces_kind % pieces_kind);
+                    int randomCake = random.nextInt(pieces_kind);;
 
                     cakes[randomX][randomY].place_piece(randomCake);
                     cakeViews[randomX][randomY].animateAddCake();

@@ -6,10 +6,8 @@ import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.util.AttributeSet;
 import android.util.DisplayMetrics;
+import android.view.MotionEvent;
 import android.view.View;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
-import android.view.animation.TranslateAnimation;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -20,12 +18,12 @@ public class RandomFallCake extends View {
     private Bitmap[] images = new Bitmap[6];
     private Bitmap[] scaledImage = new Bitmap[6];
     private Random random;
-    private int viewWidth;  // 视图的宽度
-    private int viewHeight; // 视图的高度
-    private int imageWidth = 200; // 图像的宽度
-    private int imageHeight = 200; // 图像的高度
+    private int viewWidth;  // 視圖的寬度
+    private int viewHeight; // 視圖的高度
+    private int imageWidth = 200; // 圖像的寬度
+    private int imageHeight = 200; // 圖像的高度
 
-    private List<BitmapPosition> bitmapPositions; // 存储图像及其位置
+    private List<BitmapPosition> bitmapPositions; // 存儲圖像及其位置
 
     public RandomFallCake(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -38,12 +36,12 @@ public class RandomFallCake extends View {
     }
 
     private void init(Context context) {
-        // 获取屏幕尺寸
+        // 獲取螢幕尺寸
         DisplayMetrics displayMetrics = context.getResources().getDisplayMetrics();
         viewWidth = displayMetrics.widthPixels;
         viewHeight = displayMetrics.heightPixels;
 
-        // 加载图像
+        // 加載圖像
         images[0] = BitmapFactory.decodeResource(context.getResources(), R.drawable.cake1);
         images[1] = BitmapFactory.decodeResource(context.getResources(), R.drawable.cake2);
         images[2] = BitmapFactory.decodeResource(context.getResources(), R.drawable.cake3);
@@ -51,7 +49,7 @@ public class RandomFallCake extends View {
         images[4] = BitmapFactory.decodeResource(context.getResources(), R.drawable.cake5);
         images[5] = BitmapFactory.decodeResource(context.getResources(), R.drawable.cake6);
 
-        // 缩放图像
+        // 縮放圖像
         for(int i=0;i<6;i++) {
             scaledImage[i] = Bitmap.createScaledBitmap(images[i], imageWidth, imageHeight, true);
         }
@@ -62,13 +60,13 @@ public class RandomFallCake extends View {
     }
 
     private void addNewRandomImage() {
-        // 生成随机位置
+        // 生成隨機位置
         int x = random.nextInt(viewWidth - imageWidth);
-        int y = 0; // 从顶部开始
+        int y = 0; // 從頂部開始
         int randomIndex = random.nextInt(6);
         // 添加到列表
         bitmapPositions.add(new BitmapPosition(scaledImage[randomIndex], x, y, System.currentTimeMillis()));
-        // 刷新视图
+        // 刷新視圖
         invalidate();
     }
 
@@ -81,10 +79,10 @@ public class RandomFallCake extends View {
         while (iterator.hasNext()) {
             BitmapPosition bp = iterator.next();
             long elapsedTime = currentTime - bp.startTime;
-            int newY = (int) (bp.y + elapsedTime / 300.0); // 调整速度
+            int newY = (int) (bp.y + elapsedTime / 300.0); // 調整速度
 
             if (newY > viewHeight) {
-                // 移出屏幕，移除图像
+                // 移出螢幕，移除圖像
                 iterator.remove();
             } else {
                 bp.y = newY;
@@ -92,23 +90,43 @@ public class RandomFallCake extends View {
             }
         }
 
-        // 再次调用onDraw以继续动画
+        // 再次調用onDraw以繼續動畫
         postInvalidateOnAnimation();
     }
 
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
-        // 设置视图的尺寸
+        // 設置視圖的尺寸
         setMeasuredDimension(viewWidth, viewHeight);
     }
 
-    // 暴露一个公共方法以便外部调用
+    // 暴露一個公共方法以便外部調用
     public void generateNewRandomImage() {
         addNewRandomImage();
     }
 
-    // 内部类用于存储图像及其位置
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+        if (event.getAction() == MotionEvent.ACTION_DOWN) {
+            float touchX = event.getX();
+            float touchY = event.getY();
+
+            Iterator<BitmapPosition> iterator = bitmapPositions.iterator();
+            while (iterator.hasNext()) {
+                BitmapPosition bp = iterator.next();
+                if (touchX >= bp.x && touchX <= bp.x + imageWidth && touchY >= bp.y && touchY <= bp.y + imageHeight) {
+                    // 檢測到點擊在圖像區域內
+                    iterator.remove();
+                    invalidate();
+                    break;
+                }
+            }
+        }
+        return super.onTouchEvent(event);
+    }
+
+    // 內部類用於存儲圖像及其位置
     private static class BitmapPosition {
         Bitmap bitmap;
         int x, y;

@@ -103,7 +103,6 @@ public class MainActivity extends AppCompatActivity {
 
     // 初始化背景蛋糕圖片並設置點擊監聽器
     private void setupBackgroundCakes(ImageView[] cakes) {
-        boolean[] shake = {true, true, true, true, true, true};
 
         // 開始所有背景蛋糕的搖晃動畫
         for (ImageView cake : cakes) {
@@ -114,11 +113,14 @@ public class MainActivity extends AppCompatActivity {
         for (int i = 0; i < cakes.length; i++) {
             final int index = i; // 使用 final 變量保存索引
             cakes[i].setOnClickListener(v -> {
-                shake[index] = !shake[index];
-                if (shake[index]) {
-                    Background.startShakeAnimation(cakes[index]);
-                } else {
-                    Background.startRotateAnimation(cakes[index]);
+                CakeView.setCakePaint(index);
+                for(int j=0;j<6;j++) {
+                    if(j == index) {
+                        Background.startRotateAnimation(cakes[j]);
+                    }
+                    else {
+                        Background.startShakeAnimation(cakes[j]);
+                    }
                 }
             });
         }
