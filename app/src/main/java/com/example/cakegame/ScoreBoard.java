@@ -38,20 +38,23 @@ public class ScoreBoard {
     }
 
     // 取得按編號排序的分數排行榜
-    @RequiresApi(api = Build.VERSION_CODES.N)
-    public static ArrayList<Score> getScoreBoard_num() {
-        Collections.sort(totalScoreBoard, Comparator.comparingInt(Score::getNum));
+    public static ArrayList<Score> getScoreBoard_num() { //按編號排序
 
-        // 更新排名
-        for (int i = 0; i < totalScoreBoard.size(); i++) {
-            totalScoreBoard.get(i).setRank(i + 1);
+        Collections.sort(totalScoreBoard, new Comparator<Score>() {
+            @Override
+            public int compare(Score o1, Score o2) {
+                return Integer.compare(o1.getNum(), o2.getNum());
+            }
+        });
+
+        for(int i=0;i<totalScoreBoard.size();i++){
+            totalScoreBoard.get(i).setRank(i+1);
         }
 
         return totalScoreBoard;
     }
 
     // 取得按分數排序的分數排行榜
-    @RequiresApi(api = Build.VERSION_CODES.N)
     public static ArrayList<Score> getScoreBoard_score(int mode) {
         ArrayList<Score> scoreBoard = new ArrayList<>();
 
@@ -63,12 +66,15 @@ public class ScoreBoard {
         }
 
         // 根據分數和蛋糕數量排序
-        scoreBoard.sort((o1, o2) -> {
-            int result = Integer.compare(o2.getScore(), o1.getScore());
-            if (result == 0) {
-                result = Integer.compare(o2.getFullCake(), o1.getFullCake());
+        Collections.sort(scoreBoard, new Comparator<Score>() {
+            @Override
+            public int compare(Score o1, Score o2) {
+                int result = Integer.compare(o2.getScore(), o1.getScore());
+                if (result == 0) {
+                    result = Integer.compare(o2.getFullCake(), o1.getFullCake());
+                }
+                return result;
             }
-            return result;
         });
 
         // 更新排名
@@ -89,7 +95,6 @@ public class ScoreBoard {
     }
 
     // 取得按蛋糕數量排序的分數排行榜
-    @RequiresApi(api = Build.VERSION_CODES.N)
     public static ArrayList<Score> getScoreBoard_cake(int mode) {
         ArrayList<Score> scoreBoard = new ArrayList<>();
 
@@ -101,12 +106,15 @@ public class ScoreBoard {
         }
 
         // 根據蛋糕數量和分數排序
-        scoreBoard.sort((o1, o2) -> {
-            int result = Integer.compare(o2.getFullCake(), o1.getFullCake());
-            if (result == 0) {
-                result = Integer.compare(o2.getScore(), o1.getScore());
+        Collections.sort(scoreBoard, new Comparator<Score>() {
+            @Override
+            public int compare(Score o1, Score o2) {
+                int result = Integer.compare(o2.getFullCake(), o1.getFullCake());
+                if (result == 0) {
+                    result = Integer.compare(o2.getScore(), o1.getScore());
+                }
+                return result;
             }
-            return result;
         });
 
         // 更新排名
