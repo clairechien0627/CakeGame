@@ -98,7 +98,7 @@ public class CakePane {
 
         int p = cakes[x][y].getPieces().get(0); //蛋糕片花色
 
-        ArrayList<int[]> availableCake = new ArrayList<>();	//位置x, y值，ArrayList中，像這樣 {{x1, y1},{x2, y2},...}
+        ArrayList<int[]> availableCake = new ArrayList<>();	    //位置x, y值，ArrayList中，像這樣 {{x1, y1},{x2, y2},...}
         ArrayList<int[]> fillCake = new ArrayList<>();			//位置x, y值，ArrayList中，像這樣 {{x1, y1},{x2, y2},...}
         boolean[][] vis = new boolean[X_MAX][Y_MAX];
 
