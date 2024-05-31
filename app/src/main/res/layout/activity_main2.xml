@@ -295,7 +295,9 @@
                 android:layout_height="wrap_content"
                 android:text="Easy"
                 android:textSize="15sp"
-                android:gravity="start"
+                android:gravity="center"
+                android:background="@drawable/difficulty_button"
+                app:backgroundTint="@color/white"
                 android:textColor="@color/aqua" />
 
             <View

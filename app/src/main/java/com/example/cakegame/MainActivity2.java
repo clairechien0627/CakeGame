@@ -234,7 +234,7 @@ public class MainActivity2 extends AppCompatActivity {
                     handleDrop(cakeView, draggedView);
                     break;
                 case DragEvent.ACTION_DRAG_ENDED:
-                    handleDragEnded(cakeView, draggedView);
+                    handleDragEnded(cakeView);
                     break;
             }
             return true;
@@ -297,7 +297,7 @@ public class MainActivity2 extends AppCompatActivity {
 
         // 執行蛋糕放置
         private void performCakeDrop(int draggedViewIndex, int i, int j) {
-            newCakes[draggedViewIndex].put_cake_to_table(cakes, cakeViews, i, j);
+            newCakes[draggedViewIndex].putCakeToTable(cakes, cakeViews, i, j);
             updateScoreAndFullCake(cakes[i][j]);
             updateTableStatus();
         }
@@ -307,18 +307,20 @@ public class MainActivity2 extends AppCompatActivity {
         private void finalizeDrop(ViewGroup draggedViewParent, CakeView draggedView) {
             draggedViewParent.removeView(draggedView);
             if (!dropped) {
-                originalParent.addView(draggedView, originalIndex);
-                draggedView.setVisibility(View.VISIBLE);
-                draggedView.setOnTouchListener(new MyTouchListener());
-            }
-
-            if (shouldResetDraggableCakes()) {
+                rebuildDragView(draggedView);
+            } else if (draggableCakesAllEmpty()) {
                 resetDraggableCakes();
             }
         }
 
+        private void rebuildDragView(CakeView draggedView) {
+            originalParent.addView(draggedView, originalIndex);
+            draggedView.setVisibility(View.VISIBLE);
+            draggedView.setOnTouchListener(new MyTouchListener());
+        }
+
         // 檢查是否需要重置可拖動蛋糕
-        private boolean shouldResetDraggableCakes() {
+        private boolean draggableCakesAllEmpty() {
             for (int i = 0; i < NUM_COLS; i++) {
                 if (!newCakes[i].getPieces().isEmpty()) {
                     return false;
@@ -328,34 +330,11 @@ public class MainActivity2 extends AppCompatActivity {
         }
 
         // 處理拖動結束
-        private void handleDragEnded(CakeView cakeView, CakeView draggedView) {
-            if (!dropped) {
-                draggedView.setVisibility(View.VISIBLE);
-            }
+        private void handleDragEnded(CakeView cakeView) {
             cakeView.setImageResource(R.drawable.stroke_circle);
-            updateTableStatus();
             checkAllNotEmpty();
             dropped = false;
         }
-    }
-
-    // 更新表格狀態
-    private void updateTableStatus() {
-        StringBuilder tableString = new StringBuilder();
-        for (int i = 0; i < NUM_ROWS; i++) {
-            for (int j = 0; j < NUM_COLS; j++) {
-                tableString.append(cakes[i][j].getPieces()).append(" ");
-            }
-            tableString.append("\n");
-        }
-
-        StringBuilder newTableString = new StringBuilder();
-        for (int i = 0; i < NUM_COLS; i++) {
-            newTableString.append(newCakes[i].getPieces()).append(" ");
-        }
-
-        Log.d("CakeSort", "Table:\n" + tableString);
-        Log.d("CakeSort", "\nnewTable:\n" + newTableString);
     }
 
     // 檢查所有格子是否都不為空
@@ -396,5 +375,25 @@ public class MainActivity2 extends AppCompatActivity {
         for (int i = 0; i < currentCake.getFullCakeNum(); i++) {
             randomFallCakeView.generateNewRandomImage();
         }
+    }
+
+
+    // 更新表格狀態
+    private void updateTableStatus() {
+        StringBuilder tableString = new StringBuilder();
+        for (int i = 0; i < NUM_ROWS; i++) {
+            for (int j = 0; j < NUM_COLS; j++) {
+                tableString.append(cakes[i][j].getPieces()).append(" ");
+            }
+            tableString.append("\n");
+        }
+
+        StringBuilder newTableString = new StringBuilder();
+        for (int i = 0; i < NUM_COLS; i++) {
+            newTableString.append(newCakes[i].getPieces()).append(" ");
+        }
+
+        Log.d("CakeSort", "Table:\n" + tableString);
+        Log.d("CakeSort", "\nnewTable:\n" + newTableString);
     }
 }
