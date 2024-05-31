@@ -234,7 +234,7 @@ public class MainActivity2 extends AppCompatActivity {
                     handleDrop(cakeView, draggedView);
                     break;
                 case DragEvent.ACTION_DRAG_ENDED:
-                    handleDragEnded(cakeView);
+                    handleDragEnded(cakeView, draggedView);
                     break;
             }
             return true;
@@ -308,7 +308,8 @@ public class MainActivity2 extends AppCompatActivity {
             draggedViewParent.removeView(draggedView);
             if (!dropped) {
                 rebuildDragView(draggedView);
-            } else if (draggableCakesAllEmpty()) {
+            }
+            if (draggableCakesAllEmpty()) {
                 resetDraggableCakes();
             }
         }
@@ -330,7 +331,10 @@ public class MainActivity2 extends AppCompatActivity {
         }
 
         // 處理拖動結束
-        private void handleDragEnded(CakeView cakeView) {
+        private void handleDragEnded(CakeView cakeView, CakeView draggedView) {
+            if (!dropped) {
+                draggedView.setVisibility(View.VISIBLE);
+            }
             cakeView.setImageResource(R.drawable.stroke_circle);
             checkAllNotEmpty();
             dropped = false;
