@@ -280,6 +280,16 @@ public class MainActivity2 extends AppCompatActivity {
             finalizeDrop(draggedViewParent, draggedView);
         }
 
+        // 處理拖動結束
+        private void handleDragEnded(CakeView cakeView, CakeView draggedView) {
+            if (!dropped) {
+                draggedView.setVisibility(View.VISIBLE);
+            }
+            cakeView.setImageResource(R.drawable.stroke_circle);
+            checkAllNotEmpty();
+            dropped = false;
+        }
+
         // 獲取拖動視圖的索引
         private int getDraggedViewIndex(CakeView draggedView) {
             for (int i = 0; i < NUM_COLS; i++) {
@@ -314,6 +324,8 @@ public class MainActivity2 extends AppCompatActivity {
             }
         }
 
+        //重置可拖動蛋糕
+        @SuppressLint("ClickableViewAccessibility")
         private void rebuildDragView(CakeView draggedView) {
             originalParent.addView(draggedView, originalIndex);
             draggedView.setVisibility(View.VISIBLE);
@@ -328,16 +340,6 @@ public class MainActivity2 extends AppCompatActivity {
                 }
             }
             return true;
-        }
-
-        // 處理拖動結束
-        private void handleDragEnded(CakeView cakeView, CakeView draggedView) {
-            if (!dropped) {
-                draggedView.setVisibility(View.VISIBLE);
-            }
-            cakeView.setImageResource(R.drawable.stroke_circle);
-            checkAllNotEmpty();
-            dropped = false;
         }
     }
 

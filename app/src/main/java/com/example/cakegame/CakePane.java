@@ -67,13 +67,11 @@ public class CakePane {
             score++;
         }
         clearPieces();  //清空下方new_cake
-
         if(cakes[x][y].canMix()) {
             cakes[x][y].mix(cakes, cakeViews, x, y);   //蛋糕片交換
         }
 
         boolean endMix = false;    //是否還有其他單花色蛋糕
-
         while(!endMix) {
             endMix = otherCakeMix(cakes, cakeViews); //單花色蛋糕交換
         }
@@ -87,9 +85,7 @@ public class CakePane {
                     }
                 }
             }
-
             addRandomCake(cakes, cakeViews, x, y); //生成random_cake
-
         }
     }
 
@@ -97,7 +93,6 @@ public class CakePane {
     public void mix(CakePane[][] cakes, CakeView[][] cakeViews, int x, int y) {
 
         int p = cakes[x][y].getPieces().get(0); //蛋糕片花色
-
         ArrayList<int[]> availableCake = new ArrayList<>();	    //位置x, y值，ArrayList中，像這樣 {{x1, y1},{x2, y2},...}
         ArrayList<int[]> fillCake = new ArrayList<>();			//位置x, y值，ArrayList中，像這樣 {{x1, y1},{x2, y2},...}
         boolean[][] vis = new boolean[X_MAX][Y_MAX];
@@ -105,7 +100,6 @@ public class CakePane {
         count = 0;
         availableCake = findAvailableCake(cakes, x, y, p, vis, availableCake);  //可進行交換的所有蛋糕
         availableCake.remove(availableCake.size() - 1);   //事先移除cakes[x][y]
-
 
         //判斷要移動到的盤子的位置
         //count可進行移動的蛋糕片數
@@ -115,7 +109,6 @@ public class CakePane {
             Log.d("CakePane", "count: " + count + "p: " + p);
 
             if(cake.canMix()) {   //單花色蛋糕
-
                 Log.d("CakePane", "fillCake: (" + availableCake.get(0)[0] + ", " + availableCake.get(0)[1] + ")");
 
                 fillCake.add(availableCake.get(0));   //fill_cake為蛋糕片要被移動到的位置
@@ -133,9 +126,7 @@ public class CakePane {
         if(count >= PIECES_MAX) {
             cakeViews[x][y].animateProgress(p);
         }
-
         fillCake.add(new int[] {x,y}); //放入最後面
-
 
         //開始進行蛋糕移動
         while(fillCake.size() > 0) {
