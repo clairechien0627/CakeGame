@@ -38,16 +38,21 @@ public class CustomSelector extends LinearLayout {
 
         // 點擊圖標時的事件
         findViewById(R.id.select_imageview).setOnClickListener(v -> {
-            drawDialog(); // 繪製對話框
-            rotateSelectImageView(); // 旋轉圖標
-            displayDialog(!isOpen); // 根據 isOpen 變量顯示/隱藏對話框
-            if (isOpen) {
-                listener.onCancel(); // 如果對話框已打開，則調用 onCancel 回調
-            } else {
-                listener.onOpen(); // 如果對話框未打開，則調用 onOpen 回調
-            }
-            isOpen = !isOpen; // 切換 isOpen 狀態
+            handleIconClick();
         });
+    }
+
+    // 處理圖標點擊事件
+    private void handleIconClick() {
+        drawDialog(); // 繪製對話框
+        rotateSelectImageView(); // 旋轉圖標
+        displayDialog(!isOpen); // 根據 isOpen 變量顯示/隱藏對話框
+        if (isOpen) {
+            listener.onCancel(); // 如果對話框已打開，則調用 onCancel 回調
+        } else {
+            listener.onOpen(); // 如果對話框未打開，則調用 onOpen 回調
+        }
+        isOpen = !isOpen; // 切換 isOpen 狀態
     }
 
     // 旋轉圖標方法
@@ -73,105 +78,145 @@ public class CustomSelector extends LinearLayout {
 
         LinearLayout iconLinearLayout = findViewById(R.id.iconLinearLayout); // 圖標佈局
         iconLinearLayout.removeAllViews(); // 清除所有子視圖
-        LinearLayout imageLayout = new LinearLayout(getContext()); // 圖片佈局
-        imageLayout.setOrientation(LinearLayout.HORIZONTAL); // 設置水平方向
 
-        FrameLayout soundFrameLayout = new FrameLayout(getContext()); // 音效FrameLayout
+        LinearLayout imageLayout = createImageLayout(); // 創建圖片佈局
+        addSoundControl(imageLayout); // 添加音效控制
+        addShakeControl(imageLayout); // 添加搖晃控制
+
+        iconLinearLayout.addView(imageLayout); // 添加圖片佈局到圖標佈局
+
+        drawDialogBackground(triangleWidth, triangleHeight); // 繪製對話框背景
+    }
+
+    // 創建圖片佈局
+    private LinearLayout createImageLayout() {
+        LinearLayout imageLayout = new LinearLayout(getContext());
+        imageLayout.setOrientation(LinearLayout.HORIZONTAL); // 設置水平方向
+        return imageLayout;
+    }
+
+    // 添加音效控制
+    private void addSoundControl(LinearLayout imageLayout) {
+        FrameLayout soundFrameLayout = createControlFrameLayout();
+        ImageView soundImageView = createControlImageView(R.drawable.volume_high_solid);
+        ImageView soundOverlayImageView = createControlOverlayImageView(R.drawable.volume_xmark_solid);
+
+        soundFrameLayout.addView(soundImageView); // 添加音效圖片視圖
+        soundFrameLayout.addView(soundOverlayImageView); // 添加音效覆蓋視圖
+
+        updateSoundIconVisibility(soundImageView, soundOverlayImageView); // 更新音效圖標可見性
+
+        // 點擊事件
+        soundImageView.setOnClickListener(v -> handleSoundClick(soundImageView, soundOverlayImageView));
+        soundOverlayImageView.setOnClickListener(v -> handleSoundClick(soundImageView, soundOverlayImageView));
+
+        imageLayout.addView(soundFrameLayout); // 添加音效控制到圖片佈局
+    }
+
+    // 更新音效圖標可見性
+    private void updateSoundIconVisibility(ImageView soundImageView, ImageView soundOverlayImageView) {
+        if (!SoundPlay.isMuted()) {
+            soundOverlayImageView.setVisibility(View.INVISIBLE);
+        } else {
+            soundImageView.setVisibility(View.INVISIBLE);
+        }
+    }
+
+    // 處理音效點擊事件
+    private void handleSoundClick(ImageView soundImageView, ImageView soundOverlayImageView) {
+        new Handler().postDelayed(this::dismissDialog, 500);
+        if (soundOverlayImageView.getVisibility() == View.INVISIBLE) {
+            soundOverlayImageView.setVisibility(View.VISIBLE);
+            soundImageView.setVisibility(View.INVISIBLE);
+            SoundPlay.setMute(true);
+            Log.d("CustomSelector", "Muted");
+        } else {
+            soundOverlayImageView.setVisibility(View.INVISIBLE);
+            soundImageView.setVisibility(View.VISIBLE);
+            SoundPlay.setMute(false);
+            SoundPlay.playSound("click");
+            Log.d("CustomSelector", "unMuted");
+        }
+    }
+
+    // 添加搖晃控制
+    private void addShakeControl(LinearLayout imageLayout) {
+        FrameLayout shakeFrameLayout = createControlFrameLayout();
+        ImageView shakeImageView = createControlImageView(R.drawable.phone_shake_svgrepo_com);
+        ImageView shakeOverlayImageView = createControlOverlayImageView(R.drawable.slash_solid);
+
+        shakeFrameLayout.addView(shakeImageView); // 添加搖晃圖片視圖
+        shakeFrameLayout.addView(shakeOverlayImageView); // 添加搖晃覆蓋視圖
+
+        updateShakeIconVisibility(shakeOverlayImageView); // 更新搖晃圖標可見性
+
+        // 點擊事件
+        shakeImageView.setOnClickListener(v -> handleShakeClick(shakeImageView, shakeOverlayImageView));
+
+        imageLayout.addView(shakeFrameLayout); // 添加搖晃控制到圖片佈局
+    }
+
+    // 更新搖晃圖標可見性
+    private void updateShakeIconVisibility(ImageView shakeOverlayImageView) {
+        if (VibrationHelper.getVibrate()) {
+            shakeOverlayImageView.setVisibility(View.INVISIBLE);
+        }
+    }
+
+    // 處理搖晃點擊事件
+    private void handleShakeClick(ImageView shakeImageView, ImageView shakeOverlayImageView) {
+        new Handler().postDelayed(this::dismissDialog, 500);
+        if (shakeOverlayImageView.getVisibility() == View.INVISIBLE) {
+            shakeOverlayImageView.setVisibility(View.VISIBLE);
+            VibrationHelper.setVibrate(false);
+        } else {
+            shakeOverlayImageView.setVisibility(View.INVISIBLE);
+            VibrationHelper.setVibrate(true);
+            VibrationHelper.vibrate();
+        }
+    }
+
+    // 創建控制FrameLayout
+    private FrameLayout createControlFrameLayout() {
+        FrameLayout frameLayout = new FrameLayout(getContext());
         LinearLayout.LayoutParams frameLayoutParams = new LinearLayout.LayoutParams(
                 0,
                 LinearLayout.LayoutParams.WRAP_CONTENT,
                 1 // 權重為1
         );
         frameLayoutParams.gravity = Gravity.CENTER; // 設置重心為中心
-        soundFrameLayout.setLayoutParams(frameLayoutParams); // 設置佈局參數
-        ImageView soundImageView = new ImageView(getContext()); // 音效ImageView
-        soundImageView.setImageResource(R.drawable.volume_high_solid); // 設置圖片
-        FrameLayout.LayoutParams soundImageLayoutParams = new FrameLayout.LayoutParams(
+        frameLayout.setLayoutParams(frameLayoutParams); // 設置佈局參數
+        return frameLayout;
+    }
+
+    // 創建控制ImageView
+    private ImageView createControlImageView(int resId) {
+        ImageView imageView = new ImageView(getContext());
+        imageView.setImageResource(resId); // 設置圖片
+        FrameLayout.LayoutParams layoutParams = new FrameLayout.LayoutParams(
                 dpToPx(getContext(), 25),
                 dpToPx(getContext(), 25)
         );
-        soundImageLayoutParams.gravity = Gravity.CENTER; // 設置重心為中心
-        soundImageView.setLayoutParams(soundImageLayoutParams); // 設置圖片佈局參數
-        soundFrameLayout.addView(soundImageView); // 添加圖片視圖
-        ImageView soundOverlayImageView = new ImageView(getContext()); // 音效覆蓋ImageView
-        soundOverlayImageView.setImageResource(R.drawable.volume_xmark_solid); // 設置覆蓋圖片
-        soundOverlayImageView.setLayoutParams(soundImageLayoutParams); // 設置覆蓋圖片佈局參數
+        layoutParams.gravity = Gravity.CENTER; // 設置重心為中心
+        imageView.setLayoutParams(layoutParams); // 設置圖片佈局參數
+        return imageView;
+    }
 
-        soundFrameLayout.addView(soundOverlayImageView); // 添加覆蓋圖片視圖
-        if(!SoundPlay.isMuted()){
-            soundOverlayImageView.setVisibility(View.INVISIBLE);
-        }else {
-            soundImageView.setVisibility(View.INVISIBLE);
-        }
-
-        // 點擊事件
-        soundImageView.setOnClickListener(v -> {
-            new Handler().postDelayed(this::dismissDialog, 500);
-            if (soundOverlayImageView.getVisibility() == View.INVISIBLE) {
-                soundOverlayImageView.setVisibility(View.VISIBLE);
-                soundImageView.setVisibility(View.INVISIBLE);
-                SoundPlay.setMute(true);
-                Log.d("CustomSelector", "Muted");
-            } else {
-                soundOverlayImageView.setVisibility(View.INVISIBLE);
-                soundImageView.setVisibility(View.VISIBLE);
-                SoundPlay.setMute(false);
-                SoundPlay.playSound("click");
-                Log.d("CustomSelector", "unMuted");
-            }
-        });
-        soundOverlayImageView.setOnClickListener(v -> {
-            new Handler().postDelayed(this::dismissDialog, 500);
-            if (soundOverlayImageView.getVisibility() == View.INVISIBLE) {
-                soundImageView.setVisibility(View.INVISIBLE);
-                soundOverlayImageView.setVisibility(View.VISIBLE);
-                SoundPlay.setMute(true);
-                Log.d("CustomSelector", "Muted");
-            } else {
-                soundImageView.setVisibility(View.VISIBLE);
-                soundOverlayImageView.setVisibility(View.INVISIBLE);
-                SoundPlay.setMute(false);
-                SoundPlay.playSound("click");
-                Log.d("CustomSelector", "unMuted");
-            }
-        });
-
-        imageLayout.addView(soundFrameLayout); // 添加音效佈局
-        FrameLayout frameLayout = new FrameLayout(getContext()); // FrameLayout
-        frameLayoutParams.gravity = Gravity.CENTER; // 設置重心為中心
-        frameLayout.setLayoutParams(frameLayoutParams); // 設置佈局參數
-        ImageView shakeImageView = new ImageView(getContext()); // 搖晃圖片ImageView
-        shakeImageView.setImageResource(R.drawable.phone_shake_svgrepo_com); // 設置圖片
-        FrameLayout.LayoutParams shakeImageLayoutParams = new FrameLayout.LayoutParams(
-                dpToPx(getContext(), 30),
-                dpToPx(getContext(), 30)
+    // 創建控制覆蓋ImageView
+    private ImageView createControlOverlayImageView(int resId) {
+        ImageView imageView = new ImageView(getContext());
+        imageView.setImageResource(resId); // 設置覆蓋圖片
+        FrameLayout.LayoutParams layoutParams = new FrameLayout.LayoutParams(
+                dpToPx(getContext(), 25),
+                dpToPx(getContext(), 25)
         );
-        shakeImageLayoutParams.gravity = Gravity.CENTER; // 設置重心為中心
-        shakeImageView.setLayoutParams(shakeImageLayoutParams); // 設置佈局參數
-        frameLayout.addView(shakeImageView); // 添加搖晃圖片視圖
-        ImageView overlayImageView = new ImageView(getContext()); // 覆蓋圖片ImageView
-        overlayImageView.setImageResource(R.drawable.slash_solid); // 設置圖片
-        overlayImageView.setLayoutParams(shakeImageLayoutParams); // 設置佈局參數
-        frameLayout.addView(overlayImageView); // 添加覆蓋圖片視圖
+        layoutParams.gravity = Gravity.CENTER; // 設置重心為中心
+        imageView.setLayoutParams(layoutParams); // 設置覆蓋圖片佈局參數
+        return imageView;
+    }
 
-        if(VibrationHelper.getVibrate()){
-            overlayImageView.setVisibility(View.INVISIBLE);
-        }
-        // 點擊事件
-        shakeImageView.setOnClickListener(v -> {
-            new Handler().postDelayed(this::dismissDialog, 500);
-            if (overlayImageView.getVisibility() == View.INVISIBLE) {
-                overlayImageView.setVisibility(View.VISIBLE);
-                VibrationHelper.setVibrate(false);
-            } else {
-                overlayImageView.setVisibility(View.INVISIBLE);
-                VibrationHelper.setVibrate(true);
-                VibrationHelper.vibrate();
-            }
-        });
-        imageLayout.addView(frameLayout); // 添加FrameLayout到圖片佈局
-        iconLinearLayout.addView(imageLayout); // 添加圖片佈局到圖標佈局
-
+    // 繪製對話框背景
+    private void drawDialogBackground(int triangleWidth, int triangleHeight) {
         int dialogWidth = 500; // 對話框寬度
         int dialogHeight = ROW_HEIGHT + triangleHeight; // 對話框高度
 
@@ -182,17 +227,23 @@ public class CustomSelector extends LinearLayout {
         p.setAntiAlias(true); // 設置抗鋸齒
         Canvas canvas = new Canvas(bitmap); // 創建畫布
 
+        Path path = createDialogPath(dialogWidth, dialogHeight, triangleWidth, triangleHeight); // 創建對話框路徑
+        canvas.drawPath(path, p); // 繪製路徑
+
+        findViewById(R.id.dialog_select_linearlayout).setBackground(new BitmapDrawable(getResources(), bitmap)); // 設置對話框背景
+    }
+
+    // 創建對話框路徑
+    private Path createDialogPath(int dialogWidth, int dialogHeight, int triangleWidth, int triangleHeight) {
         Path path = new Path(); // 路徑
         RectF rectF = new RectF(0, triangleHeight, dialogWidth, dialogHeight); // 矩形範圍
         float cornerRadius = 20; // 圓角的半徑
         path.addRoundRect(rectF, cornerRadius, cornerRadius, Path.Direction.CW); // 添加圓角矩形路徑
         path.moveTo(dialogWidth - triangleWidth - 60, triangleHeight); // 移動到三角形左側點
-        path.lineTo(dialogWidth - triangleWidth/2f - 60, 0); // 添加三角形頂點
+        path.lineTo(dialogWidth - triangleWidth / 2f - 60, 0); // 添加三角形頂點
         path.lineTo(dialogWidth - 60, triangleHeight); // 添加三角形右側點
         path.close(); // 關閉路徑
-
-        canvas.drawPath(path, p); // 繪製路徑
-        findViewById(R.id.dialog_select_linearlayout).setBackground(new BitmapDrawable(getResources(), bitmap)); // 設置對話框背景
+        return path;
     }
 
     // 顯示/隱藏對話框

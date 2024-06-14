@@ -15,40 +15,22 @@ public class CakePane {
     private ArrayList<Integer> pieces = new ArrayList<>();	//蛋糕片花色ArrayList版，已被排序過，總片數最大為pieces_max，像這樣 {1,1,4,5}
     private int[] piecesNum = new int[]{0,0,0,0,0,0};		//花色的各自數量array版，像這樣 {0,0,0,0,0}
 
-    private int count;
-    private Random random = new Random();
-    private static int score;
-    private static int fullCakeNum;
+    private int count;  //計算蛋糕片數量
+    private Random random = new Random();   //隨機
+    private static int score;       //分數
+    private static int fullCakeNum; //fullCake數量分數
 
-    private static int mode;
+    private static int mode;    //遊戲模式
     private static double complexCakePossibility; //出現complex_cake的機率
     private static final double[] difficulty = new double[]{0.3, 0.4, 0.5, 0};  //四種模式
 
 
-    public CakePane() {
-
-    }
+    public CakePane() { }
 
     //設置模式 (在MainActivity1)
     public static void setMode(int mode) {
         CakePane.mode = mode;
         complexCakePossibility = difficulty[mode];
-    }
-
-    //放置蛋糕片
-    public void placePiece(int p) {
-        pieces.add(p);
-        piecesNum[p]++;
-
-        Collections.sort(pieces, Integer::compareTo);
-
-    }
-
-    //刪除蛋糕片
-    public void erasePiece(int p) {
-        pieces.remove(Integer.valueOf(p));
-        piecesNum[p]--;
-        Log.d("CakePane", "erase: " + "p --" + piecesNum[p]);
     }
 
     //將下方new_cake移放入上方
@@ -240,28 +222,6 @@ public class CakePane {
         return availableCake;
     }
 
-    //蛋糕已滿後消失
-    public void full(int p) {
-        if(piecesNum[p] == PIECES_MAX) {
-            clearPieces();
-            fullCakeNum++;
-        }
-    }
-
-    //將蛋糕片移動到目的地
-    public void move(CakePane to, CakePane from, int p) {
-        to.placePiece(p);
-        from.erasePiece(p);
-    }
-
-    //清空蛋糕片
-    public void clearPieces() {
-        for(int i = 0; i< PIECES_KIND; i++) {
-            piecesNum[i] = 0;
-        }
-        pieces.clear();
-    }
-
     //刷新下方蛋糕new_cake
     public void refresh() {
         clearPieces();
@@ -286,6 +246,7 @@ public class CakePane {
         }
     }
 
+    //加入隨機蛋糕 (devil模式)
     public void addRandomCake(CakePane[][] cakes, CakeView[][] cakeViews, int x, int y) { //生成random_cake
         boolean[][] hasPieces = new boolean[X_MAX][Y_MAX];
         boolean all_full = true;
@@ -337,6 +298,7 @@ public class CakePane {
 
     }
 
+    //單花色蛋糕
     public boolean canMix() {
         return getPieces().size() > 0 && getPieces().size() == getPiecesNum(getPieces().get(0));
     }
@@ -345,6 +307,46 @@ public class CakePane {
     public boolean outOfBoundary(int x, int y) {
         return x < 0 || x >= X_MAX || y < 0 || y >= Y_MAX;
     }
+
+    //蛋糕已滿後消失
+    public void full(int p) {
+        if(piecesNum[p] == PIECES_MAX) {
+            clearPieces();
+            fullCakeNum++;
+        }
+    }
+
+    //放置蛋糕片
+    public void placePiece(int p) {
+        pieces.add(p);
+        piecesNum[p]++;
+
+        Collections.sort(pieces, Integer::compareTo);
+
+    }
+
+    //刪除蛋糕片
+    public void erasePiece(int p) {
+        pieces.remove(Integer.valueOf(p));
+        piecesNum[p]--;
+        Log.d("CakePane", "erase: " + "p --" + piecesNum[p]);
+    }
+
+    //將蛋糕片移動到目的地
+    public void move(CakePane to, CakePane from, int p) {
+        to.placePiece(p);
+        from.erasePiece(p);
+    }
+
+    //清空蛋糕片
+    public void clearPieces() {
+        for(int i = 0; i< PIECES_KIND; i++) {
+            piecesNum[i] = 0;
+        }
+        pieces.clear();
+    }
+
+
 
     public static int getMode() {
         return mode;
